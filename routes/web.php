@@ -15,3 +15,16 @@ Route::get('/', function () {
     return view('website/index');
 });
 Route::get('/registro','website@nusu');
+Route::Post('/newusr', 'website@Newusr');
+Route::Post('/login', 'LoginController@login');
+
+Route::group(['middleware' => 'policia'], function(){
+	Route::get('/poli', 'segpubcontroller@index');
+	Route::get('/logoutp', 'segpubcontroller@logout');
+});
+
+Route::group(['middleware' => 'psicologo'], function(){
+	Route::get('/predel', 'prevdelcontroller@index');
+	Route::get('/logoutpd', 'prevdelcontroller@logout');
+});
+

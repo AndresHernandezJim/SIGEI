@@ -32,7 +32,7 @@
                  
                     <div class="input-field col s12">
                         <input id="usuario" type="text" class="validate" name="usuario">
-                        <label id="texto" for="usuario"><i class="fa fa-user"></i>  Usuario</label>
+                        <label id="texto" for="usuario"><i class="fa fa-user"></i>  Nick</label>
                     </div>
                     <div class="input-field col s12">
                         <input id="pass" type="password" class="validate" name="password">
