@@ -26,7 +26,7 @@
                                 <select class="input-field col s12" name="privilegio">
                                     <option value="" disabled selected>Seleccione</option>
                                         @foreach ($privilegios as $privilegio)
-                                           <option value="{{$privilegio['idPrivilegios']}}">{{$privilegio['Tipo_privilegio']}}</option>
+                                           <option value="{{$privilegio['idPrivilegios']}}">{{$privilegio['nombre']}}</option>
                                         @endforeach
 
                                 </select>

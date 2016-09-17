@@ -12,6 +12,6 @@ class website extends Controller
     	 $data=array(
             'privilegios'=> \App\privilegios::get(),
         );
-        return view('/website/nuser',$data);
+        return view('/website/nusu',$data);
     }
 }
