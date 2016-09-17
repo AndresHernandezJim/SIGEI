@@ -8,5 +8,5 @@ class privilegios extends Model
 {
      protected $table='privilegio';
     protected $primarykey='idprivilegio';
-    protected $fillable=['nombre'];
+    protected $fillable=['idprivilegio','nombre'];
 }
