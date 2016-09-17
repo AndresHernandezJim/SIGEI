@@ -12,5 +12,6 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('website/index');
 });
+Route::get('/registro','website@nusu');
