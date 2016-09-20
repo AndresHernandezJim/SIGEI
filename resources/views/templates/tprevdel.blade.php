@@ -37,8 +37,12 @@
 </nav>  
 </header>
 @yield('navegacion')
-<div id="section" class="container">
+<div  class="container">
+  <div class="col s12 m5">
+    <div class="card-panel lime lighten-5">
   @yield('content')
+    </div>
+  </div>
 </div>
 
 <script src="/js/jquery-2.2.1.min.js"></script>

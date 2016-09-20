@@ -9,7 +9,7 @@
 
 body{
 	background-attachment: fixed;
-	background-color: #fff8e1;
+	background-color: #ffecb3;
 	background-image: url("/images/prevlog1.png");
 	background-repeat: no-repeat;
 	background-position: center;
@@ -18,7 +18,7 @@ body{
 #section{
 	margin-top: 20px;
 	border-width: 3px;
-	border-style: outset;
+	/*border-style: outset;*/
 	background-color: #fff3e0; 
 }
 
@@ -43,7 +43,7 @@ nav{
 
 header{
 
-	background-color: #fff8e1;
+	background-color: #ffecb3;
 }
 
 .logo{

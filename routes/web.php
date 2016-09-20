@@ -26,5 +26,9 @@ Route::group(['middleware' => 'policia'], function(){
 Route::group(['middleware' => 'psicologo'], function(){
 	Route::get('/predel', 'prevdelcontroller@index');
 	Route::get('/logoutpd', 'prevdelcontroller@logout');
+	Route::get('/predel/new/institucion','prevdelcontroller@regInst');
+	Route::get('/predel/show/institucion','prevdelcontroller@visIns');
+	Route::get('/predel/new/persona', 'prevdelcontroller@regPer');
+	Route::get('/predel/show/pacientes', 'prevdelcontroller@mostrarPac');
 });
 
