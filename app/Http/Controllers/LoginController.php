@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use Auth;
 use App\User;
-
+use App\sesion;
 class LoginController extends Controller
 {
 
@@ -26,18 +26,33 @@ class LoginController extends Controller
                 //dd($usuario->all());
                 if($usuario->idprivilegio == 1){
                     $request->session()->put('Admin', $usuario);
+                    $sesion= new sesion;
+                    $sesion->id_usuario=$usuario->id_usuario;
+                    $sesion->ip=$request->ip();
+                    $sesion->save();
                     return redirect('/admin');
+
                 }
                 if($usuario->idprivilegio == 2){
                     //dd("el tipo es 2");
                     $request->session()->put('Policia', $usuario);
                     //dd(session()->get('Policia')->nombre);
+                    $sesion= new sesion;
+                    $sesion->id_usuario=$usuario->id_usuario;
+                    $sesion->ip=$request->ip();
+                    $sesion->save();
+                    //$sesion=[$id_usuario,$fecha,$ip];
+                    //dd($sesion);
                     return redirect('/poli');
                 }
                 if($usuario->idprivilegio == 3){
                     //dd("si entro a 3");
                     $request->session()->put('Psicologo', $usuario);
                     //dd(session()->get('Psicologo')->nombre);
+                    $sesion= new sesion;
+                    $sesion->id_usuario=$usuario->id_usuario;
+                    $sesion->ip=$request->ip();
+                    $sesion->save();
                     return redirect('/predel');
                 }
         return back()->with('error', true); 
