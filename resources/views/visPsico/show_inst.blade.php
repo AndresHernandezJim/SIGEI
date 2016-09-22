@@ -32,8 +32,7 @@
 		&nbsp
 		<a  href="/predel/show/updinst/@{{institucion.idInstitucion}}" class="waves-effect waves-light btn"><i class="fa fa-info-circle aria-hidden="true"></i></a>
 		&nbsp&nbsp
-		<a v-on:click="borrar(institucion.idInstitucion, paciente)" class="waves-effect waves-light btn"><i class="fa fa-trash" aria-hidden="true"></i>
-		</a> 
+		<a  class="waves-effect waves-light btn"><i class="fa fa-trash" aria-hidden="true"></i></a> 
 		</td>
 	</tr>
 
