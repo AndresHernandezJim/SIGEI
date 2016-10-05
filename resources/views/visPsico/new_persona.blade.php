@@ -77,8 +77,17 @@
 <hr>
 
 <h5>Domicilio</h5>
+
 <div class="row">
-	 <div class="input-field col s1"></div>
+	<div class="input-field col s3 m3 l3">
+		<select name="local">
+			<option value="disabled selected">Seleccione</option>
+			@foreach ($localidades as $localidad)
+                <option value="{{$localidad['id_localidad']}}">{{$localidad['nombre']}}</option>
+            @endforeach
+		</select>
+		<label>Localidad</label>
+	</div>
 	 <div class="input-field col s3">
 	 	<input type="text" name="colonia">
 		<label id="texto"></i>Colonia</label>
@@ -111,6 +120,8 @@
 @foreach($ocupaciones as $val)
 "{{$val->nombre}}",
 @endforeach
+
 ];
+
 </script>
 @stop

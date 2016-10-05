@@ -8,6 +8,6 @@ class persona extends Model
 {
     protected $table='persona';
     protected $primarykey='id_persona';
-    protected $fillable=['id_persona','id_lugar','id_ocupacion','padre_tutor','madre','apellido','nombre','domicilio','curp','sexo','edad','telefono','foto'];
+    protected $fillable=['id_persona','id_lugar','id_ocupacion','padre_tutor','madre','apellido','nombre','domicilio','curp','sexo','edad','telefono','foto','tipo'];
      public $timestamps = false;
 }
