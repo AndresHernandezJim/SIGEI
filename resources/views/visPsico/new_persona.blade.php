@@ -15,19 +15,23 @@
 @section('content')
 <center><h3>Nuevo Paciente</h3></center>
 <hr>
-<form class="col s12" method="POST" action="/predel/persona">
+<form class="col s12" method="POST" action="/predel/insert/persona">
  {{ csrf_field() }}
  <h5>Datos Personales</h5>
  <div class="row">
-	 <div class="input-field col s4">
-		 <input type="text" name="paterno">
-		 <label id="texto" for="usuario"></i>A.Paterno</label>
+ <div class="input-field col s1"></div>
+ <div class="input-field col s5">
+ 		<input id="tags2" type="text" name="curp">
+		<label id="texto" for="tags2"></i>Curp</label>
+ 	</div>
+ </div>
+ <div class="row">
+ <div class="input-field col s1"></div>
+	 <div class="input-field col s5">
+		 <input type="text" name="apellidos">
+		 <label id="texto" for="usuario"></i>Apellidos</label>
 	 </div>	 
-	  <div class="input-field col s4">
-		 <input type="text" name="materno">
-		 <label id="texto" for="usuario"></i>A.Materno</label>
-	 </div>	
-	  <div class="input-field col s4">
+	  <div class="input-field col s5">
 		 <input type="text" name="nombre">
 		 <label id="texto" for="usuario"></i>Nombre(s)</label>
 	 </div>	
@@ -43,9 +47,9 @@
     </select>
     <label>Sexo:</label>
  </div>
- <div class="input-field col s4">
- 	<input type="text" name="ocupacion">
-	<label id="texto" for="usuario"></i>Ocupación</label>
+ <div id="suggestions" class="input-field col s4">
+	<input id="tags" type="text" name="ocupacion">
+	<label id="texto" for="tags"></i>Ocupacion</label>
  </div> 
   <div class="input-field col s2">
 		 <input type="text" name="edad">
@@ -63,7 +67,13 @@
 		<label id="texto" for="usuario"></i>Nombre de la Madre</label>
  	</div>
  </div>
-
+<div class="row">
+ 	<div class="input-field col s1"></div>
+ 	<div class="input-field col s5">
+ 		<input type="text" name="tel">
+		<label id="texto" for="usuario"></i>Teléfono</label>
+ 	</div>
+ </div>
 <hr>
 
 <h5>Domicilio</h5>
@@ -73,7 +83,7 @@
 	 	<input type="text" name="colonia">
 		<label id="texto"></i>Colonia</label>
 	 </div>
-	 <div class="input-field col s3">
+	 <div class="input-field col s4">
 	 	<input type="text" name="calle">
 		<label id="texto"></i>Calle</label>
 	 </div>
@@ -82,9 +92,6 @@
 		<label id="texto"></i>Número</label>
 	 </div>
 </div>
-
-
-
 
 <hr>
 
@@ -96,6 +103,14 @@
 </div>
 </form>
 
+@stop
 
-
+@section('script')
+<script type="text/javascript">
+	var tags = [
+@foreach($ocupaciones as $val)
+"{{$val->nombre}}",
+@endforeach
+];
+</script>
 @stop
