@@ -9,4 +9,5 @@ class institucion extends Model
     protected $table='institucion';
     protected $primarykey='id_institucion';
     protected $fillable=['id_lugar','nombre', 'domicilio','telefono','contacto'];
+    public $timestamps = false;
 }

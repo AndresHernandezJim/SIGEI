@@ -17,4 +17,7 @@ class segpubcontroller extends Controller
         session()->forget('Policia');
         return redirect('/');
     }
+    public function nueva_barandilla(){
+    	return view('visPoli.newBarandilla');
+    }
 }

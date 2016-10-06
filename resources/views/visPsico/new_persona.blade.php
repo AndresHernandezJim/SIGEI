@@ -110,6 +110,7 @@
 @stop
 
 @section('script')
+<script src="/js/general_prevdel.js"></script>
 <script type="text/javascript">
 	var tags = [
 @foreach($ocupaciones as $val)

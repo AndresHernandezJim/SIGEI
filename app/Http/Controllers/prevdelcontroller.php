@@ -9,14 +9,18 @@ use App\Http\Requests;
 use App\persona;
 use App\lugar;
 use App\ocupacion;
+use App\institucion;
 
 
 class prevdelcontroller extends Controller
 {
    
 	 public function index(){
-        //dd("policon");
-        return view('visPsico.indexPsico');
+       
+        //cargamos los datos de las instituciones registradas, y las consultas dadas para el dashboard
+        //$instituciones=array('instituciones'=>\DB::table('institucion')->select('nombre')->get() );
+        //dd($instituciones);
+        return view('visPsico.indexPsico'/*,$instituciones*/);
     }
 
     public function logout(){
@@ -26,17 +30,62 @@ class prevdelcontroller extends Controller
 
     public function regInst(){
           $datalocal=array(
-            'localidades'=> \App\localidad::get(),
+            'localidades'=>\App\localidad::get(),
         );
 		return view('visPsico.new_inst',$datalocal);
 	}
-    public function registroInst(){
-        $domicilio=$request->calle." #".$request->num_ext." colonia ".$request->colonia;
-        $dom=new lugar;
-        $dom->id_localidad=$request->local;
-        $dom->direccion=$domicilio;
-        //dd($request->local);
-        $dom->save();
+    public function registroInst(Request $request){
+       // dd($request->all());
+        //verificamos si ya existe el domicilio registrado
+        $existe=\DB::table('lugar')->where('direccion','=',$request->domicilio)->count();
+        $existe2=\DB::table('institucion')->where('nombre','=',$request->nombre)->count();
+        if($existe==0){
+            //si no existe ,registramos el domicilio en la bd
+            $dom=new lugar;
+            $dom->id_localidad=$request->local;
+            $dom->direccion=$request->domicilio;
+            //dd($request->local);
+            $dom->save();
+            //verificamos si ya está almacenada la institución en la bd
+            if($existe2==0){
+                //si no existe la insertamos
+                $instit=new institucion;
+                //obtenemos el identificador del domicilio para registrarlo junto la demás información
+                $lug=\DB::table('lugar')->select('id_lugar')->where('direccion','=',$request->domicilio)->first();
+                $instit->id_lugar=$lug->id_lugar;
+                $instit->nombre=$request->nombre;
+                $instit->domicilio=$request->domicilio;
+                $instit->telefono=$request->telefono;
+                $instit->contacto=$request->contacto;
+                $instit->save();
+                return view('visPsico.show_inst');
+            }else{
+                //si ya existe solo regresamos a la vista  de listado de instituciones
+                return view('visPsico.show_inst');
+            }
+            
+        }else{
+            //si existe el domicilio, solo obtenemos la informacion
+            if($existe2==0){
+                $instit=new institucion;
+                //obtenemos el identificador del domicilio para registrarlo junto la demás información
+                $lug=\DB::table('lugar')->select('id_lugar')->where('direccion','=',$request->domicilio)->first();
+                $instit->id_lugar=$lug->id_lugar;
+                $instit->nombre=$request->nombre;
+                $instit->domicilio=$request->domicilio;
+                $instit->telefono=$request->telefono;
+                $instit->contacto=$request->contacto;
+                $instit->save();
+                return view('visPsico.show_inst');
+            }else{
+                return view('visPsico.show_inst');
+            }
+
+             
+        }
+        
+        
+        
     }
 	 public function visIns(){
         return view('visPsico.show_inst');
