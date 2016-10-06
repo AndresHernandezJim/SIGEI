@@ -37,7 +37,7 @@
 </header>
 @yield('navegacion')
 <div  class="container">
-  <div class="col s12 m5">
+  <div class="col s12">
     <div class="card-panel lime lighten-5">
   @yield('content')
     </div>

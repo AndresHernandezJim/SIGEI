@@ -13,23 +13,21 @@
 @stop
  
 @section('content')
-<table class="striped" id="app"><thead><tr><th>Nombre</th><th>Edad</th><th>Ocupación</th></thead>
+<table class="striped" id="app"><thead><tr><th>Apellido</th><th>Nombre</th><th>Información</th><th>Eliminar</th></thead>
 <tbody v-for="paciente in pacientes">
 	<tr>
 		<td>
-			@{{paciente.Nombre}}
+			@{{paciente.apellido}}
 		</td>
 		<td>
-			@{{paciente.edad}}
+			@{{paciente.nombre}}
 		</td>
 		<td>
-			@{{paciente.Ocupacion}}
+			<a  href="/predel/paciente/info/@{{paciente.id}}" class="waves-effect waves-light btn"><i class="fa fa-info-circle" aria-hidden="true"></i>
+</a>
 		</td>
 		<td>
-			<a  href="/predel/persona/sesiones/@{{paciente.idPaciente}}" class="waves-effect waves-light btn">Consultar</a>
-		</td>
-		<td>
-			<a  v-on:click="borrar(paciente.idPaciente, paciente)" class="waves-effect waves-light btn"><i class="fa fa-trash" aria-hidden="true"></i></a>
+			<a  v-on:click="borrar(paciente.id, paciente)" class="waves-effect waves-light btn"><i class="fa fa-trash" aria-hidden="true"></i></a>
 		</td>
 	</tr>
 
@@ -39,7 +37,5 @@
 @stop
 
 @section('script')
-<script type="text/javascript">
-
-</script>
+<script src="/js/show_pac.js"></script>
 @stop

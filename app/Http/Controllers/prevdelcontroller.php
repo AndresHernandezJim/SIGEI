@@ -9,7 +9,11 @@ use App\Http\Requests;
 use App\persona;
 use App\lugar;
 use App\ocupacion;
+<<<<<<< HEAD
 use App\institucion;
+=======
+use App\sesionp;
+>>>>>>> 23fb59d4753ae98e8e87c75f2ce67502e59d67da
 
 
 class prevdelcontroller extends Controller
@@ -124,24 +128,22 @@ class prevdelcontroller extends Controller
         //se crea una sola cadena con los dartos de domicilio para luego insertar
         $domicilio=$request->calle." #".$request->num_ext." colonia ".$request->colonia;
         //insertamos la direccion
-
-        $dom=new lugar;
-        $dom->id_localidad=$request->local;
-        $dom->direccion=$domicilio;
-        //dd($request->local);
-        $dom->save();
+        $idlugar= \DB::table('lugar')->select('id_lugar')->where('direccion','=', $domicilio)->first();
+        if ($idlugar==null) {
+            //dd("no hay");
+            $dom=new lugar;
+            $dom->id_localidad=$request->local;
+            $dom->direccion=$domicilio;
+            $dom->save();
+            $idlugar= \DB::table('lugar')->select('id_lugar')->where('direccion','=', $domicilio)->first();
+            //dd($idlugar->id_lugar);
+        }
+        //dd("si hay");
        //se verifica si es que la ocupacion existe
         $id_ocupacion = \DB::table('ocupacion')->select('id_ocupacion')->where('nombre','=', $request->ocupacion)->first();
-        //si los valores de padre y madre se mandan vacias, se le asigna valor de null
-        if(empty($request->npadre)){
-            $request->npadre = Null;
-        }
-        if(empty($request->nmadre)){
-            $request->nmadre = Null;
-        }
         //si no encuentra la ocupacion en la BD, inserta la nueva ocupación y luego se procede a inserat los demas datos en la tabla persona
         if($id_ocupacion==null){
-            dd($request->all());
+            //dd($request->all());
             $ocupacion = new ocupacion;
             $ocupacion->nombre = $request->ocupacion;
             $ocupacion->save();
@@ -149,7 +151,7 @@ class prevdelcontroller extends Controller
             $id_ocupacion = \DB::table('ocupacion')->select('id_ocupacion')->where('nombre','=', $request->ocupacion)->first();
                //insercion enla tabla de personas
                 $paciente = new persona;
-                $paciente->id_lugar =$dom->id_lugar;
+                $paciente->id_lugar = $idlugar->id_lugar;
                 $paciente->id_ocupacion = $id_ocupacion->id_ocupacion;
                 $paciente->padre_tutor = $request->npadre;
                 $paciente->madre = $request->nmadre;
@@ -159,7 +161,7 @@ class prevdelcontroller extends Controller
                 $paciente->curp = $request->curp;
                 $paciente->sexo = $request->sexo;
                 $paciente->edad = $request->edad;
-                $paciente->telefono = $request->tel;
+                $paciente->telefono = $request->telefono;
                 $paciente->foto = "Null";
                 $paciente->tipo=2;
                 $paciente->save();
@@ -167,7 +169,7 @@ class prevdelcontroller extends Controller
         }else{
             //si es que existe la ocupacion en la tabla "ocupación" se procede a ingresar los datos a la tabla persona
                 $paciente = new persona;
-                $paciente->id_lugar =$dom->id_lugar;
+                $paciente->id_lugar = $idlugar->id_lugar;
                 $paciente->id_ocupacion = $id_ocupacion->id_ocupacion;
                 $paciente->padre_tutor = $request->npadre;
                 $paciente->madre = $request->nmadre;
@@ -177,11 +179,70 @@ class prevdelcontroller extends Controller
                 $paciente->curp = $request->curp;
                 $paciente->sexo = $request->sexo;
                 $paciente->edad = $request->edad;
-                $paciente->telefono = $request->tel;
+                $paciente->telefono = $request->telefono;
                 $paciente->foto = "Null";
                 $paciente->tipo=2;
                 $paciente->save();
                 return view('visPsico.show_pac');
             } 
+<<<<<<< HEAD
         }        
 }
+=======
+        }
+
+    public function showPas(){
+       $ordenado = \DB::table('persona')
+                ->select('id_persona as id', 'apellido', 'nombre')
+                ->orderBy('apellido', 'asc')
+                ->get();
+                //dd($ordenado);
+        return $ordenado;
+    }        
+
+    public function mostrarSes($id){
+        //dd($id);
+        $persona = \DB::table('persona')->where('id_persona','=', $id)->first();
+        if ($persona->sexo == 1) {
+            $persona->sexo= 'Masculino';
+        }else{
+            $persona->sexo = 'Femenino';
+        }
+        $ocupacion = \DB::table('ocupacion')->select('nombre')->where('id_ocupacion','=', $persona->id_ocupacion)->first();
+        $persona->id_ocupacion=$ocupacion->nombre;
+        
+        $localidad=\DB::table('localidad')
+        ->join('lugar','localidad.id_localidad','=','lugar.id_localidad')
+        ->join('persona','persona.id_lugar','=','lugar.id_lugar')
+        ->select('localidad.nombre')
+        ->where('persona.id_lugar', '=', $persona->id_lugar )->first();
+
+        $persona->id_lugar=$localidad->nombre;
+        //dd($persona);
+        $consultado = array('pasiente' => $persona, );
+        return view('visPsico.show_info', $consultado);
+    }
+
+     public function newSes($id){
+        $persona = \DB::table('persona')->select('id_persona as id','nombre', 'apellido')->where('id_persona','=', $id)->first();
+        //dd($persona);
+        $pasiente = array('PasNom' => $persona,);
+        return view('visPsico.new_consulta', $pasiente);
+    }
+
+    public function insertSes($id, Request $request)
+    {
+        //dd($request->all(), $id);
+
+        $sesion = new sesionp;
+        $sesion->id_usuario = $request->psicologo; 
+        $sesion->id_persona = $id;
+        $sesion->id_institucion = null;
+        $sesion->fecha = $request->fecha;
+        $sesion->detalle = $request->observ;
+        $sesion->save();
+        dd("exito");
+        //return view('visPsico.show_info', $consultado);
+    }
+}
+>>>>>>> 23fb59d4753ae98e8e87c75f2ce67502e59d67da
