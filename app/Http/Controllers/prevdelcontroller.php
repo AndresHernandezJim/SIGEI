@@ -25,9 +25,19 @@ class prevdelcontroller extends Controller
     }   
 
     public function regInst(){
-		return view('visPsico.new_inst');
+          $datalocal=array(
+            'localidades'=> \App\localidad::get(),
+        );
+		return view('visPsico.new_inst',$datalocal);
 	}
-
+    public function registroInst(){
+        $domicilio=$request->calle." #".$request->num_ext." colonia ".$request->colonia;
+        $dom=new lugar;
+        $dom->id_localidad=$request->local;
+        $dom->direccion=$domicilio;
+        //dd($request->local);
+        $dom->save();
+    }
 	 public function visIns(){
         return view('visPsico.show_inst');
     }
@@ -108,7 +118,7 @@ class prevdelcontroller extends Controller
         }else{
             //si es que existe la ocupacion en la tabla "ocupación" se procede a ingresar los datos a la tabla persona
                 $paciente = new persona;
-                $paciente->id_lugar = 1;
+                $paciente->id_lugar =$dom->id_lugar;
                 $paciente->id_ocupacion = $id_ocupacion->id_ocupacion;
                 $paciente->padre_tutor = $request->npadre;
                 $paciente->madre = $request->nmadre;

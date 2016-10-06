@@ -34,9 +34,11 @@
  </div>
 
  <div class="row">
+ 
+ 	
 	<div class="input-field col s1"></div>
 	 <div class="input-field col s3">
-		 <input type="text" name="telefono">
+		 <input  type='tel' pattern='[\(]\d{3}[\)]\d{3}[\-]\d{4}' name=' (Format: (999)999-9999)'>
 		 <label id="texto" for="usuario">Telefono</label>
 	 </div>	
 	 <div class="input-field col s7">
@@ -44,7 +46,14 @@
 		 <label id="texto" for="usuario">Contacto</label>
 	 </div>	  
  </div>
-
+ <div class="row">
+ 	<div class="input-field col s3">
+ 		<select>
+ 			<option value="" disabled selected>aa</option>
+ 		</select>
+ 		<label>Localidad</label>
+ 	</div>
+ </div>
 <hr>
 
 <div class="row">
@@ -57,3 +66,6 @@
 
 
 @stop
+@section('script')
+	<script type="text/javascript"> alert("hola")</script>
+@end
