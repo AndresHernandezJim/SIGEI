@@ -31,5 +31,9 @@ Route::group(['middleware' => 'psicologo'], function(){
 	Route::get('/predel/new/persona', 'prevdelcontroller@regPer');
 	Route::get('/predel/show/pacientes', 'prevdelcontroller@mostrarPac');
 	Route::post('/predel/insert/persona', 'prevdelcontroller@newPaciente');
+	Route::get('/predel/ajax/paciente', 'prevdelcontroller@showPas');
+	Route::get('/predel/paciente/info/{id}', 'prevdelcontroller@mostrarSes');
+	Route::get('/predel/new/sesiones/{id}', 'prevdelcontroller@newSes');
+	Route::post('/predel/sesion/{id}', 'prevdelcontroller@insertSes');
 });
 

@@ -40,7 +40,7 @@
 </header>
 @yield('navegacion')
 <div  class="container">
-  <div class="col s12 m5">
+  <div class="col s12">
     <div class="card-panel lime lighten-5">
   @yield('content')
     </div>
@@ -50,7 +50,6 @@
 <script src="/js/jquery-2.2.1.min.js"></script>
 <script src="/js/materialize.min.js"></script>
 <script src="/js/app.js"></script>
-<script src="/js/general_prevdel.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.6/js/materialize.min.js"></script>
 <script src="https://cdn.jsdelivr.net/vue/1.0.21/vue.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/0.7.0/vue-resource.min.js"></script>

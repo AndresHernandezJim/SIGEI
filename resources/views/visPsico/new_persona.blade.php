@@ -85,15 +85,15 @@
 	</div>
 	 <div class="input-field col s3">
 	 	<input type="text" name="colonia">
-		<label id="texto"></i>Colonia</label>
+		<label id="texto">Colonia</label>
 	 </div>
 	 <div class="input-field col s4">
 	 	<input type="text" name="calle">
-		<label id="texto"></i>Calle</label>
+		<label id="texto">Calle</label>
 	 </div>
 	 <div class="input-field col s1">
 	 	<input type="text" name="num_ext">
-		<label id="texto"></i>Número</label>
+		<label id="texto">Número</label>
 	 </div>
 </div>
 
@@ -110,6 +110,7 @@
 @stop
 
 @section('script')
+<script src="/js/general_prevdel.js"></script>
 <script type="text/javascript">
 	var tags = [
 @foreach($ocupaciones as $val)
