@@ -196,15 +196,21 @@ class prevdelcontroller extends Controller
 
     public function ses_esp($id){
         //dd($id);
-        $sesiones = \DB::table('sesion')->select('id_usuario', 'detalle', 'fecha')->where('id_sesion', '=', $id)->first();
+        $sesiones = \DB::table('sesion')->select('id_persona', 'detalle', 'fecha')->where('id_sesion', '=', $id)->first();
         //dd($sesiones->id_usuario);
-        $persona = \DB::table('persona')->select('id_persona as id', 'apellido', 'nombre')->where('id_persona','=', $sesiones->id_usuario)->first();
+        $persona = \DB::table('persona')->select('id_persona as id', 'apellido', 'nombre')->where('id_persona','=', $sesiones->id_persona)->first();
         //dd($persona);
         $data = array('sesion' => $sesiones,);
         //dd($data);
         $pasiente = array('PasNom' => $persona,);
         //dd($pasiente);
         return view('visPsico.show_sec_esp', $data, $pasiente);
+    }
+
+     public function deletePac(Request $request){
+        //dd($request->all());
+        $sesiones = \DB::table('sesion')->where('id_persona', '=', $request->id_pas)->delete();
+        $pasiente = \DB::table('persona')->where('id_persona', '=', $request->id_pas)->delete();
     }
 
 }
