@@ -9,12 +9,8 @@ use App\Http\Requests;
 use App\persona;
 use App\lugar;
 use App\ocupacion;
-<<<<<<< HEAD
 use App\institucion;
-=======
 use App\sesionp;
->>>>>>> 23fb59d4753ae98e8e87c75f2ce67502e59d67da
-
 
 class prevdelcontroller extends Controller
 {
@@ -185,11 +181,10 @@ class prevdelcontroller extends Controller
                 $paciente->save();
                 return view('visPsico.show_pac');
             } 
-<<<<<<< HEAD
+
         }        
-}
-=======
-        }
+
+
 
     public function showPas(){
        $ordenado = \DB::table('persona')
@@ -245,4 +240,3 @@ class prevdelcontroller extends Controller
         //return view('visPsico.show_info', $consultado);
     }
 }
->>>>>>> 23fb59d4753ae98e8e87c75f2ce67502e59d67da
