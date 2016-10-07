@@ -8,6 +8,6 @@ class sesionp extends Model
 {
     protected $table = 'sesion';
     protected $primaryKey="id_sesion";
-    protected $fillable = ['id_sesion', 'id_usuario', 'id_persona','id_institucion','fecha', 'detalle'];
+    protected $fillable = ['id_sesion', 'id_usuario', 'id_persona', 'fecha', 'detalle'];
     public $timestamps = false;
 }
