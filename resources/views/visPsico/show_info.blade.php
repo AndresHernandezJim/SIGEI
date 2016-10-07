@@ -85,13 +85,13 @@
 <tbody v-for="sesion in sesiones">
 	<tr>
 		<td>
-			@{{sesion.Nombre}}
+			{{$pasiente->apellido." ".$pasiente->nombre}}
 		</td>
 		<td>
-			@{{sesion.Fecha}}
+			@{{sesion.fecha}}
 		</td>
 		<td>
-			<a href="/predel/personas/sesion/@{{sesion.Id}}" class="waves-effect waves-light btn">Ver</a>
+			<a href="/predel/personas/sesion/@{{sesion.id}}" class="waves-effect waves-light btn">Ver</a>
 		</td>
 	</tr>
 </tbody>
@@ -105,4 +105,27 @@
 		<a href="/predel/new/sesiones/{{$pasiente->id_persona}}" class="waves-effect waves-light btn">Nueva Consulta</a>
 	</div>
 </div>
+@stop
+
+@section('script')
+<script type="text/javascript">
+	Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector("#token").getAttribute('value');
+new Vue({
+		el: 'body',
+		data: {
+			sesiones:[],
+		},
+		ready: function(){
+			this.getSesiones();
+		},
+		methods:{
+			getSesiones: function(){
+				
+				this.$http.get('/predel/ajax/sesiones/{{$pasiente->id_persona}}').then(function(response){
+					this.$set('sesiones', response.data);
+				});
+			}
+		},
+	});
+</script>
 @stop

@@ -177,15 +177,34 @@ class prevdelcontroller extends Controller
     public function insertSes($id, Request $request)
     {
         //dd($request->all(), $id);
-
+        $persona = \DB::table('persona')->where('id_persona','=', $id)->first(); 
+        $consultado = array('pasiente' => $persona, ); 
         $sesion = new sesionp;
         $sesion->id_usuario = $request->psicologo; 
         $sesion->id_persona = $id;
-        $sesion->id_institucion = null;
         $sesion->fecha = $request->fecha;
         $sesion->detalle = $request->observ;
         $sesion->save();
-        dd("exito");
-        //return view('visPsico.show_info', $consultado);
+        //dd("exito");
+        return view('visPsico.show_info', $consultado);
     }
+
+     public function showSec($id){
+        $sesiones = \DB::table('sesion')->select('id_sesion as id','fecha')->where('id_persona', '=', $id )->get();
+        return $sesiones;
+    }
+
+    public function ses_esp($id){
+        //dd($id);
+        $sesiones = \DB::table('sesion')->select('id_usuario', 'detalle', 'fecha')->where('id_sesion', '=', $id)->first();
+        //dd($sesiones->id_usuario);
+        $persona = \DB::table('persona')->select('id_persona as id', 'apellido', 'nombre')->where('id_persona','=', $sesiones->id_usuario)->first();
+        //dd($persona);
+        $data = array('sesion' => $sesiones,);
+        //dd($data);
+        $pasiente = array('PasNom' => $persona,);
+        //dd($pasiente);
+        return view('visPsico.show_sec_esp', $data, $pasiente);
+    }
+
 }
