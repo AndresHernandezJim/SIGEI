@@ -264,4 +264,15 @@ class prevdelcontroller extends Controller
         $pasiente = \DB::table('persona')->where('id_persona', '=', $request->id_pas)->delete();
     }
 
+    public function showInst(){
+            $data = \DB::table('institucion')->select('id_institucion as id', 'nombre', 'telefono')->orderBy('Nombre', 'asc')->get();
+            //dd($data);
+            return $data;
+        }
+
+    public function mostrarInst($id){
+        $ins = \DB::table('institucion')->where('id_institucion', '=', $id)->first();
+        $institucion = array('instituto' => $ins,);
+        return view('visPsico.show_infoinst', $institucion);
+    }    
 }
