@@ -6,8 +6,10 @@
     <div id="navegacion" class="col s12">
       <a href="/"></a>
       <a href="/predel">Menú principal</a>
-      <span class="space"><b>˃</b></span>
-      <a class="nav-active">Registro de Intitución</a>
+      <span class="space">|</span>
+      <a href="/predel/show/institucion">Instituciones guardadas</a>
+      <span class="space">|</span>
+      <a>Info. Intitucion</a>
     </div>
   </div>
 @stop
@@ -15,8 +17,6 @@
 @section('content')
 <center><h3>Detalles de Institución</h3></center>
 <hr>
-<form class="col s12" method="POST" action="/prevdel/insert/isntitucion">
- {{ csrf_field() }}
  <div class="row">
 	 <div class="input-field col s9 offset-s1">
 		 <input disabled value="{{$instituto->nombre}}" type="text" name="nombre" id="nombre">
@@ -27,7 +27,7 @@
 <div class="row">
 	<div class="input-field col s1"></div>
 	<div class="input-field col s3 m3 l3">
-		<input disabled value="{{$instituto->nombre}}" type="text" name="nombre" id="nombre">
+		<input disabled value="{{$instituto->id_lugar}}" type="text" name="nombre" id="nombre">
 		 <label id="nombre" for="usuario">Localidad</label>
 	</div>
 	 <div class="input-field col s6">
@@ -51,13 +51,13 @@
 <div class="row">
 <div class="input-field col s12">
 <table class="striped" id="app"><thead><tr><th>Fecha</th><th>Observaciones</th></thead>
-<tbody v-for="sesion in sesiones">
+<tbody v-for="visita in visitas">
 	<tr>
 		<td>
-			@{{sesion.fecha}}
+			@{{visita.fecha}}
 		</td>
 		<td>
-			<a href="/predel/personas/sesion/@{{sesion.id}}" class="waves-effect waves-light btn">Ver</a>
+			<a href="/predel/intitucion/visita/@{{visita.id}}" class="waves-effect waves-light btn">Ver</a>
 		</td>
 	</tr>
 </tbody>
@@ -69,8 +69,31 @@
 <div class="row">
 <div class="input-field col s7"></div>
 	<div class="input-field col s4">
-		<button type="submit" class="waves-effect waves-light btn-large cyan darken-3 right">Registrar Visita &nbsp<i class="fa fa-floppy-o" aria-hidden="true"></i></button>
+		<a href="/predel/new/visitas/{{$instituto->id_institucion}}" class="waves-effect waves-light btn">Nueva Consulta</a>
 	</div>	
 </div>
-</form>
+@stop
+
+@section('script')
+<script type="text/javascript">
+	Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector("#token").getAttribute('value');
+new Vue({
+		el: 'body',
+		data: {
+			visitas:[],
+		},
+		ready: function(){
+			
+			this.getVisitas();
+		},
+		methods:{
+			getVisitas: function(){
+				
+				this.$http.get('/predel/ajax/visitas/{{$instituto->id_institucion}}').then(function(response){
+					this.$set('visitas', response.data);
+				});
+			}
+		},
+	});
+</script>
 @stop
