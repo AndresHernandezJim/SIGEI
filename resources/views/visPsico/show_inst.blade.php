@@ -13,26 +13,19 @@
 @stop
 
 @section('content')
-<table class="striped"><thead><tr><th>Nombre</th><th>Domicilio</th><th>Telefono</th><th>Representante</th><th>Opciones</th></thead>
+<table class="striped"><thead><tr><th>Nombre</th><th>Telefono</th><th>Información</th></thead>
 <tbody v-for="institucion in instituciones">
 	<tr>
 		<td>
-			@{{institucion.Nombre}}
-		</td>
-		<td>
-			@{{institucion.Domicilio}}
+			@{{institucion.nombre}}
 		</td>
 		<td>
 			@{{institucion.telefono}}
 		</td>
-		<td>
-			@{{institucion.nombreContacto}}
-		</td>
+		
 		<td>
 		&nbsp
-		<a  href="/predel/show/updinst/@{{institucion.idInstitucion}}" class="waves-effect waves-light btn"><i class="fa fa-info-circle aria-hidden="true"></i></a>
-		&nbsp&nbsp
-		<a  class="waves-effect waves-light btn"><i class="fa fa-trash" aria-hidden="true"></i></a> 
+		<a  href="/predel/intitucion/info/@{{institucion.id}}" class="waves-effect waves-light btn"><i class="fa fa-info-circle aria-hidden="true"></i></a>
 		</td>
 	</tr>
 
@@ -42,7 +35,5 @@
 @stop
 
 @section('script')
-<script type="text/javascript">
-
-</script>
+<script src="/js/show_inst.js"></script>
 @stop

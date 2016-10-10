@@ -57,8 +57,7 @@
 <div class="input-field col s7"></div>
 	<div class="input-field col s4">
 		<button type="submit" class="waves-effect waves-light btn-large cyan darken-3 right">Registrar &nbsp<i class="fa fa-floppy-o" aria-hidden="true"></i></button>
-	</div>
-	
+	</div>	
 </div>
 </form>
 @stop

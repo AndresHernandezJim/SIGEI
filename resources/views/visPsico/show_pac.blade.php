@@ -13,7 +13,7 @@
 @stop
  
 @section('content')
-<table class="striped" id="app"><thead><tr><th>Apellido</th><th>Nombre</th><th>Información</th><th>Eliminar</th></thead>
+<table class="striped" id="app"><thead><tr><th>Apellido</th><th>Nombre</th><th>Información</th><th>¿Eliminar?</th></thead>
 <tbody v-for="paciente in pacientes">
 	<tr>
 		<td>
@@ -27,7 +27,7 @@
 </a>
 		</td>
 		<td>
-			<a  v-on:click="borrar(paciente.id, paciente)" class="waves-effect waves-light btn"><i class="fa fa-trash" aria-hidden="true"></i></a>
+			<!--a  v-on:click="borrar(paciente.id, paciente)" class="waves-effect waves-light btn disabled"><i class="fa fa-trash" aria-hidden="true"></i></a-->
 		</td>
 	</tr>
 

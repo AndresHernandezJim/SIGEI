@@ -11,6 +11,7 @@ use App\lugar;
 use App\ocupacion;
 use App\institucion;
 use App\sesionp;
+use App\sesionIns;
 
 class prevdelcontroller extends Controller
 {
@@ -80,11 +81,8 @@ class prevdelcontroller extends Controller
             }else{
                 return view('visPsico.show_inst');
             }
-
              
-        }
-        
-        
+        }   
         
     }
 	 public function visIns(){
@@ -185,7 +183,6 @@ class prevdelcontroller extends Controller
         }        
 
 
-
     public function showPas(){
        $ordenado = \DB::table('persona')
                 ->select('id_persona as id', 'apellido', 'nombre')
@@ -218,7 +215,7 @@ class prevdelcontroller extends Controller
         return view('visPsico.show_info', $consultado);
     }
 
-     public function newSes($id){
+    public function newSes($id){
         $persona = \DB::table('persona')->select('id_persona as id','nombre', 'apellido')->where('id_persona','=', $id)->first();
         //dd($persona);
         $pasiente = array('PasNom' => $persona,);
@@ -228,16 +225,12 @@ class prevdelcontroller extends Controller
     public function insertSes($id, Request $request)
     {
         //dd($request->all(), $id);
-        $persona = \DB::table('persona')->where('id_persona','=', $id)->first(); 
-        $consultado = array('pasiente' => $persona, ); 
-        $sesion = new sesionp;
         $sesion->id_usuario = $request->psicologo; 
         $sesion->id_persona = $id;
         $sesion->fecha = $request->fecha;
         $sesion->detalle = $request->observ;
         $sesion->save();
-        //dd("exito");
-        return view('visPsico.show_info', $consultado);
+        return redirect()->action('prevdelcontroller@mostrarSes', ['id' => $id]);
     }
 
      public function showSec($id){
@@ -258,10 +251,62 @@ class prevdelcontroller extends Controller
         return view('visPsico.show_sec_esp', $data, $pasiente);
     }
 
-     public function deletePac(Request $request){
+     
+    public function deletePac(Request $request){
         //dd($request->all());
         $sesiones = \DB::table('sesion')->where('id_persona', '=', $request->id_pas)->delete();
         $pasiente = \DB::table('persona')->where('id_persona', '=', $request->id_pas)->delete();
     }
 
+    public function showInst(){
+            $data = \DB::table('institucion')->select('id_institucion as id', 'nombre', 'telefono')->orderBy('Nombre', 'asc')->get();
+            //dd($data);
+            return $data;
+    }
+
+    public function mostrarInst($id){
+        $ins = \DB::table('institucion')->where('id_institucion', '=', $id)->first();
+         $localidad=\DB::table('localidad')
+        ->join('lugar','localidad.id_localidad','=','lugar.id_localidad')
+        ->join('institucion','institucion.id_lugar','=','lugar.id_lugar')
+        ->select('localidad.nombre')
+        ->where('institucion.id_lugar', '=', $ins->id_lugar )->first();
+        $ins->id_lugar=$localidad->nombre;
+        //dd($ins);
+        $institucion = array('instituto' => $ins,);
+        return view('visPsico.show_infoinst', $institucion);
+    }    
+
+    public function newVis($id){
+        $ins = \DB::table('institucion')->select('id_institucion as id', 'nombre')->where('id_institucion', '=', $id)->first();
+        $institucion = array('ins' => $ins,);
+        return view('visPsico.new_visita', $institucion);
+    }
+
+    public function regVis($id, Request $request){
+        //dd($request->all(), $id);
+        $visita = new sesionIns;
+        $visita->id_usuario = $request->psicologo;
+        $visita->id_institucion = $id;
+        $visita->fecha = $request->fecha;
+        $visita->observaciones = $request->observ;
+        $visita->save();
+        return redirect()->action('prevdelcontroller@mostrarInst', ['id' => $id]);
+    }
+
+    public function showVis($id){
+        $sesiones = \DB::table('sesioninstit')->select('id_sesion as id','fecha')->where('id_institucion', '=', $id )->get();
+        return $sesiones;
+    }
+
+    public function vis_esp($id){
+        //dd($id);
+        $visita = \DB::table('sesioninstit')->select('id_institucion as id', 'fecha', 'observaciones')->where('id_sesion', '=', $id)->first();
+        $nombre=  \DB::table('institucion')->select('nombre')->where('id_institucion', '=', $visita->id)->first();
+        $visita->id_institucion=$nombre->nombre;
+        //dd($visita);
+        $data = array('visita' => $visita,);
+        return view('visPsico.show_visita', $data);
+        
+    }
 }
