@@ -7,7 +7,8 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 
 class segpubcontroller extends Controller
-{
+{   
+    public $imagen="";
      public function index(){
         //dd("policon");
         return view('visPoli.indexPoli');
@@ -23,19 +24,9 @@ class segpubcontroller extends Controller
         );
     	return view('visPoli.newBarandilla',$datalocal);
     }
-    public function postImage(Request $request)
-    {
-        $this->validate($request, [
-            'image_file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1024',
-        ]);
-        $imageName = time().'.'.$request->image_file->getClientOriginalExtension();
-        $request->image_file->move(public_path('images'), $imageName);
-        return back()
-            ->with('success','Foto subida correctamente.')
-            ->with('image',$imageName);
-    }
-     public function getImage()
-    {
-        nueva_barandilla();
+   
+    public function guardabarandilla(Request $request){
+        
+        dd($request->all());
     }
 }
