@@ -13,6 +13,9 @@
 @stop
 
 @section('content')
+<h2>Instituciones registradas</h2>
+<hr>
+@{{ $institucion.links() }}
 <table class="striped"><thead><tr><th>Nombre</th><th>Telefono</th><th>Información</th></thead>
 <tbody v-for="institucion in instituciones">
 	<tr>
@@ -28,8 +31,8 @@
 		<a  href="/predel/intitucion/info/@{{institucion.id}}" class="waves-effect waves-light btn"><i class="fa fa-info-circle aria-hidden="true"></i></a>
 		</td>
 	</tr>
-
 </tbody>
+
 </table>
 
 @stop

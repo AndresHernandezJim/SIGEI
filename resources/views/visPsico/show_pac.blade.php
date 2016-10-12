@@ -4,7 +4,7 @@
 @section('navegacion')
 <br>
 <div class="row">
-    <div id="navegacion" class="col s12">
+    <div id="navegacion" class="col s8">
       <a href="/predel">Menú principal</a>
       <span class="space">|</span>
       <a class="nav-active">Listado de Pacientes</a>
@@ -13,7 +13,9 @@
 @stop
  
 @section('content')
-<table class="striped" id="app"><thead><tr><th>Apellido</th><th>Nombre</th><th>Información</th><th>¿Eliminar?</th></thead>
+<h2>Pacientes registrados</h2>
+<hr>
+<table class="striped" id="app"><thead><tr><th>Apellido</th><th>Nombre</th><th>Información</th><th>Eliminar</th></thead>
 <tbody v-for="paciente in pacientes">
 	<tr>
 		<td>
@@ -27,7 +29,7 @@
 </a>
 		</td>
 		<td>
-			<!--a  v-on:click="borrar(paciente.id, paciente)" class="waves-effect waves-light btn disabled"><i class="fa fa-trash" aria-hidden="true"></i></a-->
+			<a  v-on:click="borrar(paciente.id, paciente)" class="waves-effect waves-red btn disabled"><i class="fa fa-trash" aria-hidden="true"></i></a>
 		</td>
 	</tr>
 
