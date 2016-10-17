@@ -21,15 +21,15 @@
  <div class="row">
  <div class="input-field col s1"></div>
 	 <div class="input-field col s3">
-		 <input type="text" name="nombre">
+		 <input type="text" name="nombre" class="validate">
 		 <label id="texto" for="usuario"></i>Nombre(s)</label>
 	 </div>
 	 <div class="input-field col s3">
-		 <input type="text" name="apellidos">
+		 <input type="text" name="apellidos" class="validate">
 		 <label id="texto" for="usuario"></i>Apellidos</label>
 	 </div>	 
 	 <div class="input-field col s3">
- 		<input id="tags2" type="text" name="curp">
+ 		<input id="tags2" type="text" font style="text-transform: uppercase;" name="curp" minlength="18" maxlength="18" class="validate" placeholder="AAAA999999AAAAAA99">
 		<label id="texto" for="tags2"></i>Curp</label>
  	</div> 
  </div>
@@ -37,7 +37,7 @@
 <div class="row">
  	<div class="input-field col s1"></div>
  	<div class="input-field col s2">
- 	<select name="sexo">
+ 	<select name="sexo" class="validate">
       <option value="none" disabled selected>Seleccione..</option>
       <option value="1">Masculino</option>
       <option value="2">Femenino</option>
@@ -45,16 +45,16 @@
     <label>Sexo:</label>
  </div>
  <div id="suggestions" class="input-field col s3">
-	<input id="tags" type="text" name="ocupacion">
-	<label id="texto" for="tags"></i>Ocupacion</label>
+	<input id="tags" type="text" name="ocupacion" class="validate">
+	<label id="texto" for="tags"></i>Ocupación</label>
  </div> 
   <div class="input-field col s1 m1 l1">
-		 <input type="number" name="edad">
+		 <input type="number" name="edad" min="5" max="120" class="validate">
 		 <label id="texto" for="usuario"></i>Edad</label>
    </div>
 
  	<div class="input-field col s3">
- 		<input type='tel' pattern='[\(]\d{3}[\)]\d{3}[\-]\d{4}' title='Phone Number (Format: (999)999-9999)' name="telefono" class="validate" placeholder="(999)999-9999"> 
+ 		<input type='tel' pattern='[\(]\d{3}[\)]\d{3}[\-]\d{4}' title='Phone Number (Format: (999)999-9999)' name="telefono" class="validate" placeholder="(999)999-9999" maxlength="12"> 
 		<label id="texto" for="usuario"></i>Teléfono</label>
  	</div>   
  </div>
@@ -75,7 +75,7 @@
 
 <div class="row">
 	<div class="input-field col s3 m3 l3 offset-s1">
-		<select name="local">
+		<select name="local" class="validate">
 			<option value="" disabled selected>Seleccione</option>
 			@foreach ($localidades as $localidad)
                 <option value="{{$localidad['id_localidad']}}">{{$localidad['nombre']}}</option>
@@ -84,15 +84,15 @@
 		<label>Localidad</label>
 	</div>
 	 <div class="input-field col s3">
-	 	<input type="text" name="colonia">
+	 	<input type="text" name="colonia" class="validate">
 		<label id="texto">Colonia</label>
 	 </div>
 	 <div class="input-field col s4">
-	 	<input type="text" name="calle">
+	 	<input type="text" name="calle" class="validate">
 		<label id="texto">Calle</label>
 	 </div>
 	 <div class="input-field col s1">
-	 	<input type="text" name="num_ext">
+	 	<input type="text" name="num_ext" class="validate" min="1" max="9999">
 		<label id="texto">Número</label>
 	 </div>
 </div>

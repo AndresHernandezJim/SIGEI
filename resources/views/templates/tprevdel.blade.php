@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Prevención del Delito</title>
+  <link rel="shortcut icon" href="/images/prevdel.png" type="image/png">
   <base href="{{asset('/')}}/">
   <meta id="token" value="{{csrf_token()}}"> 
   <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
