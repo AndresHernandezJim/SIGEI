@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 use App\Http\Requests;
 
@@ -88,9 +89,19 @@ class prevdelcontroller extends Controller
 	 public function visIns(){
         return view('visPsico.show_inst');
     }
-
+//===========================================================================================================================
+ //===========================================================================================================================
+ //===========================================================================================================================
+ //===========================================================================================================================
     public function mostrarPac(){ 
-        return view('visPsico.show_pac');
+         $ordenado = \DB::table('persona')
+                ->select('id_persona as id', 'apellido', 'nombre')
+                ->orderBy('apellido', 'asc')
+                ->paginate(3); 
+                //dd($ordenado);
+           $pasiente = array('pasientes' => $ordenado,);
+           //dd($pasiente);
+        return view('visPsico.show_pac', $pasiente);
     }
 
     public function regPer(){

@@ -18,7 +18,7 @@
 <hr>
 <div class="row">
 <!--=======================================================-->
-    <div class="col s8 card-panel lime lighten-4">
+    <div class="col s8 card-panel amber lighten-5">
         <h5>Datos Personales</h5>
 		 <div class="row">
 		 <div class="input-field col s1"></div>
@@ -89,7 +89,7 @@
 		</div>
     </div>
 <!--=======================================================-->
-    <div class="col s4 card-panel lime lighten-3">
+    <div class="col s4 card-panel cyan accent-1">
 		<br>
 		<h5>Sesiones</h5>
 		<div class="row">
