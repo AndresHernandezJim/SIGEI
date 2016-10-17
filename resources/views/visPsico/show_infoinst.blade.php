@@ -19,7 +19,7 @@
 <hr>
  <div class="row">
 	 <div class="input-field col s9 offset-s1">
-		 <input disabled value="{{$instituto->nombre}}" type="text" name="nombre" id="nombre">
+		 <input readonly="" value="{{$instituto->nombre}}" type="text" name="nombre" id="nombre">
 		 <label id="nombre" for="usuario">Nombre</label>
 	 </div>
 	 
@@ -27,21 +27,21 @@
 <div class="row">
 	<div class="input-field col s1"></div>
 	<div class="input-field col s3 m3 l3">
-		<input disabled value="{{$instituto->id_lugar}}" type="text" name="nombre" id="nombre">
+		<input readonly=""d value="{{$instituto->id_lugar}}" type="text" name="nombre" id="nombre">
 		 <label id="nombre" for="usuario">Localidad</label>
 	</div>
 	 <div class="input-field col s6">
-	 	<input disabled value="{{$instituto->domicilio}}" type="text" name="domicilio">
+	 	<input readonly="" value="{{$instituto->domicilio}}" type="text" name="domicilio">
 		<label id="texto">Domicilio</label>
 	 </div>
 </div>
 <div class="row">
  	<div class="input-field col s3 offset-s1">
- 		<input disabled value="{{$instituto->telefono}}" type='tel' > 
+ 		<input readonly="" value="{{$instituto->telefono}}" type='tel' > 
 		<label id="texto" for="usuario">Teléfono</label>
  	</div> 
  	<div class="input-field col s8 m8 l5">
-		<input disabled value="{{$instituto->contacto}}" type="text" id="contacto" name="contacto">
+		<input readonly="" value="{{$instituto->contacto}}" type="text" id="contacto" name="contacto">
 		<label for="contacto">Contacto</label>
 	</div>  
  </div>
@@ -67,7 +67,11 @@
 <hr>
 
 <div class="row">
-<div class="input-field col s7"></div>
+<div class="input-field col s4">
+	<a href="/predel/show/institucion" class="waves-effect waves-light btn"><i class="fa fa-arrow-left" aria-hidden="true"></i>Regresar</a>
+	</div>
+
+<div class="input-field col s4"></div>
 	<div class="input-field col s4">
 		<a href="/predel/new/visitas/{{$instituto->id_institucion}}" class="waves-effect waves-light btn">Nueva Consulta</a>
 	</div>	

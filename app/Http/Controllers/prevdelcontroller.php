@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 use App\Http\Requests;
 
@@ -88,9 +89,19 @@ class prevdelcontroller extends Controller
 	 public function visIns(){
         return view('visPsico.show_inst');
     }
-
+//===========================================================================================================================
+ //===========================================================================================================================
+ //===========================================================================================================================
+ //===========================================================================================================================
     public function mostrarPac(){ 
-        return view('visPsico.show_pac');
+         $ordenado = \DB::table('persona')
+                ->select('id_persona as id', 'apellido', 'nombre')
+                ->orderBy('apellido', 'asc')
+                ->paginate(3); 
+                //dd($ordenado);
+           $pasiente = array('pasientes' => $ordenado,);
+           //dd($pasiente);
+        return view('visPsico.show_pac', $pasiente);
     }
 
     public function regPer(){
@@ -225,16 +236,19 @@ class prevdelcontroller extends Controller
     public function insertSes($id, Request $request)
     {
         //dd($request->all(), $id);
+        $sesion = new sesionp;
         $sesion->id_usuario = $request->psicologo; 
         $sesion->id_persona = $id;
         $sesion->fecha = $request->fecha;
         $sesion->detalle = $request->observ;
         $sesion->save();
+        //dd("se guardo");
         return redirect()->action('prevdelcontroller@mostrarSes', ['id' => $id]);
     }
 
      public function showSec($id){
         $sesiones = \DB::table('sesion')->select('id_sesion as id','fecha')->where('id_persona', '=', $id )->get();
+        //dd($sesiones);
         return $sesiones;
     }
 
@@ -257,9 +271,14 @@ class prevdelcontroller extends Controller
         $sesiones = \DB::table('sesion')->where('id_persona', '=', $request->id_pas)->delete();
         $pasiente = \DB::table('persona')->where('id_persona', '=', $request->id_pas)->delete();
     }
-
+/*==================================================================================================================================
+====================================================================================================================================
+====================================================================================================================================*/
     public function showInst(){
-            $data = \DB::table('institucion')->select('id_institucion as id', 'nombre', 'telefono')->orderBy('Nombre', 'asc')->get();
+            $data = \DB::table('institucion')
+            ->select('id_institucion as id', 'nombre', 'telefono')
+            ->orderBy('Nombre', 'asc')->get();
+           //->paginate(3); 
             //dd($data);
             return $data;
     }

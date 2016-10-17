@@ -21,6 +21,9 @@ new Vue({
 					Materialize.toast('La institucion a sido borrada', 3500)
 			});
 			}else{}
+
+			
+
 		}
 	}
 });

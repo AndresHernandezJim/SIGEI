@@ -44,7 +44,8 @@
 </div>
 
 <div class="row">
-<div class="input-field col s7"></div>
-	
+<div class="input-field col s1"></div>
+<a href="/predel/paciente/info/{{$PasNom->id}}" class="waves-effect waves-light btn"><i class="fa fa-arrow-left" aria-hidden="true"></i>
+Regresar</a>
 </div>
 @stop
