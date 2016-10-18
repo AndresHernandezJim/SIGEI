@@ -29,7 +29,7 @@
 		 <label id="texto" for="usuario"></i>Apellidos</label>
 	 </div>	 
 	 <div class="input-field col s3">
- 		<input id="tags2" type="text" font style="text-transform: uppercase;" name="curp" minlength="18" maxlength="18" class="validate" placeholder="AAAA999999AAAAAA99">
+ 		<input id="tags2" type="text" font style="text-transform: uppercase;" pattern="^[a-zA-Z]{4}\d{6}[a-zA-Z]{6}\d{2}$" title="Curp (formato: AAAA######AAAAAA##)" name="curp" minlength="18" maxlength="18" class="validate" placeholder="AAAA999999AAAAAA99">
 		<label id="texto" for="tags2"></i>Curp</label>
  	</div> 
  </div>
@@ -54,7 +54,7 @@
    </div>
 
  	<div class="input-field col s3">
- 		<input type='tel' pattern='[\(]\d{3}[\)]\d{3}[\-]\d{4}' title='Phone Number (Format: (999)999-9999)' name="telefono" class="validate" placeholder="(999)999-9999" maxlength="12"> 
+ 		<input type='tel' pattern='[\(]\d{3}[\)]\d{3}[\-]\d{4}' title='Teléfono (Formato: (999)999-9999)' name="telefono" class="validate" placeholder="(999)999-9999" maxlength="12"> 
 		<label id="texto" for="usuario"></i>Teléfono</label>
  	</div>   
  </div>
@@ -118,6 +118,6 @@
 @endforeach
 
 ];
-
 </script>
+
 @stop
