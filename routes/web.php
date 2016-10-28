@@ -18,8 +18,6 @@ Route::get('/registro','website@nusu');
 Route::Post('/newusr', 'website@Newusr');
 Route::Post('/login', 'LoginController@login');
 Route::get('hola',function(){return view('upload-image');});
-Route::get('image-upload-with-validation',['as'=>'getimage','uses'=>'ImageController@getImage']);// ejemplo de imagen
-Route::post('image-upload-with-validation',['as'=>'postimage','uses'=>'ImageController@postImage']);//ejemplo de imagen
 
 Route::group(['middleware' => 'policia'], function(){
 	Route::get('/poli', 'segpubcontroller@index');

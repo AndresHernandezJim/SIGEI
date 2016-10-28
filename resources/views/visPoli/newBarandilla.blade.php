@@ -11,6 +11,10 @@
 @section('content')
 <center><h3>Detenido</h3></center>
 <hr>
+	
+    @if(Session::has('error'))
+       <p  >No se pudo registrar el asegurado, ya existe un registro previo</p>
+    @endif
 <form method="POST" action="/savebarandilla"  enctype="multipart/form-data">
 	{{csrf_field()}}
 	<div class="row">
@@ -91,6 +95,10 @@
 		</div>
 	</div>
 	 <div class="row">
+	 	<div class="input-field col s9 offset-s1">
+          <textarea id="textarea2" class="materialize-textarea" name="pertenencias" class="validate"></textarea>
+          <label for="textarea2">pertenencias</label>
+        </div>
         <div class="input-field col s9 offset-s1">
           <textarea id="textarea1" class="materialize-textarea" name="observaciones" class="validate"></textarea>
           <label for="textarea1">Observaciones</label>
@@ -105,9 +113,10 @@
 </form>
 @stop
 @section('script')
-	 <script>function archivo(evt) {
-                  var files = evt.target.files; // FileList object
-             
+	<script>
+		
+              function archivo(evt) {
+                  var files = evt.target.files; 
                   // Obtenemos la imagen del campo "file".
                   for (var i = 0, f; f = files[i]; i++) {
                     //Solo admitimos imágenes.
@@ -115,16 +124,18 @@
                         continue;
                     }
                     var reader = new FileReader();
+             
                     reader.onload = (function(theFile) {
                         return function(e) {
                           // Insertamos la imagen
                          document.getElementById("list").innerHTML = ['<img class="thumb" src="', e.target.result,'" title="', escape(theFile.name), '"/>'].join('');
                         };
                     })(f);
+             
                     reader.readAsDataURL(f);
                   }
               }
+             
               document.getElementById('files').addEventListener('change', archivo, false);
-              }
       </script>
 @stop

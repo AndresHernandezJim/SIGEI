@@ -54,7 +54,7 @@
    </div>
 
  	<div class="input-field col s3">
- 		<input type='tel' pattern='[\(]\d{3}[\)]\d{3}[\-]\d{4}' title='Phone Number (Format: (999)999-9999)' name="telefono" class="validate" placeholder="(999)999-9999"> 
+ 		<input type='tel' pattern='[\(]\d{3}[\)]\d{3}[\-]\d{4}' title='Phone Number (Format: (999)999-9999)' maxlength="13" name="telefono" class="validate" placeholder="(999)999-9999"> 
 		<label id="texto" for="usuario"></i>Teléfono</label>
  	</div>   
  </div>

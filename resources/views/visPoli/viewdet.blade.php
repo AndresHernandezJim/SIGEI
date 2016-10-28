@@ -22,7 +22,7 @@
 		@endforeach
 	</tbody>
 	</table>
-	
+	{{$detenidos->links()}}
 
 </div>
 	
