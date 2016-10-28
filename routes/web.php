@@ -26,6 +26,7 @@ Route::group(['middleware' => 'policia'], function(){
 	Route::get('/registrobarandilla','segpubcontroller@nueva_barandilla');
 	Route::post('/savebarandilla','segpubcontroller@guardabarandilla');
 	Route::get('/logoutp', 'segpubcontroller@logout');
+	Route::get('/consultadetenido','segpubcontroller@showdet');
 	
 });
 

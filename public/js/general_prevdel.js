@@ -6,7 +6,7 @@ $(document).ready(function(){
       var prof = $(this).val().trim();
       if($.inArray(prof,tags) < 0){
         console.log($.inArray(tags));
-        if(!confirm('La ocupacion no se encuentra registrada,¿deseas agregrla?')){
+        if(!confirm('Tu chingada profesión no está aquí ¿neta la quieres?:' + prof)){
           $( '#tags' ).val('');
         }
       }

@@ -23,7 +23,8 @@ class ImageController extends Controller
     * @return void
     */
     public function postImage(Request $request)
-    {
+    {   
+        dd($request->all());
         $this->validate($request, [
             'image_file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:1024',
         ]);

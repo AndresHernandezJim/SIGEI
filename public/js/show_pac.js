@@ -21,10 +21,11 @@ new Vue({
 				if (confirmar) {
 					var conf2 = confirm("Muy seguro?");
 					if(conf2){
-						console.log(id);
+						
 					this.$http.post('/predel/ajax/delpac', {'id_pas':id}).then(function(response){
 						this.pacientes.$remove(pasiente);
 						Materialize.toast('El Paciente a sido borrado', 3500);
+						location.reload();
 					});
 				}else{}
 				}else{

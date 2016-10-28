@@ -15,26 +15,29 @@
 @section('content')
 <h2>Instituciones registradas</h2>
 <hr>
-@{{ $institucion.links() }}
-<table class="striped"><thead><tr><th>Nombre</th><th>Telefono</th><th>Información</th></thead>
-<tbody v-for="institucion in instituciones">
+<table class="striped"><thead><tr><th>Nombre</th><th>Telefono</th><th>Información</th><th>Eliminar</th></thead>
+<tbody>
+@foreach ($instituciones as $institucion)
 	<tr>
 		<td>
-			@{{institucion.nombre}}
+			{{$institucion->nombre}}
 		</td>
 		<td>
-			@{{institucion.telefono}}
+			{{$institucion->telefono}}
 		</td>
 		
 		<td>
-		&nbsp
-		<a  href="/predel/intitucion/info/@{{institucion.id}}" class="waves-effect waves-light btn"><i class="fa fa-info-circle aria-hidden="true"></i></a>
+		<a  href="/predel/intitucion/info/{{$institucion->id}}" class="waves-effect waves-light btn"><i class="fa fa-info-circle aria-hidden="true"></i></a>
 		</td>
+		<td>
+			<a  v-on:click="borrar({{$institucion->id, $institucion}})" class="waves-effect waves-red btn disabled"><i class="fa fa-trash" aria-hidden="true"></i></a>
+		</td>
+		@endforeach
 	</tr>
 </tbody>
 
 </table>
-
+{{$instituciones->links()}}
 @stop
 
 @section('script')

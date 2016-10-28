@@ -59,11 +59,12 @@ class prevdelcontroller extends Controller
                 $instit->domicilio=$request->domicilio;
                 $instit->telefono=$request->telefono;
                 $instit->contacto=$request->contacto;
+                $instit->activo_pd=1;
                 $instit->save();
-                return view('visPsico.show_inst');
+                 return redirect()->action('prevdelcontroller@visIns');
             }else{
                 //si ya existe solo regresamos a la vista  de listado de instituciones
-                return view('visPsico.show_inst');
+               return redirect()->action('prevdelcontroller@visIns');
             }
             
         }else{
@@ -78,16 +79,24 @@ class prevdelcontroller extends Controller
                 $instit->telefono=$request->telefono;
                 $instit->contacto=$request->contacto;
                 $instit->save();
-                return view('visPsico.show_inst');
+                return redirect()->action('prevdelcontroller@visIns');
             }else{
-                return view('visPsico.show_inst');
+                return redirect()->action('prevdelcontroller@visIns');
             }
              
         }   
         
     }
 	 public function visIns(){
-        return view('visPsico.show_inst');
+
+         $data = \DB::table('institucion')
+            ->select('id_institucion as id', 'nombre', 'telefono')
+            ->orderBy('Nombre', 'asc')
+            ->where('activo_pd', 1)
+            ->paginate(3);
+            //dd($data);
+        $institucion = array('instituciones' => $data,); 
+        return view('visPsico.show_inst', $institucion);
     }
 //===========================================================================================================================
  //===========================================================================================================================
@@ -97,10 +106,11 @@ class prevdelcontroller extends Controller
          $ordenado = \DB::table('persona')
                 ->select('id_persona as id', 'apellido', 'nombre')
                 ->orderBy('apellido', 'asc')
+                ->where('activo_pd', 1)
                 ->paginate(3); 
-                //dd($ordenado);
+
            $pasiente = array('pasientes' => $ordenado,);
-           //dd($pasiente);
+
         return view('visPsico.show_pac', $pasiente);
     }
 
@@ -143,7 +153,6 @@ class prevdelcontroller extends Controller
             $idlugar= \DB::table('lugar')->select('id_lugar')->where('direccion','=', $domicilio)->first();
             //dd($idlugar->id_lugar);
         }
-        //dd("si hay");
        //se verifica si es que la ocupacion existe
         $id_ocupacion = \DB::table('ocupacion')->select('id_ocupacion')->where('nombre','=', $request->ocupacion)->first();
         //si no encuentra la ocupacion en la BD, inserta la nueva ocupación y luego se procede a inserat los demas datos en la tabla persona
@@ -169,8 +178,10 @@ class prevdelcontroller extends Controller
                 $paciente->telefono = $request->telefono;
                 $paciente->foto = "Null";
                 $paciente->tipo=2;
+                $paciente->activo_pd=1;
+                $paciente->activo_sp=0;
                 $paciente->save();
-                return view('visPsico.show_pac');
+                return redirect()->action('prevdelcontroller@mostrarPac');
         }else{
             //si es que existe la ocupacion en la tabla "ocupación" se procede a ingresar los datos a la tabla persona
                 $paciente = new persona;
@@ -187,8 +198,10 @@ class prevdelcontroller extends Controller
                 $paciente->telefono = $request->telefono;
                 $paciente->foto = "Null";
                 $paciente->tipo=2;
+                $paciente->activo_pd=1;
+                $paciente->activo_sp=0;
                 $paciente->save();
-                return view('visPsico.show_pac');
+                return redirect()->action('prevdelcontroller@mostrarPac');
             } 
 
         }        
@@ -204,7 +217,7 @@ class prevdelcontroller extends Controller
     }        
 
     public function mostrarSes($id){
-        //dd($id);
+        //proceso para obtener los datos del paciente
         $persona = \DB::table('persona')->where('id_persona','=', $id)->first();
         if ($persona->sexo == 1) {
             $persona->sexo= 'Masculino';
@@ -221,9 +234,13 @@ class prevdelcontroller extends Controller
         ->where('persona.id_lugar', '=', $persona->id_lugar )->first();
 
         $persona->id_lugar=$localidad->nombre;
-        //dd($persona);
         $consultado = array('pasiente' => $persona, );
-        return view('visPsico.show_info', $consultado);
+
+        //proceso para obtener las sesiones de paciente
+        $sesiones = \DB::table('sesion')->select('id_sesion as id','fecha')->where('id_persona', '=', $id )->paginate(5);
+       
+        $terapias = array('sesiones' => $sesiones, );
+        return view('visPsico.show_info', $consultado, $terapias);
     }
 
     public function newSes($id){
@@ -246,11 +263,11 @@ class prevdelcontroller extends Controller
         return redirect()->action('prevdelcontroller@mostrarSes', ['id' => $id]);
     }
 
-     public function showSec($id){
+     /*public function showSec($id){
         $sesiones = \DB::table('sesion')->select('id_sesion as id','fecha')->where('id_persona', '=', $id )->get();
         //dd($sesiones);
         return $sesiones;
-    }
+    }*/
 
     public function ses_esp($id){
         //dd($id);
@@ -268,8 +285,14 @@ class prevdelcontroller extends Controller
      
     public function deletePac(Request $request){
         //dd($request->all());
-        $sesiones = \DB::table('sesion')->where('id_persona', '=', $request->id_pas)->delete();
-        $pasiente = \DB::table('persona')->where('id_persona', '=', $request->id_pas)->delete();
+        //$sesiones = \DB::table('sesion')->where('id_persona', '=', $request->id_pas)->delete();
+        //$pasiente = \DB::table('persona')->where('id_persona', '=', $request->id_pas)->delete();
+        $pasiente = \DB::table('persona')->where('id_persona', '=', $request->id_pas)->update(['activo_pd' => 0]);
+    }
+
+    public function deleteIns(Request $request){
+        //dd($request->all());
+        $institucion = \DB::table('institucion')->where('id_institucion', '=', $request->id_ins)->update(['activo_pd' => 0]);
     }
 /*==================================================================================================================================
 ====================================================================================================================================
@@ -283,7 +306,9 @@ class prevdelcontroller extends Controller
             return $data;
     }
 
+//funcion de la vista de informacion de institucion
     public function mostrarInst($id){
+        //obtencion de los datos de la institucion
         $ins = \DB::table('institucion')->where('id_institucion', '=', $id)->first();
          $localidad=\DB::table('localidad')
         ->join('lugar','localidad.id_localidad','=','lugar.id_localidad')
@@ -291,17 +316,26 @@ class prevdelcontroller extends Controller
         ->select('localidad.nombre')
         ->where('institucion.id_lugar', '=', $ins->id_lugar )->first();
         $ins->id_lugar=$localidad->nombre;
-        //dd($ins);
         $institucion = array('instituto' => $ins,);
-        return view('visPsico.show_infoinst', $institucion);
+
+        //Obtencion de las visitas  registradas para esta institución
+         $sesiones = \DB::table('sesioninstit')
+         ->select('id_sesion as id','fecha')
+         ->where('id_institucion', '=', $id )
+         ->paginate(3);
+        $visitas= array('visitas' => $sesiones,);
+
+        return view('visPsico.show_infoinst', $institucion, $visitas);
     }    
 
+    //funcion del avista de nueva visita para una institución
     public function newVis($id){
         $ins = \DB::table('institucion')->select('id_institucion as id', 'nombre')->where('id_institucion', '=', $id)->first();
         $institucion = array('ins' => $ins,);
         return view('visPsico.new_visita', $institucion);
     }
 
+//fucion para registrar una visista en cierta institucion
     public function regVis($id, Request $request){
         //dd($request->all(), $id);
         $visita = new sesionIns;
@@ -313,11 +347,14 @@ class prevdelcontroller extends Controller
         return redirect()->action('prevdelcontroller@mostrarInst', ['id' => $id]);
     }
 
-    public function showVis($id){
-        $sesiones = \DB::table('sesioninstit')->select('id_sesion as id','fecha')->where('id_institucion', '=', $id )->get();
-        return $sesiones;
-    }
 
+    /*public function showVis($id){
+        $sesiones = \DB::table('sesioninstit')->select('id_sesion as id','fecha')->where('id_institucion', '=', $id )->get();
+       
+        return $sesiones;
+    }*/
+
+//funcion de la vista de una vista en especifico que se quiera consultar de una institucion en especifico
     public function vis_esp($id){
         //dd($id);
         $visita = \DB::table('sesioninstit')->select('id_institucion as id', 'fecha', 'observaciones')->where('id_sesion', '=', $id)->first();

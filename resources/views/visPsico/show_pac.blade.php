@@ -28,8 +28,11 @@
 		<td>
 			<a  href="/predel/paciente/info/{{$pasiente->id}}" class="waves-effect waves-light btn"><i class="fa fa-info-circle" aria-hidden="true"></i>
 </a>
+		<td>
+			<a  v-on:click="borrar({{$pasiente->id, $pasiente}})" class="waves-effect waves-red btn disabled"><i class="fa fa-trash" aria-hidden="true"></i></a>
 		</td>
-		@endforeach
+		</td>
+@endforeach
 		<!--Esta parte la voy a consultar con victor -->
 		<!--td v-for="paciente in pacientes">
 			<a  v-on:click="borrar(pasiente.id, paciente)" class="waves-effect waves-red btn disabled"><i class="fa fa-trash" aria-hidden="true"></i></a>

@@ -47,6 +47,7 @@
 				<label for="contacto">Contacto</label>
 			</div>  
  		</div>
+ 		<hr>
  		<div class="row">
 			<div class="input-field col s4">
 				<a href="/predel/show/institucion" class="waves-effect waves-light btn"><i class="fa fa-arrow-left" aria-hidden="true"></i>Regresar</a>
@@ -64,17 +65,20 @@
 		<div class="row">
 		<div class="input-field col s12">
 		<table class="striped" id="app"><thead><tr><th>Fecha</th><th>Observaciones</th></thead>
-		<tbody v-for="visita in visitas">
+		<tbody>
+		@foreach ($visitas as $visita)
 			<tr>
 				<td>
-					@{{visita.fecha}}
+					{{$visita->fecha}}
 				</td>
 				<td>
-					<a href="/predel/intitucion/visita/@{{visita.id}}" class="waves-effect waves-light btn">Ver</a>
+					<a href="/predel/intitucion/visita/{{$visita->id}}" class="waves-effect waves-light btn">Ver</a>
 				</td>
 			</tr>
+		@endforeach
 		</tbody>
 		</table>
+		{{$visitas->links()}}
 		</div>
 		</div>  	
     </div>
@@ -88,28 +92,4 @@
 <hr>
 
 
-@stop
-
-@section('script')
-<script type="text/javascript">
-	Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector("#token").getAttribute('value');
-new Vue({
-		el: 'body',
-		data: {
-			visitas:[],
-		},
-		ready: function(){
-			
-			this.getVisitas();
-		},
-		methods:{
-			getVisitas: function(){
-				
-				this.$http.get('/predel/ajax/visitas/{{$instituto->id_institucion}}').then(function(response){
-					this.$set('visitas', response.data);
-				});
-			}
-		},
-	});
-</script>
 @stop

@@ -87,6 +87,7 @@
 			<a href="/predel/new/sesiones/{{$pasiente->id_persona}}" class="waves-effect waves-light btn">Nueva Consulta</a>
 			</div>
 		</div>
+		<hr>
     </div>
 <!--=======================================================-->
     <div class="col s4 card-panel cyan accent-1">
@@ -95,17 +96,21 @@
 		<div class="row">
 		<div class="input-field col s12">
 		<table class="striped" id="app"><thead><tr><th>Fecha</th><th>Observaciones</th></thead>
-		<tbody v-for="sesion in sesiones">
+		<tbody>
+		@foreach ($sesiones as $sesion)
 			<tr>
 				<td>
-					@{{sesion.fecha}}
+					{{$sesion->fecha}}
 				</td>
 				<td>
-					<a href="/predel/personas/sesion/@{{sesion.id}}" class="waves-effect waves-light btn">Ver</a>
+					<a href="/predel/personas/sesion/{{$sesion->id}}" class="waves-effect waves-light btn">Ver</a>
 				</td>
 			</tr>
+		@endforeach
 		</tbody>
 		</table>
+		<br><br>
+		{{$sesiones->links()}}
 		</div>
 		</div>
 		<hr>
@@ -117,25 +122,3 @@
 
 @stop
 
-@section('script')
-<script type="text/javascript">
-	Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector("#token").getAttribute('value');
-new Vue({
-		el: 'body',
-		data: {
-			sesiones:[],
-		},
-		ready: function(){
-			this.getSesiones();
-		},
-		methods:{
-			getSesiones: function(){
-				
-				this.$http.get('/predel/ajax/sesiones/{{$pasiente->id_persona}}').then(function(response){
-					this.$set('sesiones', response.data);
-				});
-			}
-		},
-	});
-</script>
-@stop
