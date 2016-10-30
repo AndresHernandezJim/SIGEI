@@ -12,6 +12,7 @@ use App\lugar;
 use App\Helper\reporte;
 use App\Helper\barandilla;
 use App\reportebarandilla;
+use App\emergencia;
 
 class segpubcontroller extends Controller
 {   
@@ -24,6 +25,18 @@ class segpubcontroller extends Controller
         session()->forget('Policia');
         return redirect('/');
     }
+
+    public function nueva_incidencia_sp(){
+        $datalocal=array(
+            'localidades'=> \App\localidad::get(),
+
+        );
+        $dataemergencia = array(
+                'emergencias' => \App\emergencia::get(),
+            );
+        return view('visPoli.registroincidenciasp',$datalocal, $dataemergencia);
+    }
+
     public function nueva_barandilla(){
         $datalocal=array(
             'localidades'=> \App\localidad::get(),

@@ -21,6 +21,9 @@ Route::get('hola',function(){return view('upload-image');});
 
 Route::group(['middleware' => 'policia'], function(){
 	Route::get('/poli', 'segpubcontroller@index');
+
+	Route::get('/registroincidenciasp', 'segpubcontroller@nueva_incidencia_sp');
+	
 	Route::get('/registrobarandilla','segpubcontroller@nueva_barandilla');
 	Route::post('/savebarandilla','segpubcontroller@guardabarandilla');
 	Route::get('/logoutp', 'segpubcontroller@logout');
