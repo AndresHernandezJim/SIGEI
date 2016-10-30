@@ -168,6 +168,7 @@ class prevdelcontroller extends Controller
                 $paciente->madre = $request->nmadre;
                 $paciente->apellido = $request->apellidos;
                 $paciente->nombre = $request->nombre;
+                $paciente->alias = "Null";
                 $paciente->domicilio = $domicilio;
                 $paciente->curp = $request->curp;
                 $paciente->sexo = $request->sexo;
@@ -188,6 +189,7 @@ class prevdelcontroller extends Controller
                 $paciente->madre = $request->nmadre;
                 $paciente->apellido = $request->apellidos;
                 $paciente->nombre = $request->nombre;
+                $paciente->alias = "Null";
                 $paciente->domicilio = $domicilio;
                 $paciente->curp = $request->curp;
                 $paciente->sexo = $request->sexo;

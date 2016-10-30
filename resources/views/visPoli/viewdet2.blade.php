@@ -59,6 +59,7 @@
 	</div>
 	<div class="row">
 		<div class="input-field col s9 offset-s1">
+
           <input readonly="" id="a"  value="{{$info->pertenencias}}"  name="pertenencias" ></input>
           <label for="a">Pertenencias al momento de la remisión</label>
         </div>
@@ -67,5 +68,20 @@
           <label for="b">Observaciones</label>
         </div>
 	</div>
+
+          <input readonly="" value="{{$info->pertenencias}}" id="disabled" type="text"></input>
+          <label for="disabled">Pertenencias al momento de la remisión</label>
+        </div>
+        <div class="input-field col s9 offset-s1">
+          <input id="b" readonly="" value="observaciones"  type="text" ></input>
+          <label for="b">Observaciones</label>
+        </div>
+	</div>
+	<div class="row">
+		<div class="input-field col s4 offset-s1">
+				<a href="/consultadetenido" class="waves-effect waves-light btn"><i class="fa fa-arrow-left" aria-hidden="true"></i>Regresar</a>
+			</div>
+	</div>
+>>>>>>> 8ca08def89f07f0703d8f461d1515e3046a965c3
 	
 @stop

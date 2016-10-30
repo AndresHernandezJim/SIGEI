@@ -4,6 +4,9 @@
 @yield('styles')
 
 <title>DSPVC</title>
+<base href="{{asset('/')}}/">
+  <meta id="token" value="{{csrf_token()}}"> 
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
 	<link rel="stylesheet" type="text/css" href="/css/materialize.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="/css/app1.css">
@@ -44,7 +47,7 @@
   <div class="nav-wrapper ">
     <img class="logo" src="/images/logo.png"><a href="#!" class="brand-logo form">&nbspSICOI</a>
     <ul class="right hide-on-med-and-down">
-	  <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Seg.Publica&nbsp<i class="fa fa-chevron-down"></i></a></li>    
+	  <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Seg.Pública&nbsp<i class="fa fa-chevron-down"></i></a></li>    
       <li><a class="dropdown-button" href="#!" data-activates="dropdown2">Vialidad &nbsp &nbsp<i class="fa fa-chevron-down"></i></a></li> 
       <li><a class="dropdown-button" href="#!" data-activates="dropdown3">Detenidos &nbsp &nbsp &nbsp<i class="fa fa-chevron-down"></i></a></li> 
       <li><a href="/logoutp">{{session()->get('Policia')->nombre}} &nbsp&nbsp<i class="fa fa-sign-out"></i>Cerrar Sesión</a></li> 
@@ -52,7 +55,13 @@
   </div>
 </nav>	
 </header>
-
+@yield('navegacion')
+<div class="row">
+  
+    <div class="col s10 offset-s1 card-panel blue lighten-5">
+  @yield('content')
+    </div>
+  </div>
 <script src="/js/jquery-2.2.1.min.js"></script>
 <script src="/js/materialize.min.js"></script>
 <script src="/js/app.js"></script>

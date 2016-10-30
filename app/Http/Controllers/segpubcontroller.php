@@ -48,12 +48,20 @@ class segpubcontroller extends Controller
         );
     	return view('visPoli.newBarandilla',$datalocal,$data);
     }
+    //================================================================================================================
+    //================================================================================================================
+    //================================================================================================================
     public function showdet(){
-        $data=\DB::table('persona')
+       $data=\DB::table('persona')
             ->join('reporte_barandilla', 'persona.id_persona', '=', 'reporte_barandilla.id_persona')
             ->select('persona.*','reporte_barandilla.created_at')
             ->paginate(2);
+            ->select('persona.nombre','persona.apellido','persona.foto', 'persona.alias','reporte_barandilla.id_reporte as id','reporte_barandilla.created_at')
+            ->paginate(3);
+            dd($data->all());
         $detenido=array('detenidos'=>$data);
+
+        
         return view('visPoli.viewdet',$detenido);
     }
     
@@ -182,6 +190,7 @@ class segpubcontroller extends Controller
         'id_sesion'=>$sesion->id_sesion]);
         //obtenemos el id del reporte 
         $id=\DB::table('reporte')->select('id_reporte')->orderby('id_reporte','desc')->first();
+
          //dd($id);
         //verificamos si existe un reporte de barandilla donde la persona, el id_reportey el estatus esta activo.
         $reportebarandilla=\DB::table('reporte_barandilla')->where('id_reporte','=',$id->id_reporte)->where('id_persona','=',$persona->id_persona)->first();
@@ -204,6 +213,32 @@ class segpubcontroller extends Controller
          return back()->with('error',true);
          
         }
+
+        public function showdet2($id){
+
+        $data=\DB::table('persona')->join('reporte_barandilla','persona.id_persona','=','reporte_barandilla.id_persona')
+            ->join('ocupacion','ocupacion.id_ocupacion','=','persona.id_ocupacion')
+            ->join('lugar','persona.id_lugar','=','lugar.id_lugar')->join('localidad','localidad.id_localidad','=','lugar.id_localidad')
+            ->select(array('persona.nombre','persona.apellido','persona.domicilio','persona.curp','persona.sexo','persona.alias','ocupacion.nombre as ocupacion','persona.telefono','persona.edad','persona.foto','reporte_barandilla.causa','reporte_barandilla.pertenencias','reporte_barandilla.observaciones','localidad.nombre as localidad','reporte_barandilla.remite'))
+            ->where('reporte_barandilla.id_reporte','=',$id)->first();
+            if($data->sexo==1){
+                $data->sexo="Masculino";
+            }
+            if($data->sexo==2){
+                $data->sexo="Femenino";
+            }
+            $datos=array('info'=>$data);
+        //dd($data);
+        return view('visPoli.viewdet2',$datos);
+    }
+
+    public function liberar(Request $request){
+         $reporte = \DB::table('reporte_barandilla')->where('id_reporte', '=', $request->id_rep)->update(['estatus' => 3]);
+    }
+
+
  }
+
+
     
 

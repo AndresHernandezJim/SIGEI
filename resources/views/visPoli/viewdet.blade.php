@@ -1,22 +1,28 @@
-@extends('templates.tsegpub')
+@extends('templates.tsegpub2')
 
 @section('content')
-<div  class="row">
-	
-		<center><h2>Barandillas</h2></center>
+
+<center><h2>Barandillas</h2></center>
 	<hr>
-	<table class="striped" id="app"><thead><tr><th>Apellido</th><th>Nombre</th><th>Información</th><th>Eliminar</th></thead>
+	
+	<table class="centered bordered" id="app"><thead><tr><th>Imagen</th><th>Nombre</th><th>Ingresó</th><th>Detalles</th><th>liberar</th></thead>
 	<tbody >
 		@foreach($detenidos as $detenido)
 		<tr>
 			<td>
-			{{$detenido->apellido}}
+			<img src="{{$detenido->foto}}" width="80px">
 			</td>
 			<td>
-			{{$detenido->nombre}}
+			{{$detenido->apellido." ".$detenido->nombre." (".$detenido->alias.")"}}
 			</td>
 			<td>
-				<img src="{{$detenido->foto}}" width="80px">
+			{{$detenido->created_at}}
+			</td>
+			<td>
+			<a  href="/segpub/barandilla/info/{{$detenido->id}}" class="waves-effect waves-light btn"><i class="fa fa-info-circle aria-hidden="true"></i></a>	
+			</td>
+			<td>
+			<a  v-on:click="borrar({{$detenido->id, $detenido}})" class="waves-effect waves-red btn disabled"><i class="fa fa-check-circle" aria-hidden="true"></i></a>
 			</td>
 		</tr>
 		@endforeach
@@ -24,6 +30,12 @@
 	</table>
 	{{$detenidos->links()}}
 
-</div>
 	
+		
+
+	
+@stop
+
+@section('script')
+<script src="/js/barandilla.js"></script>
 @stop
