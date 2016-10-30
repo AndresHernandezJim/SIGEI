@@ -38,11 +38,7 @@
 <li class="divider"></li>
 <li><a href="/consultadetenido">Consultar Interno</a></li>
 <li class="divider"></li>
-<li><a href="/consultabarimagen">Imagen de Interno</a></li>
-<li class="divider"></li>
 <li><a href="/consultaaseguramiento">Aseguramientos</a></li>
-<li class="divider"></li>
-<li><a href="/liberardetenido">Liberar Detenido</a></li>
 <li class="divider"></li>
 </ul>
 <nav class="grey darken-4">
