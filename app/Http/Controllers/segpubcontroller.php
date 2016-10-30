@@ -56,24 +56,7 @@ class segpubcontroller extends Controller
         $detenido=array('detenidos'=>$data);
         return view('visPoli.viewdet',$detenido);
     }
-    public function showdet2($id){
-
-        $data=\DB::table('persona')->join('reporte_barandilla','persona.id_persona','=','reporte_barandilla.id_persona')
-            ->join('ocupacion','ocupacion.id_ocupacion','=','persona.id_ocupacion')
-            ->join('lugar','persona.id_lugar','=','lugar.id_lugar')->join('localidad','localidad.id_localidad','=','lugar.id_localidad')
-            ->select(array('persona.nombre','persona.apellido','persona.domicilio','persona.curp','persona.sexo','persona.alias','ocupacion.nombre as ocupacion','persona.telefono','persona.edad','persona.foto','reporte_barandilla.causa','reporte_barandilla.pertenencias','reporte_barandilla.observaciones','localidad.nombre as localidad','reporte_barandilla.remite'))
-            ->where('reporte_barandilla.id_reporte','=',$id)->first();
-            if($data->sexo==1){
-                $data->sexo="Masculino";
-            }
-            if($data->sexo==2){
-                $data->sexo="Femenino";
-            }
-            $datos=array('info'=>$data);
-        //dd($data);
-        return view('visPoli.viewdet2',$datos);
-    }
-   
+    
     public function guardabarandilla(Request $request){ 
         //subimos la foto
         $file = $request->file('files');
