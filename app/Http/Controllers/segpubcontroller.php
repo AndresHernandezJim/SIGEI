@@ -39,7 +39,7 @@ class segpubcontroller extends Controller
         $data=\DB::table('persona')
             ->join('reporte_barandilla', 'persona.id_persona', '=', 'reporte_barandilla.id_persona')
             ->select('persona.*')
-            ->paginate(3);
+            ->paginate(2);
         $detenido=array('detenidos'=>$data);
         return view('visPoli.viewdet',$detenido);
     }
@@ -55,7 +55,7 @@ class segpubcontroller extends Controller
             //dd($subir);
         }
         //verificamos si existe la persona;
-        $persona=\DB::table('persona')->where('curp','=',$request->curp)->first();
+        $persona=\DB::table('persona')->select('id_persona')->where('curp','=',$request->curp)->first();
         if($persona==null){ //no existe la persona, hay que agregarla
             //verificamos datos del lugar
             $domicilio=$request->calle." #".$request->num_ext." colonia ".$request->colonia;
@@ -156,8 +156,6 @@ class segpubcontroller extends Controller
             $foto=\DB::table('persona')->where('id_persona',$persona->id_persona)->update(array('foto' => $subir,'activo_sp'=>1));
             $persona=\DB::table('persona')->where('curp','=',$request->curp)->first();
         }
-        
-        
         //creamos el reporte de tipo de barandilla
         $sesion=\DB::table('sys_sesion')->select('id_sesion')->orderby('id_sesion','desc')->first();
         $nuevo= \DB::table('reporte')->insert([
@@ -169,10 +167,8 @@ class segpubcontroller extends Controller
         'canalizacion'=>null,
         'detalles'=>"se remite ciudadano a los separos preventívos",
         'id_sesion'=>$sesion->id_sesion]);
-        //obtenemos el id del reporte
-        
+        //obtenemos el id del reporte 
         $id=\DB::table('reporte')->select('id_reporte')->groupby('id_reporte')->first();
-
          //dd($id);
         //verificamos si existe un reporte de barandilla donde la persona, el id_reportey el estatus esta activo.
         $reportebarandilla=\DB::table('reporte_barandilla')->where('id_reporte','=',$id->id_reporte)->where('id_persona','=',$persona->id_persona)->first();
