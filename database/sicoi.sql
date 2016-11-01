@@ -15,7 +15,6 @@ Date: 2016-10-30 01:56:16
 create database sicoi;
 use sicoi;
 SET FOREIGN_KEY_CHECKS=0;
-
 -- ----------------------------
 -- Table structure for emergencia
 -- ----------------------------
@@ -158,6 +157,7 @@ CREATE TABLE `persona` (
   `madre` varchar(255) DEFAULT NULL,
   `nombre` varchar(255) NOT NULL,
   `apellido` varchar(255) DEFAULT NULL,
+  `alias` varchar(100) DEFAULT NULL,
   `domicilio` varchar(255) NOT NULL,
   `curp` varchar(18) DEFAULT NULL,
   `sexo` tinyint(1) NOT NULL DEFAULT '1',
@@ -224,7 +224,10 @@ CREATE TABLE `reporte_barandilla` (
   `updated_at` datetime DEFAULT NULL,
   `estatus` int(11) NOT NULL DEFAULT '1' COMMENT 'especifica el estatus de la persona 1=detenido, 2=transferido,3=liberado',
   `remite` varchar(400) DEFAULT NULL,
-  `observaciones` varchar(400) DEFAULT NULL,
+  `observaciones` varchar(400) NOT NULL,
+  `lugar_arresto` varchar(400) DEFAULT NULL,
+  `aseguramiento` varchar(400) DEFAULT 'No se registró ningún material peligroso o ilícito',
+  `destino` int(11) DEFAULT NULL,
   KEY `fk_persona` (`id_persona`),
   KEY `fk_reporte` (`id_reporte`),
   CONSTRAINT `fk_persona` FOREIGN KEY (`id_persona`) REFERENCES `persona` (`id_persona`) ON UPDATE CASCADE,
@@ -311,7 +314,7 @@ CREATE TABLE `sys_sesion` (
   PRIMARY KEY (`id_sesion`),
   KEY `fk_sesion_usuario` (`id_usuario`) USING BTREE,
   CONSTRAINT `sys_sesion_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for tipo_aviso

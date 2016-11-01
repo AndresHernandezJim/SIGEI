@@ -54,34 +54,40 @@
 		 </div>
 		 <div class="input-field col s5 ">
 			<input readonly="" value="{{$info->causa}}" id="disabled" type="text"  name="sexo">
-	        <label for="disabled">Por motivo de</label>
+	        <label for="disabled">Causa de arresto</label>
 		 </div>
 	</div>
 	<div class="row">
-		<div class="input-field col s9 offset-s1">
-
-          <input readonly="" id="a"  value="{{$info->pertenencias}}"  name="pertenencias" ></input>
-          <label for="a">Pertenencias al momento de la remisión</label>
-        </div>
-        <div class="input-field col s9 offset-s1">
-          <input id="b" readonly="" value="observaciones"  name="observaciones" ></input>
-          <label for="b">Observaciones</label>
-        </div>
+		<div class="input-field col s4 offset-s1">
+			<input  readonly value="{{$info->destino}}" type="text" name="">
+			<label  >Ubicación</label>
+		</div>
+		<div class="input-field col s6">
+			<input  readonly type="text" value="{{$info->lugar_arresto}}" name="">
+			<label>Lugar donde se sucitó el arresto</label>
+		</div>
 	</div>
-
+	<div class="row">
+		<div class="input-field col s5 offset-s1">
           <input readonly="" value="{{$info->pertenencias}}" id="disabled" type="text"></input>
           <label for="disabled">Pertenencias al momento de la remisión</label>
         </div>
-        <div class="input-field col s9 offset-s1">
-          <input id="b" readonly="" value="observaciones"  type="text" ></input>
+        <div class="input-field col s5 ">
+          <input id="b" readonly="" value="{{$info->observaciones}}"  type="text" ></input>
           <label for="b">Observaciones</label>
         </div>
+	</div>
+	<div class="row">
+		<div class="input-field col s10 offset-s1">
+			<input  readonly type="text" name="" value="{{$info->aseguramiento}}">
+			<label>Eleméntos decomizados</label>
+		</div>
 	</div>
 	<div class="row">
 		<div class="input-field col s4 offset-s1">
 				<a href="/consultadetenido" class="waves-effect waves-light btn"><i class="fa fa-arrow-left" aria-hidden="true"></i>Regresar</a>
 			</div>
 	</div>
->>>>>>> 8ca08def89f07f0703d8f461d1515e3046a965c3
+
 	
 @stop

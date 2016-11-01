@@ -8,5 +8,5 @@ class reportebarandilla extends Model
 {
      protected $table = 'reporte_barandilla';
     protected $primaryKey="id_reporte";
-    protected $fillable = ['id_persona', 'causa', 'pertenencias','estatus','remite','observaciones'];
+    protected $fillable = ['id_persona', 'causa', 'pertenencias','estatus','remite','observaciones','lugara_rresto','aseguramiento','destino'];
 }
