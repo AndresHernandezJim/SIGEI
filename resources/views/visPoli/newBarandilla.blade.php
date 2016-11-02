@@ -13,7 +13,7 @@
 <hr>
 	
     @if(Session::has('error'))
-       <p  >No se pudo registrar el asegurado, ya existe un registro previo</p>
+       <center><p>No es posible registrar al individuo, ya se encuentra detenido</p></center>
     @endif
 <form method="POST" action="/savebarandilla"  enctype="multipart/form-data">
 	{{csrf_field()}}
@@ -65,7 +65,7 @@
  		</div>
 	</div>
 	<div class="row">
-		<div class="input-field col s3 m3 l3 offset-s1 offset-m1 offset-l1">
+		<div class=" col s3 m3 l3 offset-s1 offset-m1 offset-l1">
 			<select name="local" class="validate" required>
 				<option value="" disabled selected>Localidad</option>
 				@foreach ($localidades as $localidad)
@@ -73,6 +73,17 @@
 	            @endforeach
 			</select>
 			<label>Domicilio</label>
+		</div>
+		<div>
+			<a href="#modal1" class="modal-trigger"><i class="fa fa-plus" aria-hidden="true" ></i></a>
+			<div class="modal" id="modal1">
+				<h3>aasdas</h3>
+					<div class="input-field col s2">
+						<input type="text" name="">
+						<label>asdasd</label>
+					</div>
+			</div>
+
 		</div>
 		<div class="input-field col s3 m3 l3">
 			<input type="text" name="colonia" class="validate" required>
@@ -134,6 +145,7 @@
 		</div>
 	</div>
 </form>
+
 @stop
 @section('script')
 	<script>
