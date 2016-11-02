@@ -45,7 +45,7 @@
     <label>Sexo:</label>
  </div>
  <div id="suggestions" class="input-field col s3">
-	<input id="tags" type="text" name="ocupacion">
+	<input id="ocupacion" type="text" name="ocupacion" class="validate">
 	<label id="texto" for="tags"></i>Ocupacion</label>
  </div> 
   <div class="input-field col s1 m1 l1">
@@ -110,14 +110,14 @@
 @stop
 
 @section('script')
-<script src="/js/general_prevdel.js"></script>
+
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
-	var tags = [
-@foreach($ocupaciones as $val)
-"{{$val->nombre}}",
-@endforeach
-
+var tagso = [
+	@foreach($ocupaciones as $val)
+	"{{$val->nombre}}",
+	@endforeach
 ];
-
 </script>
+<script src="/js/general_prevdel.js"></script>
 @stop

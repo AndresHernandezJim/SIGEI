@@ -1,16 +1,20 @@
 $(document).ready(function(){
-	  $( "#tags" ).autocomplete({
-      source: tags
+  
+	  $( "#ocupacion" ).autocomplete({
+      source: tagso
     });
-    $( '#tags' ).on('change', function(){
+    console.log(tagso);
+    $( '#ocupacion' ).on('change', function(){
       var prof = $(this).val().trim();
-      if($.inArray(prof,tags) < 0){
-        console.log($.inArray(tags));
-        if(!confirm('Tu chingada profesión no está aquí ¿neta la quieres?:' + prof)){
-          $( '#tags' ).val('');
+      if($.inArray(prof,tagso) < 0){
+        console.log($.inArray(tagso));
+        if(!confirm('La profesión no está registrada ¿la quieres registrar?:' + prof)){
+          $( '#ocupacion' ).val('');
         }
       }
     });
+
+
      $( "#tags2" ).autocomplete({
       source: tags2
     });
