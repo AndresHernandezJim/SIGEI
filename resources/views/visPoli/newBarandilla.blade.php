@@ -9,7 +9,7 @@
         </style>
 @stop
 @section('content')
-<center><h3>REGISTRO DE INGRESO A BARANDILLA</h3></center>
+<center><h4>REGISTRO DE INGRESO A BARANDILLA</h4></center>
 <hr>
 	
     @if(Session::has('error'))
@@ -22,51 +22,59 @@
 	            	<h6>Fotografía</h6>
 				      	<output id="list"></output>
 				      	<br />
-				        <input type="file" id="files" name="files[]"  class="validate" />			      
+				        <input type="file" id="files" name="files[]"  class="validate"  required/>			      
     	</div>
 	</div>
 	<div class="row">
 			<div class="input-field col s3 m3 l3 offset-s1 offset-m1 offset-l1">
-				<input type="text" name="nombre" id="nombre" class="validate" minlength="3">
+				<input type="text" name="nombre" id="nombre" class="validate" minlength="3" required>
 				<label>Nombre(s)</label>
 			</div>
 			<div class="input-field col s4 m4 l4">
-				<input id="apellidos" type="text" name="apellidos" class="validate" minlength="3">
+				<input id="apellidos" type="text" name="apellidos" class="validate" minlength="3" required>
 				<label>Apellidos</label>
 			</div>
 			<div class="input-field col s3 m3 l3">
+
 				<input type="text" id="tags" font style="text-transform: uppercase;" pattern="^[a-zA-Z]{4}\d{6}[a-zA-Z]{6}\d{2}$" title="Curp (formato: AAAA######AAAAAA##)" name="curp" minlength="18" maxlength="18" class="validate" placeholder="AAAA999999AAAAAA99">
+
+				<input type="text"  font style="text-transform: uppercase;" pattern="^[a-zA-Z]{4}\d{6}[a-zA-Z]{6}\d{2}$" title="Curp (formato: AAAA######AAAAAA##)" name="curp" minlength="18" maxlength="18" class="validate" placeholder="AAAA999999AAAAAA99" required>
+
 				<label>CURP</label>
 			</div>
 	</div>
 	<div class="row">
 		<div class="input-field col s2 m2 l2 offset-s1 offset-m1 offset-l1">
-			<select class="validate" name="sexo">
+			<select class="validate" name="sexo" required>
 				<option value="" selected disabled>Sexo</option>
 				<option value="1"> Masculino</option>
 				<option value="2"> Femenino</option>
 			</select>
 		</div>
-		<div id="suggestions" class="input-field col s3 m3 l3">
-			<input id="tags" type="text" name="ocupacion" class="validate">
+		<div  class="input-field col s3 m3 l3">
+			<input id="tags" type="text" name="ocupacion" class="validate" required>
 			<label id="texto" for="tags"></i>Ocupación</label>
 		 </div>
+
 		 <div id="apodo" class="input-field col s2 m2 l2">
+
+		 <div  class="input-field col s2 m2 l2">
+
 			<input id="tags" type="text" name="alias" class="validate">
 			<label id="texto" for="tags"></i>Apodo</label>
 		 </div> 
   		<div class="input-field col s1 m1 l1">
-		 	<input type="number" name="edad" min="5" max="120" class="validate">
+		 	<input type="number" name="edad" min="5" max="120" class="validate" required>
 		 	<label id="texto" for="usuario"></i>Edad</label>
    		</div>
  		<div class="input-field col s2 m2 l2">
- 			<input type='tel' pattern='[\(]\d{3}[\)]\d{3}[\-]\d{4}' title='Phone Number (Format: (999)999-9999)' name="telefono" class="validate" placeholder="(999)999-9999"> 
+ 			<input type='tel' pattern='[\(]\d{3}[\)]\d{3}[\-]\d{4}' title='Phone Number (Format: (999)999-9999)' name="telefono" class="validate" placeholder="(999)999-9999" required> 
 			<label id="texto" for="usuario"></i>Teléfono</label>
  		</div>
 	</div>
 	<div class="row">
 		<div class="input-field col s3 m3 l3 offset-s1 offset-m1 offset-l1">
-			<select name="local" class="validate">
+			<select name="local" class="validate" required>
 				<option value="" disabled selected>Localidad</option>
 				@foreach ($localidades as $localidad)
 	                <option value="{{$localidad['id_localidad']}}">{{$localidad['nombre']}}</option>
@@ -75,25 +83,29 @@
 			<label>Domicilio</label>
 		</div>
 		<div class="input-field col s3 m3 l3">
-			<input type="text" name="colonia" class="validate">
+			<input type="text" name="colonia" class="validate" required>
 			<label id="texto">Colonia</label>
 		</div>
 		<div class="input-field col s3 m3 l3">
-		 	<input type="text" name="calle" class="validate">
+		 	<input type="text" name="calle" class="validate" required>
 			<label id="texto">Calle</label>
 		</div>
 		<div class="input-field col s1 m1 l1">
-		 	<input type="number" name="num_ext" min="1" max="9999" class="validate">
+		 	<input type="number" name="num_ext" min="1" max="9999" class="validate" required>
 			<label id="texto">Número</label>
 		</div>
 	</div>
 	<div class="row">
 	    <div class = "input-field col s2 m2 l2 offset-s1 offset-m1 offset-l1">
 	        <input id="unidadremite" type="text" class="validate" name ="remite" required>
+
 	        <label for="unidadremite">Unidad que remite</label>
+
+	        <label for="unidadremite">Oficial que Remite</label>
+
 	    </div>
 	    <div class = "input-field col s8 m8 l8">
-	        <input id="lugararresto" type="text" class="validate" name ="lugararresto" required>
+	        <input id="lugararresto" type="text" class="validate" name ="lugara" required>
 	        <label for="lugararresto">Lugar del arresto</label>
 	    </div>
 	</div>
@@ -103,7 +115,7 @@
 	        <label for="pertenencias">Pertenencias al momento del arresto</label>
 	    </div>
 	    <div class = "input-field col s5 m5 l5">
-	        <input id="aseguramiento" type="text" class="validate" name ="aseguramiento" required>
+	        <input id="aseguramiento" type="text" class="validate" name ="aseguramiento">
 	        <label for="aseguramiento">Aseguramiento</label>
 	    </div>
 	</div>
