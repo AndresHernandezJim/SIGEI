@@ -50,7 +50,7 @@
 	<div class="col s4 card-panel amber lighten-5">
 		<center><h5>Detenciones</h5></center>
 		<hr>
-		<center>Numero de detenciones: {{$personax->tipo}}</center>
+		<center>Número de detenciones: {{$personax->tipo}}</center>
 		<hr>
 		<div class="row">
 		<div class="input-field col s12">

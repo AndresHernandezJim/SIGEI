@@ -9,7 +9,6 @@
 <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
 	<link rel="stylesheet" type="text/css" href="/css/materialize.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="/css/app1.css">
 </head>
 <body>
@@ -68,7 +67,6 @@
 <script src="/js/app.js"></script>
 <script src="https://cdn.jsdelivr.net/vue/1.0.21/vue.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/0.7.0/vue-resource.min.js"></script>
-<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 @yield('script')
 </body>
 </html>

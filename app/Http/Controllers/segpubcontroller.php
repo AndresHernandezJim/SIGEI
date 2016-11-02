@@ -68,12 +68,6 @@ class segpubcontroller extends Controller
             ->paginate(2);
             //dd($data->all());
 
-       ->join('reporte_barandilla','persona.id_persona','=','reporte_barandilla.id_persona')
-       ->select('persona.nombre', 'persona.apellido','persona.foto','persona.alias','reporte_barandilla.id_reporte as id','reporte_barandilla.created_at')
-       ->where('reporte_barandilla.estatus',1)
-            ->paginate(3);
-           // dd($data->all());
-
         $detenido=array('detenidos'=>$data);
 
         
@@ -83,34 +77,34 @@ class segpubcontroller extends Controller
     public function guardabarandilla(Request $request){ 
          $guardado=\DB::table('reporte_barandilla as rb')->join('persona as p','rb.id_persona','=','p.id_persona')->where('p.curp','=',$request->curp)->where('rb.estatus','=',1)->count();
          //dd($guardado);
-         if($guardado==0){
+        if($guardado==0){
 
-        //subimos la foto
-        $file = $request->file('files');
-        $file = $file[0];
-        //dd($file);
-        if ($request->hasFile('files')) {
-            //  mandamos subir el archivo con el upload   
-            $subir=imagehelper::upload($file);
-            //dd($subir);
-        }
+            //subimos la foto
+            $file = $request->file('files');
+            $file = $file[0];
+            //dd($file);
+            if ($request->hasFile('files')) {
+                //  mandamos subir el archivo con el upload   
+                $subir=imagehelper::upload($file);
+                //dd($subir);
+            }
 
-        //verificamos si existe la persona;
-        $persona=\DB::table('persona')->select('id_persona')->where('curp','=',$request->curp)->first();
-        //dd($persona);
-        if($persona==null){ //no existe la persona, hay que agregarla
-            //verificamos datos del lugar
-            $domicilio=$request->calle." #".$request->num_ext." colonia ".$request->colonia;
-            $id_lugar= \DB::table('lugar')->select('id_lugar')->where('direccion','=', $domicilio)->first();
-            //dd($id_lugar);
-            if($id_lugar==null){//no existe el lugar, hay que agregarlo
-                $dom=new lugar;
-                $dom->id_localidad=$request->local;
-                $dom->direccion=$domicilio;
-                $dom->save();
-                $id_lugar= \DB::table('lugar')->select('id_lugar')->where('direccion','=', $domicilio)->first(); //obtenemos el id de lugar ojo-*****
+            //verificamos si existe la persona;
+            $persona=\DB::table('persona')->select('id_persona')->where('curp','=',$request->curp)->first();
+            //dd($persona);
+            if($persona==null){ //no existe la persona, hay que agregarla
+                //verificamos datos del lugar
+                $domicilio=$request->calle." #".$request->num_ext." colonia ".$request->colonia;
+                $id_lugar= \DB::table('lugar')->select('id_lugar')->where('direccion','=', $domicilio)->first();
+                //dd($id_lugar);
+                if($id_lugar==null){//no existe el lugar, hay que agregarlo
+                    $dom=new lugar;
+                    $dom->id_localidad=$request->local;
+                    $dom->direccion=$domicilio;
+                    $dom->save();
+                    $id_lugar= \DB::table('lugar')->select('id_lugar')->where('direccion','=', $domicilio)->first(); //obtenemos el id de lugar ojo-*****
+                }
                 //verificamos si existe  la ocupacion
-
                 $id_ocupacion = \DB::table('ocupacion')->select('id_ocupacion')->where('nombre','=', $request->ocupacion)->first();
                 if($id_ocupacion==null){//la ocupación no existe tenemos que crearla
                     $ocupacion = new ocupacion;
@@ -118,21 +112,9 @@ class segpubcontroller extends Controller
                     $ocupacion->save();
                     //se hace nuevamente la consulta para obtener el id de la nueva profesión
                     $id_ocupacion = \DB::table('ocupacion')->select('id_ocupacion')->where('nombre','=', $request->ocupacion)->first();
-                    //procedemos a registrar la persona con los campos obtenidos
-                    $detenido = new persona;
-                    $detenido->id_lugar = $id_lugar->id_lugar;$detenido->id_ocupacion = $id_ocupacion->id_ocupacion;
-                    $detenido->apellido = $request->apellidos;$detenido->nombre = $request->nombre;
-                     $detenido->alias = $request->alias;
-                    $detenido->domicilio = $domicilio;$detenido->curp = $request->curp;
-                    $detenido->sexo = $request->sexo;$detenido->edad = $request->edad;
-                    $detenido->telefono = $request->telefono;$detenido->foto = $subir;
-                    $detenido->tipo=1;$detenido->activo_pd=0;$detenido->activo_sp=1;
-                    $detenido->save();
-                    $persona=\DB::table('persona')->select('id_persona')->where('curp','=',$request->curp)->first();
-                    //obtenemos el id de la persona recien agregada
+
                 }
-                $id_ocupacion = \DB::table('ocupacion')->select('id_ocupacion')->where('nombre','=', $request->ocupacion)->first();
-                //procedemos a registrar la persona con los campos obtenidos
+                   //procedemos a registrar la persona con los campos obtenidos
                 $detenido = new persona;
                 $detenido->id_lugar = $id_lugar->id_lugar;
                 $detenido->id_ocupacion = $id_ocupacion->id_ocupacion;
@@ -152,120 +134,46 @@ class segpubcontroller extends Controller
                 $persona=\DB::table('persona')->select('id_persona')->where('curp','=',$request->curp)->first();//obtenemos el id de la persona 
 
             }
-            //verificamos si existe  la ocupacion
-            $id_ocupacion = \DB::table('ocupacion')->select('id_ocupacion')->where('nombre','=', $request->ocupacion)->first();
-            if($id_ocupacion==null){//la ocupación no existe tenemos que crearla
-                $ocupacion = new ocupacion;
-                $ocupacion->nombre = $request->ocupacion;
-                $ocupacion->save();
-                //se hace nuevamente la consulta para obtener el id de la nueva profesión
-                $id_ocupacion = \DB::table('ocupacion')->select('id_ocupacion')->where('nombre','=', $request->ocupacion)->first();
-
-                //procedemos a registrar la persona con los campos obtenidos
-                $detenido = new persona;
-                $detenido->id_lugar = $id_lugar->id_lugar;
-                $detenido->id_ocupacion = $id_ocupacion->id_ocupacion;
-                $detenido->apellido = $request->apellidos;
-                $detenido->nombre = $request->nombre;
-                $detenido->domicilio = $domicilio;
-                $detenido->curp = $request->curp;
-                $detenido->sexo = $request->sexo;
-                $detenido->edad = $request->edad;
-                 $detenido->alias = $request->alias;
-                $detenido->telefono = $request->telefono;
-                $detenido->foto = $subir;
-                $detenido->tipo=1;
-                $detenido->activo_pd=0;
-                $detenido->activo_sp=1;
-                $detenido->save();
-                $persona=\DB::table('persona')->select('id_persona')->where('curp','=',$request->curp)->first();//obtenemos el id de la persona recien agregada
-                }
-                $id_ocupacion = \DB::table('ocupacion')->select('id_ocupacion')->where('nombre','=', $request->ocupacion)->first();
-                //dd($id_lugar);
-                //procedemos a registrar la persona con los campos obtenidos
-                $detenido = new persona;
-                $detenido->id_lugar = $id_lugar->id_lugar;
-                $detenido->id_ocupacion = $id_ocupacion->id_ocupacion;
-                $detenido->apellido = $request->apellidos;
-                $detenido->nombre = $request->nombre;
-                $detenido->domicilio = $domicilio;
-                $detenido->curp = $request->curp;
-                $detenido->sexo = $request->sexo;
-                $detenido->edad = $request->edad;
-                 $detenido->alias = $request->alias;
-                $detenido->telefono = $request->telefono;
-                $detenido->foto = $subir;
-                $detenido->tipo=1;
-                $detenido->activo_pd=0;
-                $detenido->activo_sp=1;
-                $detenido->save();
-                $persona=\DB::table('persona')->select('id_persona')->where('curp','=',$request->curp)->first();//obtenemos el id de la persona 
-
-             }
-             //dd($id_lugar);
-            //procedemos a registrar la persona con los campos obtenidos
-            $detenido = new persona;
-            $detenido->id_lugar = $id_lugar->id_lugar;
-            $detenido->id_ocupacion = $id_ocupacion->id_ocupacion;
-            $detenido->apellido = $request->apellidos;
-            $detenido->nombre = $request->nombre;
-            $detenido->domicilio = $domicilio;
-            $detenido->curp = $request->curp;
-            $detenido->sexo = $request->sexo;
-            $detenido->alias=$request->alias;
-            $detenido->edad = $request->edad;
-            $detenido->telefono = $request->telefono;
-            $detenido->foto = $subir;
-            $detenido->tipo=1;
-            $detenido->activo_pd=0;
-            $detenido->activo_sp=1;
-            $detenido->save();
-            $persona=\DB::table('persona')->select('id_persona')->where('curp','=',$request->curp)->first();//obtenemos el id de la persona 
-
-        }
-        else{ // la persona si existe hay que actualizar su foto
-            $foto=\DB::table('persona')->where('id_persona',$persona->id_persona)->update(array('foto' => $subir,'activo_sp'=>1));
-            $persona=\DB::table('persona')->where('curp','=',$request->curp)->first();
-        }
-        //verificamos si no se encuentra en calidad de detenido
-
-
-        //creamos el reporte de tipo de barandilla
-        $sesion=\DB::table('sys_sesion')->select('id_sesion')->orderby('id_sesion','desc')->first();
-        $nuevo= \DB::table('reporte')->insert([
-        'id_emergencia'=>1,
-        'tipo_aviso'=>3,
-        'id_lugar'=>1, //asegurarse que el primer lugar sea la misma DSPV
-        'fecha'=>DATE('Y-m-d H:i:s'),
-        'hora'=>Date('H:i:s'),
-        'canalizacion'=>null,
-        'detalles'=>"se remite ciudadano a los separos preventívos",
-        'id_sesion'=>$sesion->id_sesion]);
-        //obtenemos el id del reporte 
-        $id=\DB::table('reporte')->select('id_reporte')->orderby('id_reporte','desc')->first();
-
-         //dd($id);
-        //verificamos si existe un reporte de barandilla donde la persona, el id_reportey el estatus esta activo.
-        $reportebarandilla=\DB::table('reporte_barandilla')->where('id_reporte','=',$id->id_reporte)->where('id_persona','=',$persona->id_persona)->first();
-        //
-        if($reportebarandilla==null){//si no existe el reporte lo creamos
-            //dd($request->observaciones);
-            $baran=new reportebarandilla;
-            $baran->id_reporte=$id->id_reporte;
-            $baran->id_persona=$persona->id_persona;
-            $baran->causa=$request->causa;
-            $baran->lugar_arresto=$request->lugara;
-            $baran->destino=$request->destino;
-            $baran->pertenencias=$request->pertenencias;
-            $baran->estatus=1;
-            $baran->remite=$request->remite;
-            $baran->observaciones=$request->observaciones;
-            $baran->save();
-            //return back()->with('exito',true);
-            //$reportebarandilla=\DB::table('reporte_barandilla')->where('id_reporte','=',$id->id_reporte)->where('id_persona','=',$persona->id_persona)->first();
-            //dd('insertó');
-            return redirect('/consultadetenido');         
+            else{ // la persona si existe hay que actualizar su foto
+                $foto=\DB::table('persona')->where('id_persona',$persona->id_persona)->update(array('foto' => $subir,'activo_sp'=>1));
+                $persona=\DB::table('persona')->where('curp','=',$request->curp)->first();
             }
+            //creamos el reporte de tipo de barandilla
+            $sesion=\DB::table('sys_sesion')->select('id_sesion')->orderby('id_sesion','desc')->first();
+            $nuevo= \DB::table('reporte')->insert([
+            'id_emergencia'=>1,
+            'tipo_aviso'=>3,
+            'id_lugar'=>1, //asegurarse que el primer lugar sea la misma DSPV
+            'fecha'=>DATE('Y-m-d H:i:s'),
+            'hora'=>Date('H:i:s'),
+            'canalizacion'=>null,
+            'detalles'=>"se remite ciudadano a los separos preventívos",
+            'id_sesion'=>$sesion->id_sesion]);
+            //obtenemos el id del reporte 
+            $id=\DB::table('reporte')->select('id_reporte')->orderby('id_reporte','desc')->first();
+
+             //dd($id);
+            //verificamos si existe un reporte de barandilla donde la persona, el id_reportey el estatus esta activo.
+            $reportebarandilla=\DB::table('reporte_barandilla')->where('id_reporte','=',$id->id_reporte)->where('id_persona','=',$persona->id_persona)->first();
+            //
+            if($reportebarandilla==null){//si no existe el reporte lo creamos
+                //dd($request->observaciones);
+                $baran=new reportebarandilla;
+                $baran->id_reporte=$id->id_reporte;
+                $baran->id_persona=$persona->id_persona;
+                $baran->causa=$request->causa;
+                $baran->lugar_arresto=$request->lugara;
+                $baran->destino=$request->destino;
+                $baran->pertenencias=$request->pertenencias;
+                $baran->estatus=1;
+                $baran->remite=$request->remite;
+                $baran->observaciones=$request->observaciones;
+                $baran->save();
+                //return back()->with('exito',true);
+                //$reportebarandilla=\DB::table('reporte_barandilla')->where('id_reporte','=',$id->id_reporte)->where('id_persona','=',$persona->id_persona)->first();
+                //dd('insertó');
+                return redirect('/consultadetenido');         
+                }
         }
          return back()->with('error',true);
          
