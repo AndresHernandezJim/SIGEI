@@ -35,7 +35,11 @@
 				<label>Apellidos</label>
 			</div>
 			<div class="input-field col s3 m3 l3">
+
+				<input type="text" id="tags" font style="text-transform: uppercase;" pattern="^[a-zA-Z]{4}\d{6}[a-zA-Z]{6}\d{2}$" title="Curp (formato: AAAA######AAAAAA##)" name="curp" minlength="18" maxlength="18" class="validate" placeholder="AAAA999999AAAAAA99">
+
 				<input type="text"  font style="text-transform: uppercase;" pattern="^[a-zA-Z]{4}\d{6}[a-zA-Z]{6}\d{2}$" title="Curp (formato: AAAA######AAAAAA##)" name="curp" minlength="18" maxlength="18" class="validate" placeholder="AAAA999999AAAAAA99" required>
+
 				<label>CURP</label>
 			</div>
 	</div>
@@ -51,7 +55,11 @@
 			<input id="tags" type="text" name="ocupacion" class="validate" required>
 			<label id="texto" for="tags"></i>Ocupación</label>
 		 </div>
+
+		 <div id="apodo" class="input-field col s2 m2 l2">
+
 		 <div  class="input-field col s2 m2 l2">
+
 			<input id="tags" type="text" name="alias" class="validate">
 			<label id="texto" for="tags"></i>Apodo</label>
 		 </div> 
@@ -101,7 +109,11 @@
 	<div class="row">
 	    <div class = "input-field col s2 m2 l2 offset-s1 offset-m1 offset-l1">
 	        <input id="unidadremite" type="text" class="validate" name ="remite" required>
+
+	        <label for="unidadremite">Unidad que remite</label>
+
 	        <label for="unidadremite">Oficial que Remite</label>
+
 	    </div>
 	    <div class = "input-field col s8 m8 l8">
 	        <input id="lugararresto" type="text" class="validate" name ="lugara" required>
@@ -173,4 +185,26 @@
              
               document.getElementById('files').addEventListener('change', archivo, false);
       </script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script type="text/javascript">
+var tags = [
+	@foreach($personas as $val)
+	"{{$val->curp}}",
+	@endforeach
+];
+
+var nombre = [
+	@foreach($personas as $val)
+	"{{$val->nombre}}",
+	@endforeach
+];
+
+var apellido = [
+	@foreach($personas as $val)
+	"{{$val->apellido}}",
+	@endforeach
+];
+
+</script>
+<script src="/js/historial.js"></script>
 @stop

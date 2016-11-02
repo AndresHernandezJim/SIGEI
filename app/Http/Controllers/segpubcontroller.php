@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+
 use App\Http\Requests;
 use App\Helper\imagehelper;
 use App\ocupacion;
@@ -38,26 +39,41 @@ class segpubcontroller extends Controller
     }
 
     public function nueva_barandilla(){
-        $datalocal=array(
-            'localidades'=> \App\localidad::get(),
-        );
-         $data=array(
-            'ocupaciones'=> \DB::table('ocupacion')
-                ->select('id_ocupacion as id', 'nombre')
-                ->get()
-        );
-    	return view('visPoli.newBarandilla',$datalocal,$data);
+         $data1 = \DB::table('persona')
+        ->select('nombre', 'apellido', 'curp')
+        ->get();
+        //dd($data1);
+        $data = array('personas' => $data1,
+                      'localidades'=> \App\localidad::get(),
+                      'ocupaciones'=> \DB::table('ocupacion')
+                       ->select('id_ocupacion as id', 'nombre')
+                       ->get()
+                    );
+    	return view('visPoli.newBarandilla',$data);
     }
-    //================================================================================================================
+    //====git status============================================================================================================
     //================================================================================================================
     //================================================================================================================
     public function showdet(){
        $data=\DB::table('persona')
+
+            ->join('reporte_barandilla', 'persona.id_persona', '=', 'reporte_barandilla.id_persona')
+            ->select('persona.nombre',
+             'persona.apellido',
+             'persona.foto',
+             'persona.alias',
+             'reporte_barandilla.id_reporte as id',
+            'reporte_barandilla.created_at')
+            ->where('reporte_barandilla.estatus', 1)
+            ->paginate(2);
+            //dd($data->all());
+
        ->join('reporte_barandilla','persona.id_persona','=','reporte_barandilla.id_persona')
        ->select('persona.nombre', 'persona.apellido','persona.foto','persona.alias','reporte_barandilla.id_reporte as id','reporte_barandilla.created_at')
        ->where('reporte_barandilla.estatus',1)
             ->paginate(3);
            // dd($data->all());
+
         $detenido=array('detenidos'=>$data);
 
         
@@ -94,6 +110,47 @@ class segpubcontroller extends Controller
                 $dom->save();
                 $id_lugar= \DB::table('lugar')->select('id_lugar')->where('direccion','=', $domicilio)->first(); //obtenemos el id de lugar ojo-*****
                 //verificamos si existe  la ocupacion
+
+                $id_ocupacion = \DB::table('ocupacion')->select('id_ocupacion')->where('nombre','=', $request->ocupacion)->first();
+                if($id_ocupacion==null){//la ocupación no existe tenemos que crearla
+                    $ocupacion = new ocupacion;
+                    $ocupacion->nombre = $request->ocupacion;
+                    $ocupacion->save();
+                    //se hace nuevamente la consulta para obtener el id de la nueva profesión
+                    $id_ocupacion = \DB::table('ocupacion')->select('id_ocupacion')->where('nombre','=', $request->ocupacion)->first();
+                    //procedemos a registrar la persona con los campos obtenidos
+                    $detenido = new persona;
+                    $detenido->id_lugar = $id_lugar->id_lugar;$detenido->id_ocupacion = $id_ocupacion->id_ocupacion;
+                    $detenido->apellido = $request->apellidos;$detenido->nombre = $request->nombre;
+                     $detenido->alias = $request->alias;
+                    $detenido->domicilio = $domicilio;$detenido->curp = $request->curp;
+                    $detenido->sexo = $request->sexo;$detenido->edad = $request->edad;
+                    $detenido->telefono = $request->telefono;$detenido->foto = $subir;
+                    $detenido->tipo=1;$detenido->activo_pd=0;$detenido->activo_sp=1;
+                    $detenido->save();
+                    $persona=\DB::table('persona')->select('id_persona')->where('curp','=',$request->curp)->first();
+                    //obtenemos el id de la persona recien agregada
+                }
+                $id_ocupacion = \DB::table('ocupacion')->select('id_ocupacion')->where('nombre','=', $request->ocupacion)->first();
+                //procedemos a registrar la persona con los campos obtenidos
+                $detenido = new persona;
+                $detenido->id_lugar = $id_lugar->id_lugar;
+                $detenido->id_ocupacion = $id_ocupacion->id_ocupacion;
+                $detenido->apellido = $request->apellidos;
+                $detenido->nombre = $request->nombre;
+                $detenido->domicilio = $domicilio;
+                $detenido->curp = $request->curp;
+                $detenido->sexo = $request->sexo;
+                $detenido->edad = $request->edad;
+                $detenido->alias = $request->alias;
+                $detenido->telefono = $request->telefono;
+                $detenido->foto = $subir;
+                $detenido->tipo=1;
+                $detenido->activo_pd=0;
+                $detenido->activo_sp=1;
+                $detenido->save();
+                $persona=\DB::table('persona')->select('id_persona')->where('curp','=',$request->curp)->first();//obtenemos el id de la persona 
+
             }
             //verificamos si existe  la ocupacion
             $id_ocupacion = \DB::table('ocupacion')->select('id_ocupacion')->where('nombre','=', $request->ocupacion)->first();
@@ -103,6 +160,47 @@ class segpubcontroller extends Controller
                 $ocupacion->save();
                 //se hace nuevamente la consulta para obtener el id de la nueva profesión
                 $id_ocupacion = \DB::table('ocupacion')->select('id_ocupacion')->where('nombre','=', $request->ocupacion)->first();
+
+                //procedemos a registrar la persona con los campos obtenidos
+                $detenido = new persona;
+                $detenido->id_lugar = $id_lugar->id_lugar;
+                $detenido->id_ocupacion = $id_ocupacion->id_ocupacion;
+                $detenido->apellido = $request->apellidos;
+                $detenido->nombre = $request->nombre;
+                $detenido->domicilio = $domicilio;
+                $detenido->curp = $request->curp;
+                $detenido->sexo = $request->sexo;
+                $detenido->edad = $request->edad;
+                 $detenido->alias = $request->alias;
+                $detenido->telefono = $request->telefono;
+                $detenido->foto = $subir;
+                $detenido->tipo=1;
+                $detenido->activo_pd=0;
+                $detenido->activo_sp=1;
+                $detenido->save();
+                $persona=\DB::table('persona')->select('id_persona')->where('curp','=',$request->curp)->first();//obtenemos el id de la persona recien agregada
+                }
+                $id_ocupacion = \DB::table('ocupacion')->select('id_ocupacion')->where('nombre','=', $request->ocupacion)->first();
+                //dd($id_lugar);
+                //procedemos a registrar la persona con los campos obtenidos
+                $detenido = new persona;
+                $detenido->id_lugar = $id_lugar->id_lugar;
+                $detenido->id_ocupacion = $id_ocupacion->id_ocupacion;
+                $detenido->apellido = $request->apellidos;
+                $detenido->nombre = $request->nombre;
+                $detenido->domicilio = $domicilio;
+                $detenido->curp = $request->curp;
+                $detenido->sexo = $request->sexo;
+                $detenido->edad = $request->edad;
+                 $detenido->alias = $request->alias;
+                $detenido->telefono = $request->telefono;
+                $detenido->foto = $subir;
+                $detenido->tipo=1;
+                $detenido->activo_pd=0;
+                $detenido->activo_sp=1;
+                $detenido->save();
+                $persona=\DB::table('persona')->select('id_persona')->where('curp','=',$request->curp)->first();//obtenemos el id de la persona 
+
              }
              //dd($id_lugar);
             //procedemos a registrar la persona con los campos obtenidos
@@ -123,6 +221,7 @@ class segpubcontroller extends Controller
             $detenido->activo_sp=1;
             $detenido->save();
             $persona=\DB::table('persona')->select('id_persona')->where('curp','=',$request->curp)->first();//obtenemos el id de la persona 
+
         }
         else{ // la persona si existe hay que actualizar su foto
             $foto=\DB::table('persona')->where('id_persona',$persona->id_persona)->update(array('foto' => $subir,'activo_sp'=>1));
@@ -199,6 +298,95 @@ class segpubcontroller extends Controller
 
     public function liberar(Request $request){
          $reporte = \DB::table('reporte_barandilla')->where('id_reporte', '=', $request->id_rep)->update(['estatus' => 3]);
+    }
+
+    public function bus_per(){
+
+        $data1 = \DB::table('persona')
+        ->select('nombre', 'apellido', 'curp')
+        ->get();
+        //dd($data1);
+        $persona = array('personas' => $data1,);
+        return view('visPoli.historial', $persona);
+    }
+
+    public function detalleper_bara(Request $request){
+        
+        //dd($request->all());
+
+        if (!empty($request->curp)) {
+           $persona=\DB::table('persona')
+            ->join('ocupacion','ocupacion.id_ocupacion','=','persona.id_ocupacion')
+            ->join('lugar','persona.id_lugar','=','lugar.id_lugar')->join('localidad','localidad.id_localidad','=','lugar.id_localidad')
+            ->select(array('persona.id_persona as id','persona.nombre','persona.tipo','persona.apellido','persona.domicilio','persona.curp','persona.sexo','ocupacion.nombre as ocupacion','persona.telefono','persona.foto','localidad.nombre as localidad'))
+            ->where('persona.curp', $request->curp)
+            ->first();
+            //dd($persona->id);
+             $numdet=\DB::table('persona as p')
+            ->select(\DB::raw('COUNT(r.id_persona) as detenciones'), 'p.id_persona')
+            ->join('reporte_barandilla as r', 'r.id_persona', '=', 'p.id_persona')
+            ->where('r.id_persona', $persona->id)
+            ->groupBY('r.id_persona')
+            ->first();
+
+            if($persona->sexo==1){
+                    $persona->sexo="Masculino";
+                }
+            if($persona->sexo==2){
+                    $persona->sexo="Femenino";
+                }
+            //se modificara el valor de tipo de la tabla persona por el numero de veses que esta, a sido encerrada
+              $persona->tipo=$numdet->detenciones;
+            //dd($persona);  
+            $detencion=\DB::table('reporte_barandilla')
+           ->select('id_reporte as id','created_at as fecha')
+           ->where('id_persona', $persona->id)
+           ->paginate(4);  
+            //dd($detencion, $persona);
+
+             $data= array('personax' => $persona,
+                          'detenciones' => $detencion,
+                        );
+
+             return view('visPoli.hist_per', $data);
+        }else{
+
+            $fragmento = explode(", ", $request->nombre);
+            //dd($fragmento[0]."----".$fragmento[1]);
+             $persona=\DB::table('persona')
+            ->join('ocupacion','ocupacion.id_ocupacion','=','persona.id_ocupacion')
+            ->join('lugar','persona.id_lugar','=','lugar.id_lugar')->join('localidad','localidad.id_localidad','=','lugar.id_localidad')
+            ->select(array('persona.id_persona as id','persona.nombre','persona.tipo','persona.apellido','persona.domicilio','persona.curp','persona.sexo','ocupacion.nombre as ocupacion','persona.telefono','persona.foto','localidad.nombre as localidad'))
+            ->where('persona.nombre', $fragmento[0])
+            ->where('persona.apellido', $fragmento[1])
+            ->first();
+
+             $numdet=\DB::table('reporte_barandilla')
+            ->select(\DB::raw('COUNT(id_persona) as detenciones, id_persona'))
+            ->where('id_persona', $persona->id)
+            ->groupBY('id_persona')
+            ->first();
+
+             if($persona->sexo==1){
+                    $persona->sexo="Masculino";
+                }
+                if($persona->sexo==2){
+                    $persona->sexo="Femenino";
+                }
+            $persona->tipo=$numdet->detenciones;
+
+           $detencion=\DB::table('reporte_barandilla')
+           ->select('id_reporte as id','created_at as fecha')
+           ->where('id_persona', $persona->id)
+           ->paginate(4);  
+            //dd($detencion, $persona);
+            $data= array('personax' => $persona,
+                          'detenciones' => $detencion,
+                        );
+
+             return view('visPoli.hist_per', $data);
+   
+        } 
     }
 
 

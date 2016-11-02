@@ -37,7 +37,7 @@
 <li class="divider"></li>
 <li><a href="/consultadetenido">Consultar Interno</a></li>
 <li class="divider"></li>
-<li><a href="/consultaaseguramiento">Aseguramientos</a></li>
+<li><a href="/segpub/barandilla/historial">Aseguramientos</a></li>
 <li class="divider"></li>
 </ul>
 <nav class="grey darken-4">

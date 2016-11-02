@@ -115,13 +115,13 @@ class prevdelcontroller extends Controller
         $data=array(
             'ocupaciones'=> \DB::table('ocupacion')
                 ->select('id_ocupacion as id', 'nombre')
-                ->get()
+                ->get(),
         );
 
         $data2=array(
             'personas'=> \DB::table('persona')
                 ->select('id_persona as id', 'apellido', 'nombre', 'curp', 'domicilio')
-                ->get()
+                ->get(),
         );
        
         $muni=array(
