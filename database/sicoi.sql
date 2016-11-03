@@ -228,6 +228,7 @@ CREATE TABLE `reporte_barandilla` (
   `lugar_arresto` varchar(400) DEFAULT NULL,
   `aseguramiento` varchar(400) DEFAULT 'No se registró ningún material peligroso o ilícito',
   `destino` int(11) DEFAULT NULL,
+  `foto` varchar(255) NOT NULL DEFAULT 'images/default.png',
   KEY `fk_persona` (`id_persona`),
   KEY `fk_reporte` (`id_reporte`),
   CONSTRAINT `fk_persona` FOREIGN KEY (`id_persona`) REFERENCES `persona` (`id_persona`) ON UPDATE CASCADE,

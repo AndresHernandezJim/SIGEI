@@ -174,7 +174,6 @@ class prevdelcontroller extends Controller
                 $paciente->sexo = $request->sexo;
                 $paciente->edad = $request->edad;
                 $paciente->telefono = $request->telefono;
-                $paciente->foto = "Null";
                 $paciente->tipo=2;
                 $paciente->activo_pd=1;
                 $paciente->activo_sp=0;
@@ -195,7 +194,6 @@ class prevdelcontroller extends Controller
                 $paciente->sexo = $request->sexo;
                 $paciente->edad = $request->edad;
                 $paciente->telefono = $request->telefono;
-                $paciente->foto = "Null";
                 $paciente->tipo=2;
                 $paciente->activo_pd=1;
                 $paciente->activo_sp=0;
@@ -293,9 +291,7 @@ class prevdelcontroller extends Controller
         //dd($request->all());
         $institucion = \DB::table('institucion')->where('id_institucion', '=', $request->id_ins)->update(['activo_pd' => 0]);
     }
-/*==================================================================================================================================
-====================================================================================================================================
-====================================================================================================================================*/
+
     public function showInst(){
             $data = \DB::table('institucion')
             ->select('id_institucion as id', 'nombre', 'telefono')

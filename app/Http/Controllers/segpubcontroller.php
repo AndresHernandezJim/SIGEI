@@ -60,7 +60,7 @@ class segpubcontroller extends Controller
             ->join('reporte_barandilla', 'persona.id_persona', '=', 'reporte_barandilla.id_persona')
             ->select('persona.nombre',
              'persona.apellido',
-             'persona.foto',
+             'reporte_barandilla.foto',
              'persona.alias',
              'reporte_barandilla.id_reporte as id',
             'reporte_barandilla.created_at')
@@ -79,15 +79,7 @@ class segpubcontroller extends Controller
          //dd($guardado);
         if($guardado==0){
 
-            //subimos la foto
-            $file = $request->file('files');
-            $file = $file[0];
-            //dd($file);
-            if ($request->hasFile('files')) {
-                //  mandamos subir el archivo con el upload   
-                $subir=imagehelper::upload($file);
-                //dd($subir);
-            }
+           
 
             //verificamos si existe la persona;
             $persona=\DB::table('persona')->select('id_persona')->where('curp','=',$request->curp)->first();
@@ -126,7 +118,6 @@ class segpubcontroller extends Controller
                 $detenido->edad = $request->edad;
                 $detenido->alias = $request->alias;
                 $detenido->telefono = $request->telefono;
-                $detenido->foto = $subir;
                 $detenido->tipo=1;
                 $detenido->activo_pd=0;
                 $detenido->activo_sp=1;
@@ -151,8 +142,15 @@ class segpubcontroller extends Controller
             'id_sesion'=>$sesion->id_sesion]);
             //obtenemos el id del reporte 
             $id=\DB::table('reporte')->select('id_reporte')->orderby('id_reporte','desc')->first();
-
-             //dd($id);
+             //subimos la foto
+            $file = $request->file('files');
+            $file = $file[0];
+            //dd($file);
+            if ($request->hasFile('files')) {
+                //  mandamos subir el archivo con el upload   
+                $subir=imagehelper::upload($file);
+                //dd($subir);
+            }
             //verificamos si existe un reporte de barandilla donde la persona, el id_reportey el estatus esta activo.
             $reportebarandilla=\DB::table('reporte_barandilla')->where('id_reporte','=',$id->id_reporte)->where('id_persona','=',$persona->id_persona)->first();
             //
@@ -168,6 +166,7 @@ class segpubcontroller extends Controller
                 $baran->estatus=1;
                 $baran->remite=$request->remite;
                 $baran->observaciones=$request->observaciones;
+                $baran->foto=$subir;
                 $baran->save();
                 //return back()->with('exito',true);
                 //$reportebarandilla=\DB::table('reporte_barandilla')->where('id_reporte','=',$id->id_reporte)->where('id_persona','=',$persona->id_persona)->first();
@@ -184,7 +183,7 @@ class segpubcontroller extends Controller
         $data=\DB::table('persona as p')->join('reporte_barandilla as rb','p.id_persona','=','rb.id_persona')
             ->join('ocupacion as o','o.id_ocupacion','=','p.id_ocupacion')
             ->join('lugar as l','p.id_lugar','=','l.id_lugar')->join('localidad as l2','l2.id_localidad','=','l.id_localidad')
-            ->select(array('p.nombre','p.apellido','p.domicilio','p.curp','p.sexo','.alias','o.nombre as ocupacion','p.telefono','p.edad','p.foto','rb.causa','rb.pertenencias','rb.observaciones','l2.nombre as localidad','rb.remite','rb.destino','rb.lugar_arresto','rb.aseguramiento'))
+            ->select(array('p.nombre','p.apellido','p.domicilio','p.curp','p.sexo','.alias','o.nombre as ocupacion','p.telefono','p.edad','rb.foto','rb.causa','rb.pertenencias','rb.observaciones','l2.nombre as localidad','rb.remite','rb.destino','rb.lugar_arresto','rb.aseguramiento'))
             ->where('rb.id_reporte','=',$id)->first();
             if($data->sexo==1){
                 $data->sexo="Masculino";
@@ -226,7 +225,7 @@ class segpubcontroller extends Controller
            $persona=\DB::table('persona')
             ->join('ocupacion','ocupacion.id_ocupacion','=','persona.id_ocupacion')
             ->join('lugar','persona.id_lugar','=','lugar.id_lugar')->join('localidad','localidad.id_localidad','=','lugar.id_localidad')
-            ->select(array('persona.id_persona as id','persona.nombre','persona.tipo','persona.apellido','persona.domicilio','persona.curp','persona.sexo','ocupacion.nombre as ocupacion','persona.telefono','persona.foto','localidad.nombre as localidad'))
+            ->select(array('persona.id_persona as id','persona.nombre','persona.tipo','persona.apellido','persona.domicilio','persona.curp','persona.sexo','ocupacion.nombre as ocupacion','persona.telefono','localidad.nombre as localidad'))
             ->where('persona.curp', $request->curp)
             ->first();
             //dd($persona->id);
@@ -264,7 +263,7 @@ class segpubcontroller extends Controller
              $persona=\DB::table('persona')
             ->join('ocupacion','ocupacion.id_ocupacion','=','persona.id_ocupacion')
             ->join('lugar','persona.id_lugar','=','lugar.id_lugar')->join('localidad','localidad.id_localidad','=','lugar.id_localidad')
-            ->select(array('persona.id_persona as id','persona.nombre','persona.tipo','persona.apellido','persona.domicilio','persona.curp','persona.sexo','ocupacion.nombre as ocupacion','persona.telefono','persona.foto','localidad.nombre as localidad'))
+            ->select(array('persona.id_persona as id','persona.nombre','persona.tipo','persona.apellido','persona.domicilio','persona.curp','persona.sexo','ocupacion.nombre as ocupacion','persona.telefono','localidad.nombre as localidad'))
             ->where('persona.nombre', $fragmento[0])
             ->where('persona.apellido', $fragmento[1])
             ->first();
