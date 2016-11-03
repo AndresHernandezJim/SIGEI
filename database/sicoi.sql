@@ -26,7 +26,7 @@ CREATE TABLE `emergencia` (
   PRIMARY KEY (`id`),
   KEY `fk_emergencia_t_reporte` (`tipo`) USING BTREE,
   CONSTRAINT `emergencia_ibfk_1` FOREIGN KEY (`tipo`) REFERENCES `tipo_reporte` (`id_tiporep`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for estado
@@ -41,7 +41,7 @@ CREATE TABLE `estado` (
   KEY `fk_estado` (`id_pais`) USING BTREE,
   KEY `id_estado_2` (`id_estado`,`id_pais`) USING BTREE,
   CONSTRAINT `estado_ibfk_1` FOREIGN KEY (`id_pais`) REFERENCES `pais` (`id_pais`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for institucion
@@ -58,7 +58,7 @@ CREATE TABLE `institucion` (
   PRIMARY KEY (`id_institucion`),
   KEY `institucion_ibfk_1` (`id_lugar`) USING BTREE,
   CONSTRAINT `institucion_ibfk_1` FOREIGN KEY (`id_lugar`) REFERENCES `lugar` (`id_lugar`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for localidad
@@ -71,7 +71,7 @@ CREATE TABLE `localidad` (
   PRIMARY KEY (`id_localidad`),
   KEY `fk_localidad` (`id_municipio`) USING BTREE,
   CONSTRAINT `localidad_ibfk_1` FOREIGN KEY (`id_municipio`) REFERENCES `municipio` (`id_municipio`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for lugar
@@ -86,7 +86,7 @@ CREATE TABLE `lugar` (
   PRIMARY KEY (`id_lugar`),
   KEY `fk_lugar1` (`id_localidad`) USING BTREE,
   CONSTRAINT `lugar_ibfk_1` FOREIGN KEY (`id_localidad`) REFERENCES `localidad` (`id_localidad`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for marca_vehiculo
@@ -123,7 +123,7 @@ CREATE TABLE `municipio` (
   PRIMARY KEY (`id_municipio`),
   KEY `fk_municipio` (`id_estado`) USING BTREE,
   CONSTRAINT `municipio_ibfk_1` FOREIGN KEY (`id_estado`) REFERENCES `estado` (`id_estado`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for ocupacion
@@ -133,7 +133,7 @@ CREATE TABLE `ocupacion` (
   `id_ocupacion` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(150) NOT NULL,
   PRIMARY KEY (`id_ocupacion`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for pais
@@ -143,7 +143,7 @@ CREATE TABLE `pais` (
   `id_pais` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(255) NOT NULL,
   PRIMARY KEY (`id_pais`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for persona
@@ -174,7 +174,7 @@ CREATE TABLE `persona` (
   KEY `persona_ibfk_2` (`id_lugar`) USING BTREE,
   CONSTRAINT `persona_ibfk_1` FOREIGN KEY (`id_ocupacion`) REFERENCES `ocupacion` (`id_ocupacion`) ON UPDATE CASCADE,
   CONSTRAINT `persona_ibfk_2` FOREIGN KEY (`id_lugar`) REFERENCES `lugar` (`id_lugar`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for privilegio
@@ -184,7 +184,7 @@ CREATE TABLE `privilegio` (
   `idprivilegio` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(255) NOT NULL,
   PRIMARY KEY (`idprivilegio`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for reporte
@@ -209,7 +209,7 @@ CREATE TABLE `reporte` (
   CONSTRAINT `reporte_ibfk_2` FOREIGN KEY (`id_lugar`) REFERENCES `lugar` (`id_lugar`) ON UPDATE CASCADE,
   CONSTRAINT `reporte_ibfk_3` FOREIGN KEY (`id_sesion`) REFERENCES `sys_sesion` (`id_sesion`) ON UPDATE CASCADE,
   CONSTRAINT `reporte_ibfk_4` FOREIGN KEY (`tipo_aviso`) REFERENCES `tipo_aviso` (`id_tipo`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for reporte_barandilla
@@ -300,7 +300,7 @@ CREATE TABLE `sesioninstit` (
   KEY `fk_institucion` (`id_institucion`),
   CONSTRAINT `fk_institucion` FOREIGN KEY (`id_institucion`) REFERENCES `institucion` (`id_institucion`) ON UPDATE CASCADE,
   CONSTRAINT `fk_usuario` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for sys_sesion
@@ -315,7 +315,7 @@ CREATE TABLE `sys_sesion` (
   PRIMARY KEY (`id_sesion`),
   KEY `fk_sesion_usuario` (`id_usuario`) USING BTREE,
   CONSTRAINT `sys_sesion_ibfk_1` FOREIGN KEY (`id_usuario`) REFERENCES `usuario` (`id_usuario`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for tipo_aviso
@@ -325,7 +325,7 @@ CREATE TABLE `tipo_aviso` (
   `id_tipo` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(255) NOT NULL,
   PRIMARY KEY (`id_tipo`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for tipo_reporte
@@ -335,7 +335,7 @@ CREATE TABLE `tipo_reporte` (
   `id_tiporep` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_tiporep`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for tipo_vehiculo
@@ -363,7 +363,7 @@ CREATE TABLE `usuario` (
   PRIMARY KEY (`id_usuario`),
   KEY `fk_usuario_priv` (`idprivilegio`) USING BTREE,
   CONSTRAINT `usuario_ibfk_1` FOREIGN KEY (`idprivilegio`) REFERENCES `privilegio` (`idprivilegio`) ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 -- ----------------------------
 -- Table structure for vehiculo
