@@ -135,7 +135,6 @@
 		</div>
 	</div>
 </form>
-
 @stop
 @section('script')
 	<script>

@@ -62,7 +62,7 @@
 					{{$detencion->fecha}}
 				</td>
 				<td>
-					<a href="/predel/personas/sesion/{{$detencion->id}}" class="waves-effect waves-light btn">Ver</a>
+					<a href="/segpub/personas/detencion/{{$detencion->id}}" class="waves-effect waves-light btn">Ver</a>
 				</td>
 			</tr>
 		@endforeach

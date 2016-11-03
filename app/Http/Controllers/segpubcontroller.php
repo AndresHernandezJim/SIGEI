@@ -78,9 +78,6 @@ class segpubcontroller extends Controller
          $guardado=\DB::table('reporte_barandilla as rb')->join('persona as p','rb.id_persona','=','p.id_persona')->where('p.curp','=',$request->curp)->where('rb.estatus','=',1)->count();
          //dd($guardado);
         if($guardado==0){
-
-           
-
             //verificamos si existe la persona;
             $persona=\DB::table('persona')->select('id_persona')->where('curp','=',$request->curp)->first();
             //dd($persona);
@@ -183,7 +180,7 @@ class segpubcontroller extends Controller
         $data=\DB::table('persona as p')->join('reporte_barandilla as rb','p.id_persona','=','rb.id_persona')
             ->join('ocupacion as o','o.id_ocupacion','=','p.id_ocupacion')
             ->join('lugar as l','p.id_lugar','=','l.id_lugar')->join('localidad as l2','l2.id_localidad','=','l.id_localidad')
-            ->select(array('p.nombre','p.apellido','p.domicilio','p.curp','p.sexo','.alias','o.nombre as ocupacion','p.telefono','p.edad','rb.foto','rb.causa','rb.pertenencias','rb.observaciones','l2.nombre as localidad','rb.remite','rb.destino','rb.lugar_arresto','rb.aseguramiento'))
+            ->select(array('p.id_persona as id','p.nombre','p.apellido','p.domicilio','p.curp','p.sexo','.alias','o.nombre as ocupacion','p.telefono','p.edad','rb.foto','rb.causa','rb.pertenencias','rb.observaciones','l2.nombre as localidad','rb.remite','rb.destino','rb.lugar_arresto','rb.aseguramiento'))
             ->where('rb.id_reporte','=',$id)->first();
             if($data->sexo==1){
                 $data->sexo="Masculino";
@@ -201,6 +198,30 @@ class segpubcontroller extends Controller
             $datos=array('info'=>$data);
         //dd($data);
         return view('visPoli.viewdet2',$datos);
+    }
+    public function showdet3($id){
+
+        $data=\DB::table('persona as p')->join('reporte_barandilla as rb','p.id_persona','=','rb.id_persona')
+            ->join('ocupacion as o','o.id_ocupacion','=','p.id_ocupacion')
+            ->join('lugar as l','p.id_lugar','=','l.id_lugar')->join('localidad as l2','l2.id_localidad','=','l.id_localidad')
+            ->select(array('p.id_persona as id','p.nombre','p.apellido','p.domicilio','p.curp','p.sexo','.alias','o.nombre as ocupacion','p.telefono','p.edad','rb.foto','rb.causa','rb.pertenencias','rb.observaciones','l2.nombre as localidad','rb.remite','rb.destino','rb.lugar_arresto','rb.aseguramiento'))
+            ->where('rb.id_reporte','=',$id)->first();
+            if($data->sexo==1){
+                $data->sexo="Masculino";
+            }
+            if($data->sexo==2){
+                $data->sexo="Femenino";
+            }
+            if($data->destino==1){
+                $data->destino="Remitído al Ministerio Público";
+            }
+            if($data->destino==2){
+                $data->destino="Remitído a los Separos Preventivos";
+            }
+
+            $datos=array('info'=>$data);
+        //dd($data);
+        return view('visPoli.viewdet3',$datos);
     }
 
     public function liberar(Request $request){
@@ -222,50 +243,42 @@ class segpubcontroller extends Controller
         //dd($request->all());
 
         if (!empty($request->curp)) {
-           $persona=\DB::table('persona')
-            ->join('ocupacion','ocupacion.id_ocupacion','=','persona.id_ocupacion')
-            ->join('lugar','persona.id_lugar','=','lugar.id_lugar')->join('localidad','localidad.id_localidad','=','lugar.id_localidad')
-            ->select(array('persona.id_persona as id','persona.nombre','persona.tipo','persona.apellido','persona.domicilio','persona.curp','persona.sexo','ocupacion.nombre as ocupacion','persona.telefono','localidad.nombre as localidad'))
-            ->where('persona.curp', $request->curp)
+            $persona=\DB::table('persona')
+            ->select('id_persona as id')
+            ->where('curp', $request->curp)
             ->first();
-            //dd($persona->id);
-             $numdet=\DB::table('persona as p')
-            ->select(\DB::raw('COUNT(r.id_persona) as detenciones'), 'p.id_persona')
-            ->join('reporte_barandilla as r', 'r.id_persona', '=', 'p.id_persona')
-            ->where('r.id_persona', $persona->id)
-            ->groupBY('r.id_persona')
-            ->first();
-
-            if($persona->sexo==1){
-                    $persona->sexo="Masculino";
-                }
-            if($persona->sexo==2){
-                    $persona->sexo="Femenino";
-                }
-            //se modificara el valor de tipo de la tabla persona por el numero de veses que esta, a sido encerrada
-              $persona->tipo=$numdet->detenciones;
-            //dd($persona);  
-            $detencion=\DB::table('reporte_barandilla')
-           ->select('id_reporte as id','created_at as fecha')
-           ->where('id_persona', $persona->id)
-           ->paginate(4);  
-            //dd($detencion, $persona);
-
-             $data= array('personax' => $persona,
-                          'detenciones' => $detencion,
-                        );
-
-             return view('visPoli.hist_per', $data);
+            return redirect('/segpub/barandilla/detperx/'.$persona->id);
+          
         }else{
 
             $fragmento = explode(", ", $request->nombre);
             //dd($fragmento[0]."----".$fragmento[1]);
              $persona=\DB::table('persona')
+            ->select('id_persona as id')
+            ->where('persona.nombre', $fragmento[0])
+            ->where('persona.apellido', $fragmento[1])
+            ->first();
+            return redirect('/segpub/barandilla/detperx/'.$persona->id);
+        } 
+    }
+    public function newrepvial(){
+        $datalocal=array(
+            'localidades'=> \App\localidad::get(),
+
+        );
+        $dataesta=array(
+            'estados'=>\App\estado::get()
+            );
+       // dd($data);
+        return view('visPoli.newrepvial',$datalocal,$dataesta);
+    }
+
+    public function detalleper_bara2($id){
+        $persona=\DB::table('persona')
             ->join('ocupacion','ocupacion.id_ocupacion','=','persona.id_ocupacion')
             ->join('lugar','persona.id_lugar','=','lugar.id_lugar')->join('localidad','localidad.id_localidad','=','lugar.id_localidad')
             ->select(array('persona.id_persona as id','persona.nombre','persona.tipo','persona.apellido','persona.domicilio','persona.curp','persona.sexo','ocupacion.nombre as ocupacion','persona.telefono','localidad.nombre as localidad'))
-            ->where('persona.nombre', $fragmento[0])
-            ->where('persona.apellido', $fragmento[1])
+            ->where('persona.id_persona', $id)
             ->first();
 
              $numdet=\DB::table('reporte_barandilla')
@@ -292,10 +305,7 @@ class segpubcontroller extends Controller
                         );
 
              return view('visPoli.hist_per', $data);
-   
-        } 
     }
-
 
  }
 

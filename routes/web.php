@@ -23,16 +23,18 @@ Route::group(['middleware' => 'policia'], function(){
 	Route::get('/poli', 'segpubcontroller@index');
 
 	Route::get('/registroincidenciasp', 'segpubcontroller@nueva_incidencia_sp');
-	
+	Route::get('/registroincidenciavial','segpubcontroller@newrepvial');
 	Route::get('/registrobarandilla','segpubcontroller@nueva_barandilla');
 	Route::post('/savebarandilla','segpubcontroller@guardabarandilla');
 	Route::get('/logoutp', 'segpubcontroller@logout');
 	Route::get('/consultadetenido','segpubcontroller@showdet');
 	Route::get('/segpub/barandilla/info/{id}','segpubcontroller@showdet2');
 	Route::post('/segpub/ajax/liberar', 'segpubcontroller@liberar');
-
+	Route::get('/regreso','segpubcontroller@return');
+	Route::get('/segpub/personas/detencion/{id}','segpubcontroller@showdet3');
 	Route::get('/segpub/barandilla/historial', 'segpubcontroller@bus_per');
 	Route::post('/segpub/barandilla/detper','segpubcontroller@detalleper_bara');
+	Route::get('/segpub/barandilla/detperx/{id}', 'segpubcontroller@detalleper_bara2');
 
 
 	
