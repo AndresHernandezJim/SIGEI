@@ -15,6 +15,7 @@ use App\Helper\barandilla;
 use App\reportebarandilla;
 use App\emergencia;
 
+
 class segpubcontroller extends Controller
 {   
     public function index(){
@@ -262,6 +263,9 @@ class segpubcontroller extends Controller
         } 
     }
     public function newrepvial(){
+        $dataecho=array(
+            'emergencias'=>\DB::table('emergencia')->select(array('id','nombre'))->where('tipo',2)->get(),
+            );
         $datalocal=array(
             'localidades'=> \App\localidad::get(),
 
@@ -270,7 +274,8 @@ class segpubcontroller extends Controller
             'estados'=>\App\estado::get()
             );
        // dd($data);
-        return view('visPoli.newrepvial',$datalocal,$dataesta);
+       // dd($dataecho);
+        return view('visPoli.newrepvial',$datalocal,$dataesta,$dataecho);
     }
 
     public function detalleper_bara2($id){

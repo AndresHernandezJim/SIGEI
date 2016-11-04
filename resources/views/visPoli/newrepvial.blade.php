@@ -97,3 +97,7 @@
 @include('vispoli.modales')
 
 @stop
+@section('script')
+
+<script type="text/javascript" src="/js/vialidad.js"></script>
+@stop
