@@ -234,7 +234,11 @@ class prevdelcontroller extends Controller
         $consultado = array('pasiente' => $persona, );
 
         //proceso para obtener las sesiones de paciente
-        $sesiones = \DB::table('sesion')->select('id_sesion as id','fecha')->where('id_persona', '=', $id )->paginate(5);
+        $sesiones = \DB::table('sesion')
+        ->select('id_sesion as id','fecha')
+        ->where('id_persona', '=', $id )
+        ->orderBy('id_sesion', 'desc')
+        ->paginate(5);
        
         $terapias = array('sesiones' => $sesiones, );
         return view('visPsico.show_info', $consultado, $terapias);
@@ -317,6 +321,7 @@ class prevdelcontroller extends Controller
          $sesiones = \DB::table('sesioninstit')
          ->select('id_sesion as id','fecha')
          ->where('id_institucion', '=', $id )
+         ->orderBy('id_sesion', 'desc')
          ->paginate(3);
         $visitas= array('visitas' => $sesiones,);
 

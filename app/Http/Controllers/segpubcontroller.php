@@ -29,14 +29,17 @@ class segpubcontroller extends Controller
     }
 
     public function nueva_incidencia_sp(){
-        $datalocal=array(
-            'localidades'=> \App\localidad::get(),
-
-        );
-        $dataemergencia = array(
-                'emergencias' => \App\emergencia::get(),
-            );
-        return view('visPoli.registroincidenciasp',$datalocal, $dataemergencia);
+      
+        $data1 = \DB::table('persona')
+        ->select('nombre', 'apellido', 'curp')
+        ->get();
+        //dd($data1);
+        $persona = array('personas' => $data1,
+                        'emergencias' => \App\emergencia::get()->where('tipo','<>',2)->where('tipo','<>',3)->where('id','<>',1),
+                        'localidades'=> \App\localidad::get(),
+                        'ocupaciones'=>\App\ocupacion::get(),
+                        );
+        return view('visPoli.registroincidenciasp',$persona);
     }
 
     public function nueva_barandilla(){
@@ -44,11 +47,11 @@ class segpubcontroller extends Controller
         ->select('nombre', 'apellido', 'curp')
         ->get();
         //dd($data1);
+
         $data = array('personas' => $data1,
                       'localidades'=> \App\localidad::get(),
-                      'ocupaciones'=> \DB::table('ocupacion')
-                       ->select('id_ocupacion as id', 'nombre')
-                       ->get()
+                      'ocupaciones'=> \DB::table('ocupacion')->select('id_ocupacion as id', 'nombre')->get(),
+                       'emergencias' => \App\emergencia::get()->where('tipo','<>',2)->where('tipo','<>',3)->where('id','<>',1),
                     );
     	return view('visPoli.newBarandilla',$data);
     }
@@ -181,7 +184,8 @@ class segpubcontroller extends Controller
         $data=\DB::table('persona as p')->join('reporte_barandilla as rb','p.id_persona','=','rb.id_persona')
             ->join('ocupacion as o','o.id_ocupacion','=','p.id_ocupacion')
             ->join('lugar as l','p.id_lugar','=','l.id_lugar')->join('localidad as l2','l2.id_localidad','=','l.id_localidad')
-            ->select(array('p.id_persona as id','p.nombre','p.apellido','p.domicilio','p.curp','p.sexo','.alias','o.nombre as ocupacion','p.telefono','p.edad','rb.foto','rb.causa','rb.pertenencias','rb.observaciones','l2.nombre as localidad','rb.remite','rb.destino','rb.lugar_arresto','rb.aseguramiento'))
+            ->join('emergencia as e','e.id','=','rb.causa')
+            ->select(array('p.id_persona as id','p.nombre','p.apellido','p.domicilio','p.curp','p.sexo','.alias','o.nombre as ocupacion','p.telefono','p.edad','rb.foto','e.nombre as causa','rb.pertenencias','rb.observaciones','l2.nombre as localidad','rb.remite','rb.destino','rb.lugar_arresto','rb.aseguramiento'))
             ->where('rb.id_reporte','=',$id)->first();
             if($data->sexo==1){
                 $data->sexo="Masculino";
@@ -205,7 +209,8 @@ class segpubcontroller extends Controller
         $data=\DB::table('persona as p')->join('reporte_barandilla as rb','p.id_persona','=','rb.id_persona')
             ->join('ocupacion as o','o.id_ocupacion','=','p.id_ocupacion')
             ->join('lugar as l','p.id_lugar','=','l.id_lugar')->join('localidad as l2','l2.id_localidad','=','l.id_localidad')
-            ->select(array('p.id_persona as id','p.nombre','p.apellido','p.domicilio','p.curp','p.sexo','.alias','o.nombre as ocupacion','p.telefono','p.edad','rb.foto','rb.causa','rb.pertenencias','rb.observaciones','l2.nombre as localidad','rb.remite','rb.destino','rb.lugar_arresto','rb.aseguramiento'))
+             ->join('emergencia as e','e.id','=','rb.causa')
+            ->select(array('p.id_persona as id','p.nombre','p.apellido','p.domicilio','p.curp','p.sexo','.alias','o.nombre as ocupacion','p.telefono','p.edad','rb.foto','e.nombre as causa','rb.pertenencias','rb.observaciones','l2.nombre as localidad','rb.remite','rb.destino','rb.lugar_arresto','rb.aseguramiento'))
             ->where('rb.id_reporte','=',$id)->first();
             if($data->sexo==1){
                 $data->sexo="Masculino";
@@ -310,6 +315,10 @@ class segpubcontroller extends Controller
                         );
 
              return view('visPoli.hist_per', $data);
+    }
+
+    public function storepersona(Request $request){
+       dd($request->all());
     }
 
  }

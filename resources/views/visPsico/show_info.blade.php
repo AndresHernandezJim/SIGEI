@@ -28,7 +28,7 @@
 			 </div>
 			 <div class="input-field col s3">
 		 		<input readonly="" value="{{$pasiente->curp}}"  type="text" name="curp">
-				<label id="texto" for="tags2"></i>Curp</label>
+				<label id="texto" for="tags2"></i>CURP</label>
 		 	</div> 
 		 </div>
 
@@ -40,7 +40,7 @@
 		 </div>
 		 <div id="suggestions" class="input-field col s3">
 			<input readonly="" value="{{$pasiente->id_ocupacion}}" type="text" name="ocupacion">
-			<label id="texto" for="tags"></i>Ocupacion</label>
+			<label id="texto" for="tags"></i>Ocupación</label>
 		 </div> 
 		  <div class="input-field col s1 m1 l1">
 				 <input readonly="" value="{{$pasiente->edad}}" type="text" name="edad">

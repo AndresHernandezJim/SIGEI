@@ -5,7 +5,7 @@
 <center><h2>Barandillas</h2></center>
 	<hr>
 	
-	<table class="centered bordered" id="app"><thead><tr><th>Imagen</th><th>Nombre</th><th>Ingresó</th><th>Detalles</th><th>liberar</th></thead>
+	<table class="centered bordered" id="app"><thead><tr><th>Imagen</th><th>Nombre</th><th>Ingresó</th><th>Detalles</th><th>Liberar</th></thead>
 	<tbody >
 		@foreach($detenidos as $detenido)
 		<tr>

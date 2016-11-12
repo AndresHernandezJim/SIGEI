@@ -5,6 +5,7 @@
 
 <title>DSPVC</title>
 <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+<meta id="token" value="{{csrf_token()}}"> 
 	<link rel="stylesheet" type="text/css" href="/css/materialize.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="/css/app1.css">
@@ -36,9 +37,9 @@
 <ul id="dropdown3" class="dropdown-content">
 <li><a href="/registrobarandilla">Registrar Ingreso</a></li>
 <li class="divider"></li>
-<li><a href="/consultadetenido">Consultar Interno</a></li>
+<li><a href="/consultadetenido">Consultar Internos</a></li>
 <li class="divider"></li>
-<li><a href="/segpub/barandilla/historial">Aseguramientos</a></li>
+<li><a href="/segpub/barandilla/historial">Historial de internos</a></li>
 <li class="divider"></li>
 </ul>
 <nav class="grey darken-4">
@@ -59,9 +60,10 @@
 </div>
 <script src="/js/jquery-2.2.1.min.js"></script>
 <script src="/js/materialize.min.js"></script>
-<script src="/js/app.js"></script>
 <script src="https://cdn.jsdelivr.net/vue/1.0.21/vue.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/0.7.0/vue-resource.min.js"></script>
+<script src="/js/app.js"></script>
 @yield('script')
+@yield('script2')
 </body>
 </html>

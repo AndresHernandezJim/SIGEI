@@ -7,7 +7,7 @@
       <a href="/"></a>
       <a href="/predel">Menú principal</a>
       <span class="space"><b>˃</b></span>
-      <a class="nav-active">Instituciones guardadas</a>
+      <a class="nav-active">Instituciones Registradas</a>
     </div>
   </div>
 @stop
@@ -15,7 +15,7 @@
 @section('content')
 <h2>Instituciones registradas</h2>
 <hr>
-<table class="striped"><thead><tr><th>Nombre</th><th>Telefono</th><th>Información</th><th>Eliminar</th></thead>
+<table class="striped"><thead><tr><th>Nombre</th><th>Teléfono</th><th>Información</th><th>Eliminar</th></thead>
 <tbody>
 @foreach ($instituciones as $institucion)
 	<tr>

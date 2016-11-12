@@ -3,8 +3,6 @@ $(document).ready(function(){
 	 $( "#tags" ).autocomplete({
       source: tags,
     });
-   
-
     $( '#tags' ).on('change', function(){
       var curp = $(this).val().trim();
       if($.inArray(curp,tags) < 0){

@@ -1,17 +1,32 @@
-$(document).ready(function(){
+Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector("#token").getAttribute('value');
+new Vue({
+  //atributos
+  el: 'body', //ambiente de trabajo de vue
+  data: {
+      marca:"",
+      modelo:"",
+      anio:"",
+      serie:"",
+      placas:"",
+      tipo:"",
+      estado:"",
+      asegurado:"",
+      adeudo:0.0,
+      caracteristicas:"",
+      nombre:"",
+      apellidos:"",
+      curp:"",
+      sexo:"",
+      edad:"",
+      ocupacion:"",
+      domicilio:"",
+      telefono:"",
 
-	 $( "#tags" ).autocomplete({
-      source: tags,
-    });
-   
+  },
+  ready:function(){
+    alert('hola');
+  },
+  methods:{
 
-    $( '#tags' ).on('change', function(){
-      var hecho = $(this).val().trim();
-      if($.inArray(hecho,tags) < 0){
-        console.log($.inArray(tags));
-        if(!confirm('no se encuentra la emergencia:' + hecho)){
-          $( '#tags' ).val('');
-        }
-      }
-    });
-});
+  },
+};

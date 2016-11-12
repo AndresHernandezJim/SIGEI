@@ -9,6 +9,7 @@ $(function(){
   });
 	$(document).ready(function() {
     $('select').material_select();
+    $('.tooltipped').tooltip({delay: 50});
 	});
 	$('.modal-trigger').leanModal();
 })

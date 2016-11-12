@@ -30,7 +30,7 @@
 	 </div>	 
 	 <div class="input-field col s3">
  		<input id="tags2" type="text" name="curp">
-		<label id="texto" for="tags2"></i>Curp</label>
+		<label id="texto" for="tags2"></i>CURP</label>
  	</div> 
  </div>
 
@@ -38,7 +38,7 @@
  	<div class="input-field col s1"></div>
  	<div class="input-field col s2">
  	<select name="sexo">
-      <option value="none" disabled selected>Seleccione..</option>
+      <option value="none" disabled selected>Seleccione</option>
       <option value="1">Masculino</option>
       <option value="2">Femenino</option>
     </select>
@@ -46,7 +46,7 @@
  </div>
  <div id="suggestions" class="input-field col s3">
 	<input id="ocupacion" type="text" name="ocupacion" class="validate">
-	<label id="texto" for="tags"></i>Ocupacion</label>
+	<label id="texto" for="tags"></i>Ocupación</label>
  </div> 
   <div class="input-field col s1 m1 l1">
 		 <input type="number" name="edad">

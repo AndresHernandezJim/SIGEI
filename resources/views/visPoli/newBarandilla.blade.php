@@ -99,19 +99,25 @@
 	    </div>
 	</div>
 	<div class="row">
-	    <div class = "input-field col s5 m5 l5 offset-s1 offset-m1 offset-l1">
+		<div class = "input-field col s5 offset-s1 offset-m1 offset-l1">
+			<select  id="motivoarresto" class="browser-default" name="causa" required>
+				<option value="" disabled selected>Motivo del Arresto</option>
+				@foreach($emergencias as $emergencia)
+				<option value="{{$emergencia['id']}}">{{$emergencia['nombre']}}</option>
+				@endforeach
+			</select>
+	        
+	    </div>
+	    <div class = "input-field col s5 m5 l5 ">
 	        <input id="pertenencias" type="text" class="validate" name ="pertenencias" required>
 	        <label for="pertenencias">Pertenencias al momento del arresto</label>
 	    </div>
-	    <div class = "input-field col s5 m5 l5">
-	        <input id="aseguramiento" type="text" class="validate" name ="aseguramiento">
-	        <label for="aseguramiento">Aseguramiento</label>
-	    </div>
+	    
 	</div>
 	<div class="row">
-	    <div class = "input-field col s7 m7 l7 offset-s1 offset-m1 offset-l1">
-	        <input id="motivoarresto" type="text" class="validate" name ="causa" required>
-	        <label for="motivoarresto">Motivo del arresto</label>
+	    <div class = "input-field col s5 m5 l5 offset-s1 offset-m1 offset-l1">
+	        <input id="aseguramiento" type="text" class="validate" name ="aseguramiento">
+	        <label for="aseguramiento">Aseguramiento</label>
 	    </div>
 	    <div class = "input-field col s3 m3 l3">
 	        <select id="destino" class="validate" name="destino" required>
@@ -123,7 +129,7 @@
 	</div>
 	<div class="row">
 		<div class = "input-field col s10 m10 l10 offset-s1 offset-m1 offset-l1">
-			<b>OBSERVACIONES:</b>
+			OBSERVACIONES
 	    </div>
 		<div class = "input-field col s10 m10 l10 offset-s1 offset-m1 offset-l1">
 			<textarea id="observaciones" type="materialize-textarea" cols="40" class="validate" name="observaciones" required></textarea>

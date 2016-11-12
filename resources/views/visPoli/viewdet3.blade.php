@@ -46,7 +46,7 @@
 	<div  class="row">
 		<div class="input-field col s2 offset-s1">
 			<input readonly="" value="{{$info->localidad}}" id="disabled" type="text"  name="sexo">
-	        <label for="disabled">Procediente de</label>
+	        <label for="disabled">Procedente de</label>
 		 </div>
 		 <div class="input-field col s3 ">
 			<input readonly="" value="{{$info->remite}}" id="disabled" type="text"  name="sexo">
@@ -64,7 +64,7 @@
 		</div>
 		<div class="input-field col s6">
 			<input  readonly type="text" value="{{$info->lugar_arresto}}" name="">
-			<label>Lugar donde se sucitó el arresto</label>
+			<label>Lugar donde se suscitó el arresto</label>
 		</div>
 	</div>
 	<div class="row">
@@ -80,7 +80,7 @@
 	<div class="row">
 		<div class="input-field col s10 offset-s1">
 			<input  readonly type="text" name="" value="{{$info->aseguramiento}}">
-			<label>Eleméntos decomizados</label>
+			<label>Elementos decomisados</label>
 		</div>
 	</div>
 	<div class="row">

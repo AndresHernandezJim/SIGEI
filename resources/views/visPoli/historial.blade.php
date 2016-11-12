@@ -2,7 +2,7 @@
 @section('content')
 <center><h4>Historial</h4></center>
 <hr>
-<center><h5>Buscar persona por Nombre o curp</h5></center>
+<center><h5>Buscar persona por Nombre o CURP</h5></center>
 <div class="row">
 
 		<form action="/segpub/barandilla/detper" method="POST">

@@ -36,7 +36,7 @@
 			</div>
 			<div class="input-field col s2 m2 l2">
 				<input type="number" name="numero1" min="1" max="9999" class="validate" required>
-				<label id="texto" for="usuario"></i>numero</label>
+				<label id="texto" for="usuario"></i>Número</label>
 			</div>
 	</div>
 	<div class="row">
@@ -55,7 +55,7 @@
 	</div>
 	<div class="row">
 		<div class="input_field col s4 offset-l1">
-			<h6><b>Vehiculos involucrados</b></h6>
+			<h6><b>Vehículos involucrados</b></h6>
 		</div>
 		<a href="#modal1" class="modal-trigger"><i class="fa fa-plus" aria-hidden="true" ></i></a>
 			
@@ -65,7 +65,7 @@
 			<table class="bordered striped centered responsive-table">
 				<thead>
 					<tr>
-						<th>Vehiculo</th>
+						<th>Vehículo</th>
 						<th width="30">Responsable</th>
 					</tr>
 				</thead>
@@ -98,6 +98,41 @@
 
 @stop
 @section('script')
+<script type="text/javascript">
+	
+	
+	new Vue({
+	  //atributos
+	  el: 'body', //ambiente de trabajo de vue
+	  data: {
+	      marca:"",
+	      modelo:"",
+	      anio:"",
+	      serie:"",
+	      placas:"",
+	      tipo:0,
+	      estado:"",
+	      asegurado:0,
+	      adeudo:"",
+	      caracteristicas:"",
+	      nombre:"",
+	      apellidos:"",
+	      curp:"",
+	      sexo:"",
+	      edad:0,
+	      ocupacion:"",
+	      domicilio:"",
+	      telefono:"",
 
-<script type="text/javascript" src="/js/vialidad.js"></script>
+	  },
+	  ready:function(){
+	   
+	  },
+	  methods:{
+
+	  },
+});
+
+
+</script>
 @stop

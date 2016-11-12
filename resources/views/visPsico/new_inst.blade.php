@@ -7,7 +7,7 @@
       <a href="/"></a>
       <a href="/predel">Menú principal</a>
       <span class="space"><b>˃</b></span>
-      <a class="nav-active">Registro de Intitución</a>
+      <a class="nav-active">Registro de Institución</a>
     </div>
   </div>
 @stop

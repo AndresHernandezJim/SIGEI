@@ -8,7 +8,7 @@
       <a href="/"></a>
       <a href="/predel">Menú principal</a>
       <span class="space">|</span>
-      <a href="/predel/show/institucion">Instituciones guardadas</a>
+      <a href="/predel/show/institucion">Instituciones Registradas</a>
       <span class="space">|</span>
       <a href="/predel/intitucion/info/{{$ins->id}}">Info. Intitucion</a>
       <span class="space">|</span>
@@ -34,7 +34,7 @@
   <div class="input-field col s1"></div>
   <div class="input-field col s8">
     <input readonly="" value="{{$ins->nombre}}" id="disabled" type="text" class="validate" name="nombre">
-        <label for="disabled">Institucion</label>
+        <label for="disabled">Institución</label>
    </div>  
 </div>
 <div class="row">

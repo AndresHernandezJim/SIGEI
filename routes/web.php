@@ -35,6 +35,7 @@ Route::group(['middleware' => 'policia'], function(){
 	Route::get('/segpub/barandilla/historial', 'segpubcontroller@bus_per');
 	Route::post('/segpub/barandilla/detper','segpubcontroller@detalleper_bara');
 	Route::get('/segpub/barandilla/detperx/{id}', 'segpubcontroller@detalleper_bara2');
+	Route::post('/sp','segpubcontroller@storepersona');
 
 
 	
