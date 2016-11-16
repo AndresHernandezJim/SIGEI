@@ -101,8 +101,8 @@ class prevdelcontroller extends Controller
 
     public function mostrarPac(){ 
          $ordenado = \DB::table('persona')
-                ->select('id_persona as id', 'apellido', 'nombre')
-                ->orderBy('apellido', 'asc')
+                ->select('id_persona as id', 'nombre')
+                ->orderBy('nombre', 'asc')
                 ->where('activo_pd', 1)
                 ->paginate(3); 
 
@@ -116,98 +116,119 @@ class prevdelcontroller extends Controller
             'ocupaciones'=> \DB::table('ocupacion')
                 ->select('id_ocupacion as id', 'nombre')
                 ->get(),
-        );
-
-        $data2=array(
             'personas'=> \DB::table('persona')
-                ->select('id_persona as id', 'apellido', 'nombre', 'curp', 'domicilio')
+                ->select('nombre', 'id_persona as id')
                 ->get(),
-        );
-       
-        $muni=array(
-            'muni'=>\App\municipio:: where('id_estado','=',1)-> get()
-            );
-
-         $datalocal=array(
+            'muni'=>\App\municipio:: where('id_estado','=',1)-> get(),
             'localidades'=> \App\localidad::get(),
         );
+
        // dd($municipios);
-    	return view('visPsico.new_persona', $data, $datalocal,$muni);
+    	return view('visPsico.new_persona', $data);
     }
     
 
     public function newPaciente(Request $request){
-        //se crea una sola cadena con los dartos de domicilio para luego insertar
-        $domicilio=$request->calle." #".$request->num_ext." colonia ".$request->colonia;
-        //insertamos la direccion
-        $idlugar= \DB::table('lugar')->select('id_lugar')->where('direccion','=', $domicilio)->first();
-        if ($idlugar==null) {
-            //dd("no hay");
-            $dom=new lugar;
-            $dom->id_localidad=$request->local;
-            $dom->direccion=$domicilio;
-            $dom->save();
-            $idlugar= \DB::table('lugar')->select('id_lugar')->where('direccion','=', $domicilio)->first();
-            //dd($idlugar->id_lugar);
-        }
-       //se verifica si es que la ocupacion existe
-        $id_ocupacion = \DB::table('ocupacion')->select('id_ocupacion')->where('nombre','=', $request->ocupacion)->first();
-        //si no encuentra la ocupacion en la BD, inserta la nueva ocupación y luego se procede a inserat los demas datos en la tabla persona
-        if($id_ocupacion==null){
-            //dd($request->all());
-            $ocupacion = new ocupacion;
-            $ocupacion->nombre = $request->ocupacion;
-            $ocupacion->save();
-            //se hace denuebo la consulta para obtener el id de la nueva profecion
-            $id_ocupacion = \DB::table('ocupacion')->select('id_ocupacion')->where('nombre','=', $request->ocupacion)->first();
-               //insercion enla tabla de personas
-                $paciente = new persona;
-                $paciente->id_lugar = $idlugar->id_lugar;
-                $paciente->id_ocupacion = $id_ocupacion->id_ocupacion;
-                $paciente->padre_tutor = $request->npadre;
-                $paciente->madre = $request->nmadre;
-                $paciente->apellido = $request->apellidos;
-                $paciente->nombre = $request->nombre;
-                $paciente->alias = "Null";
-                $paciente->domicilio = $domicilio;
-                $paciente->curp = $request->curp;
-                $paciente->sexo = $request->sexo;
-                $paciente->edad = $request->edad;
-                $paciente->telefono = $request->telefono;
-                $paciente->tipo=2;
-                $paciente->activo_pd=1;
-                $paciente->activo_sp=0;
-                $paciente->save();
-                return redirect()->action('prevdelcontroller@mostrarPac');
-        }else{
-            //si es que existe la ocupacion en la tabla "ocupación" se procede a ingresar los datos a la tabla persona
-                $paciente = new persona;
-                $paciente->id_lugar = $idlugar->id_lugar;
-                $paciente->id_ocupacion = $id_ocupacion->id_ocupacion;
-                $paciente->padre_tutor = $request->npadre;
-                $paciente->madre = $request->nmadre;
-                $paciente->apellido = $request->apellidos;
-                $paciente->nombre = $request->nombre;
-                $paciente->alias = "Null";
-                $paciente->domicilio = $domicilio;
-                $paciente->curp = $request->curp;
-                $paciente->sexo = $request->sexo;
-                $paciente->edad = $request->edad;
-                $paciente->telefono = $request->telefono;
-                $paciente->tipo=2;
-                $paciente->activo_pd=1;
-                $paciente->activo_sp=0;
-                $paciente->save();
-                return redirect()->action('prevdelcontroller@mostrarPac');
-            } 
+       //dd($request->all());
+        if($request->existente == 1){
 
+           $id_ocupacion = \DB::table('ocupacion')->select('id_ocupacion')->where('nombre','=', $request->ocupacion)->first();
+
+           $idlugar= \DB::table('lugar')->select('id_lugar')->where('direccion','=', $request->domicilio)->first();
+                if ($idlugar==null) {
+                    //dd("no hay");
+                    $dom=new lugar;
+                    $dom->id_localidad=$request->local;
+                    $dom->direccion=$domicilio;
+                    $dom->save();
+                    $idlugar= \DB::table('lugar')->select('id_lugar')->where('direccion','=', $request->domicilio)->first();
+                    //dd($idlugar->id_lugar);
+                }
+                //dd($id_ocupacion, $idlugar);
+            $actualido = \DB::table('persona')
+            ->where('id_persona', $request->id)
+            ->update([
+                'id_lugar' => $idlugar->id_lugar,
+                'id_ocupacion' => $id_ocupacion->id_ocupacion,
+                'padre_tutor' => $request->npadre,
+                'madre' => $request->nmadre,
+                'domicilio' => $request->domicilio,
+                'edad' => $request->edad,
+                'telefono' => $request->telefono,
+                'activo_pd' => 1,
+                ]);
+            return redirect()->action('prevdelcontroller@mostrarPac');
+        }else{
+             //se crea una sola cadena con los dartos de domicilio para luego insertar
+           
+            //insertamos la direccion
+            $idlugar= \DB::table('lugar')->select('id_lugar')->where('direccion','=', $request->domicilio)->first();
+            if ($idlugar==null) {
+                //dd("no hay");
+                $dom=new lugar;
+                $dom->id_localidad=$request->local;
+                $dom->direccion=$request->domicilio;
+                $dom->save();
+                $idlugar= \DB::table('lugar')->select('id_lugar')->where('direccion','=', $request->domicilio)->first();
+                //dd($idlugar->id_lugar);
+            }
+           //se verifica si es que la ocupacion existe
+            $id_ocupacion = \DB::table('ocupacion')->select('id_ocupacion')->where('nombre','=', $request->ocupacion)->first();
+            //si no encuentra la ocupacion en la BD, inserta la nueva ocupación y luego se procede a inserat los demas datos en la tabla persona
+            if($id_ocupacion==null){
+                //dd($request->all());
+                $ocupacion = new ocupacion;
+                $ocupacion->nombre = $request->ocupacion;
+                $ocupacion->save();
+                //se hace denuebo la consulta para obtener el id de la nueva profecion
+                $id_ocupacion = \DB::table('ocupacion')->select('id_ocupacion')->where('nombre','=', $request->ocupacion)->first();
+                   //insercion enla tabla de personas
+                    $paciente = new persona;
+                    $paciente->id_lugar = $idlugar->id_lugar;
+                    $paciente->id_ocupacion = $id_ocupacion->id_ocupacion;
+                    $paciente->padre_tutor = $request->npadre;
+                    $paciente->madre = $request->nmadre;    
+                    $paciente->nombre = $request->nombre;
+                    $paciente->alias = "Null";
+                    $paciente->domicilio = $request->domicilio;
+                    $paciente->curp = $request->curp;
+                    $paciente->sexo = $request->sexo;
+                    $paciente->edad = $request->edad;
+                    $paciente->telefono = $request->telefono;
+                    $paciente->tipo=2;
+                    $paciente->activo_pd=1;
+                    $paciente->activo_sp=0;
+                    $paciente->save();
+                    return redirect()->action('prevdelcontroller@mostrarPac');
+                }else{
+                //si es que existe la ocupacion en la tabla "ocupación" se procede a ingresar los datos a la tabla persona
+                    $paciente = new persona;
+                    $paciente->id_lugar = $idlugar->id_lugar;
+                    $paciente->id_ocupacion = $id_ocupacion->id_ocupacion;
+                    $paciente->padre_tutor = $request->npadre;
+                    $paciente->madre = $request->nmadre;
+                    $paciente->nombre = $request->nombre;
+                    $paciente->alias = "Null";
+                    $paciente->domicilio = $request->domicilio;
+                    $paciente->curp = $request->curp;
+                    $paciente->sexo = $request->sexo;
+                    $paciente->edad = $request->edad;
+                    $paciente->telefono = $request->telefono;
+                    $paciente->tipo=2;
+                    $paciente->activo_pd=1;
+                    $paciente->activo_sp=0;
+                    $paciente->save();
+                    return redirect()->action('prevdelcontroller@mostrarPac');
+                } 
+        }/////////
+       
         }        
 
 
     public function showPas(){
        $ordenado = \DB::table('persona')
-                ->select('id_persona as id', 'apellido', 'nombre')
-                ->orderBy('apellido', 'asc')
+                ->select('id_persona as id','nombre')
+                ->orderBy('nombre', 'asc')
                 ->get();
                 //dd($ordenado);
         return $ordenado;
@@ -245,7 +266,7 @@ class prevdelcontroller extends Controller
     }
 
     public function newSes($id){
-        $persona = \DB::table('persona')->select('id_persona as id','nombre', 'apellido')->where('id_persona','=', $id)->first();
+        $persona = \DB::table('persona')->select('id_persona as id','nombre')->where('id_persona','=', $id)->first();
         //dd($persona);
         $pasiente = array('PasNom' => $persona,);
         return view('visPsico.new_consulta', $pasiente);
@@ -274,7 +295,7 @@ class prevdelcontroller extends Controller
         //dd($id);
         $sesiones = \DB::table('sesion')->select('id_persona', 'detalle', 'fecha')->where('id_sesion', '=', $id)->first();
         //dd($sesiones->id_usuario);
-        $persona = \DB::table('persona')->select('id_persona as id', 'apellido', 'nombre')->where('id_persona','=', $sesiones->id_persona)->first();
+        $persona = \DB::table('persona')->select('id_persona as id','nombre')->where('id_persona','=', $sesiones->id_persona)->first();
         //dd($persona);
         $data = array('sesion' => $sesiones,);
         //dd($data);
@@ -362,7 +383,31 @@ class prevdelcontroller extends Controller
         $visita->id_institucion=$nombre->nombre;
         //dd($visita);
         $data = array('visita' => $visita,);
-        return view('visPsico.show_visita', $data);
-        
+        return view('visPsico.show_visita', $data); 
+    }
+
+     public function get_user_info(Request $request){
+        //dd($request->all());
+         $get=\DB::table('persona')
+            ->join('ocupacion','ocupacion.id_ocupacion','=','persona.id_ocupacion')
+            ->join('lugar','persona.id_lugar','=','lugar.id_lugar')
+            // ->join('localidad','localidad.id_localidad','=','lugar.id_localidad')
+            ->select(
+                'persona.id_persona as id',
+                'persona.nombre',
+                'persona.domicilio',
+                'persona.curp',
+                'persona.edad',
+                'persona.sexo',
+                'persona.padre_tutor',
+                'persona.madre',
+                'ocupacion.nombre as ocupacion',
+                'persona.telefono',
+                'lugar.id_localidad as localidad'
+            )
+            ->where('persona.id_persona', $request->id)
+            ->get();
+        if( count($get) == 1 )
+            return json_encode($get[0]);
     }
 }

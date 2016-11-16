@@ -18,9 +18,25 @@
 <div class="row">
 	<form action ="/sp" method="POST" >
     		{{ csrf_field() }}
+    		<input  v-for="agraviado in agraviados" type="hidden" name="agrav[@{{$index}}][nombre]" value="@{{agraviado.nombre}}">
+    		<input  v-for="agraviado in agraviados" type="hidden" name="agrav[@{{$index}}][curp]" value="@{{agraviado.curp}}">
+    		<input  v-for="agraviado in agraviados" type="hidden" name="agrav[@{{$index}}][domicilio]" value="@{{agraviado.domicilio}}">
+    		<input  v-for="agraviado in agraviados" type="hidden" name="agrav[@{{$index}}][edad]" value="@{{agraviado.edad}}">
+    		<input  v-for="agraviado in agraviados" type="hidden" name="agrav[@{{$index}}][ocupacion]" value="@{{agraviado.ocupacion}}">
+    		<input  v-for="agraviado in agraviados" type="hidden" name="agrav[@{{$index}}][localidad]" value="@{{agraviado.localidad}}">
+    		<input  v-for="agraviado in agraviados" type="hidden" name="agrav[@{{$index}}][sexo]" value="@{{agraviado.sexo}}">
+    		<input  v-for="agraviado in agraviados" type="hidden" name="agrav[@{{$index}}][telefono]" value="@{{agraviado.telefono}}">	
+			<input  v-for="asegurado in asegurados" type="hidden" name="asegu[@{{$index}}][nombre]" value="@{{asegurado.nombre}}">
+    		<input  v-for="asegurado in asegurados" type="hidden" name="asegu[@{{$index}}][curp]" value="@{{asegurado.curp}}">
+    		<input  v-for="asegurado in asegurados" type="hidden" name="asegu[@{{$index}}][domicilio]" value="@{{asegurado.domicilio}}">
+    		<input  v-for="asegurado in asegurados" type="hidden" name="asegu[@{{$index}}][edad]" value="@{{asegurado.edad}}">
+    		<input  v-for="asegurado in asegurados" type="hidden" name="asegu[@{{$index}}][ocupacion]" value="@{{asegurado.ocupacion}}">
+    		<input  v-for="asegurado in asegurados" type="hidden" name="asegu[@{{$index}}][localidad]" value="@{{asegurado.localidad}}">
+    		<input  v-for="asegurado in asegurados" type="hidden" name="asegu[@{{$index}}][sexo]" value="@{{asegurado.sexo}}">
+    		<input  v-for="asegurado in asegurados" type="hidden" name="asegu[@{{$index}}][telefono]" value="@{{asegurado.telefono}}">
     		<div class="row">
 		        <div class = " input-field col s6  offset-s1">
-		        	<select id="nombre_emergencia" class="browser-default" name="nombre_emergencia" required>
+		        	<select id="nombre_emergencia" class="browser-default" name="emergencia" required>
 		        		<option value="" disabled selected>Suceso</option>
 		        		@foreach ($emergencias as $emergencias)
 	                        <option value="{{$emergencias->id}}">{{$emergencias->nombre}}</option>
@@ -69,11 +85,10 @@
 	        	</div>
 	        	<div class="col s2 ">
 	        		Tipo de Atención
-	        		<select id="tipoatencion" class="browser-default" required>
-					    <option value="emergencias066">Llamada al 066</option>
-					    <option value="llamadalocal">Llamada a Dirección</option>
-					    <option value="patrullaje">Patrullaje</option>
-					    <option value="apoyo">Apoyo</option>
+	        		<select id="tipoatencion" name="atencion" class="browser-default" required>
+					    <option value="1">Llamada al 066</option>
+					    <option value="2">Llamada a Dirección</option>
+					    <option value="3">Patrullaje</option>
 					</select>
 	        	</div>
 	    	</div>
@@ -96,7 +111,7 @@
 						</thead>
 						<tbody v-for="agraviado in agraviados">
 							<tr>
-								<td>@{{agraviado.nombre}} @{{agraviado.apellido}}</td> <td> <a href="#!" v-on:click="rm_agra(@{{agraviado.index}})">X</a></td>
+								<td>@{{$index+1}}.- @{{agraviado.nombre}} </td> <td> <a href="#!" v-on:click="rm_agra(agraviado)">X</a></td>
 							</tr>
 						</tbody>
 					</table>
@@ -118,7 +133,7 @@
 						</thead>
 						<tbody v-for="asegurado in asegurados">
 							<tr>
-								<td>@{{asegurado.nombre}} @{{asegurado.apellido}}</td> <td> <a href="#!" v-on:click="rm_agra(@{{agraviado}})">X</a></td>
+								<td> @{{$index+1}} @{{asegurado.nombre}}</td> <td> <a href="#!" v-on:click="rm_aseg(asegurado)">X</a></td>
 							</tr>
 						</tbody>
 					</table>
@@ -129,13 +144,9 @@
 			<div class="col s10 offset-s1"><hr></div>			
 			<center><h4>Agraviado</h4></center>
 			<div class="row">
-				<div class="input-field col s3 m3 l3 offset-s1 offset-m1 offset-l1">
+				<div class="input-field col s7 offset-s1 offset-m1 offset-l1">
 					<input type="text" name="nombre" id="nombre" class="validate" minlength="3"  v-model="nombre">
-					<label>Nombre(s)</label>
-				</div>
-				<div class="input-field col s4 m4 l4">
-					<input id="apellidos" type="text" name="apellido" class="validate" minlength="3"  v-model="apellido">
-					<label>Apellidos</label>
+					<label>Nombre(s) Apellidos</label>
 				</div>
 				<div class="input-field col s3 m3 l3">
 					<input type="text" id="tags" font style="text-transform: uppercase;" pattern="^[a-zA-Z]{4}\d{6}[a-zA-Z]{6}\d{2}$" title="Curp (formato: AAAA######AAAAAA##)" name="curp" minlength="18" maxlength="18" class="validate" placeholder="AAAA999999AAAAAA99" v-model="curp">
@@ -192,13 +203,9 @@
 			<div class="col s10 offset-s1"><hr></div>
 			<center><h4>Consignado</h4></center>
 			<div class="row">
-				<div class="input-field col s3 m3 l3 offset-s1 offset-m1 offset-l1">
+				<div class="input-field col s7 offset-s1 offset-m1 offset-l1">
 					<input type="text" name="nombre1" id="nombre1" class="validate" minlength="3"  v-model="nombre">
-					<label>Nombre(s)</label>
-				</div>
-				<div class="input-field col s4 m4 l4">
-					<input id="apellidos1" type="text" name="apellido1" class="validate" minlength="3"  v-model="apellido">
-					<label>Apellidos</label>
+					<label>Nombre(s) Apellidos</label>
 				</div>
 				<div class="input-field col s3 m3 l3">
 					<input type="text" id="tags1" font style="text-transform: uppercase;" pattern="^[a-zA-Z]{4}\d{6}[a-zA-Z]{6}\d{2}$" title="Curp (formato: AAAA######AAAAAA##)" name="curp1" minlength="18" maxlength="18" class="validate" placeholder="AAAA999999AAAAAA99" v-model="curp">
@@ -226,7 +233,7 @@
 					<label id="texto" for="usuario"></i>Edad</label>
 				</div>
 				<div class="input-field col s3 m3 l3">
-					<input v-model="telefono1" type='tel' pattern='[\(]\d{3}[\)]\d{3}[\-]\d{4}' title='Phone Number (Format: (999)999-9999)' name="telefono1" class="validate" placeholder="(999)999-9999"> 
+					<input v-model="telefono" type='tel' pattern='[\(]\d{3}[\)]\d{3}[\-]\d{4}' title='Phone Number (Format: (999)999-9999)' name="telefono1" class="validate" placeholder="(999)999-9999"> 
 					<label id="texto" for="usuario"></i>Teléfono</label>
 				</div>
 			</div>
@@ -236,7 +243,7 @@
 					<label>Domicilio</label>
 				</div>
 				<div class="input-field col s3 ">
-					<input  id="localidad1" type="text" name="localidad">
+					<input  id="localidad1" type="text" name="localidad1" v-model="localidad">
 					<label>Localidad</label>
 				</div>
 			</div>
@@ -274,14 +281,11 @@
 	        	</div>
 	        </div>
 	        <div class="row">	
-	        	<div>
-	        		<input type="hidden" name="asegurados" value="@{{asegurados}}">
-	        		<input type="hidden" name="agraviados" value="@{{agraviados}}">
-	        	</div>
 	        	<div class="col s2 offset-s9">
 	        		<button type="submit" class="waves-effect waves-light btn-large cyan darken-3 ">REGISTRAR&nbsp<i class="fa fa-floppy-o" aria-hidden="true"></i></button>
 	        	</div>
 	        </div>
+
 	</form>
 </div>
 
@@ -295,15 +299,14 @@
 			tipo:"",
 			sexo:"",
 			nombre:"",
-			apellido:"",
 			curp:"",
 			ocupacion:"",
 			edad:"",
 			telefono:"",
 			domicilio:"",
 			localidad:"",
-			id:-1,
-			id2:-1,
+			id:0,
+			id2:0,
 			agraviados:[],
 			asegurados:[],
 			agrav:false,
@@ -311,8 +314,17 @@
 			btn_aseg:true,
 			btn_agrav:true,
 			btncanagrav:false,
+			localidades2:[],
+		},
+		ready:function(){
+			
 		},
 		methods:{
+			getlocalidad: function(){
+				this.$http.get('/sp/localidades').then(function(response){
+				this.$set('localidades2', response.data);
+				});
+			},
 			agra:function(){
 				this.agrav=!this.agrav;
 				this.btn_agrav=!this.btn_agrav;	
@@ -330,16 +342,21 @@
 				this.btn_aseg=!this.btn_aseg;
 			},
 			rm_agra:function(agraviado){
-				this.agraviados.splice(agraviado);
+				this.agraviados.$remove(agraviado);
+				this.id--;
+			},
+			rm_aseg:function(asegurado){
+				this.asegurados.$remove(asegurado);
+				this.id2--;
 			},
 			guardapersona:function(){
 				this.agrav=!this.agrav;
 				this.btn_agrav=!this.btn_agrav;
-				this.agraviados.push({'id':this.id+1,'nombre': this.nombre, 'apellido':this.apellido,
+				this.agraviados.push({'id':this.id,'nombre': this.nombre, 
 					'curp':this.curp,'ocupacion':this.ocupacion,'edad':this.edad,'telefono':this.telefono,
 					'domicilio':this.domicilio,'sexo':this.sexo,'localidad':this.localidad});
 					console.log(this.agraviados);
-					this.nombre="";this.apellido="";this.domicilio="";
+					this.nombre="";this.domicilio="";
 					this.curp="";this.domicilio="";this.ocupacion="";
 					this.edad="";this.telefono="";this.localidad="";
 					this.id++;
@@ -347,13 +364,14 @@
 			guardapersona2:function(){
 					this.asegu=!this.asegu;
 					this.btn_aseg=!this.btn_aseg;
-					this.asegurados.push({'id2':this.id2+1,'nombre': this.nombre, 'apellido':this.apellido,
+					this.asegurados.push({'id2':this.id2,'nombre': this.nombre, 
 					'curp':this.curp,'ocupacion':this.ocupacion,'edad':this.edad,'telefono':this.telefono,
 					'domicilio':this.domicilio,'sexo':this.sexo,'localidad':this.localidad});
 					console.log(this.asegurados);
-					this.nombre="";this.apellido="";this.domicilio="";
+					this.nombre="";this.domicilio="";
 					this.curp="";this.domicilio="";this.ocupacion="";
 					this.edad="";this.telefono="";this.localidad="";
+					this.id2++;
 			}
 		}
 
@@ -375,11 +393,6 @@ var nombre = [
 	@endforeach
 ];
 
-var apellido = [
-	@foreach($personas as $val)
-	"{{$val->apellido}}",
-	@endforeach
-];
 var localidad =[
 	@foreach($localidades as $val)
 	"{{$val->nombre}}",

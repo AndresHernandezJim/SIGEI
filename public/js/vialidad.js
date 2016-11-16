@@ -1,32 +1,32 @@
-Vue.http.headers.common['X-CSRF-TOKEN'] = document.querySelector("#token").getAttribute('value');
-new Vue({
-  //atributos
-  el: 'body', //ambiente de trabajo de vue
-  data: {
-      marca:"",
-      modelo:"",
-      anio:"",
-      serie:"",
-      placas:"",
-      tipo:"",
-      estado:"",
-      asegurado:"",
-      adeudo:0.0,
-      caracteristicas:"",
-      nombre:"",
-      apellidos:"",
-      curp:"",
-      sexo:"",
-      edad:"",
-      ocupacion:"",
-      domicilio:"",
-      telefono:"",
 
-  },
-  ready:function(){
-    alert('hola');
-  },
-  methods:{
-
-  },
-};
+$(document).ready(function(){
+    $( function() {
+        $( "#show-option" ).tooltip({
+        show: {
+          effect: "slideDown",
+          delay: 250
+        }
+      });
+      });
+   $( "#tags" ).autocomplete({
+      source: tags,
+    });
+    $( "#nombre" ).autocomplete({
+      source: nombre,
+    });
+    $( "#localidad" ).autocomplete({
+      source:localidad,
+    });
+    $( "#ocupacion" ).autocomplete({
+      source:ocupacion
+    });
+    $("#marca").autocomplete({
+      source:marca,
+      });
+    $("#modelo").autocomplete({
+      source:modelo,
+    });
+    $("#estado").autocomplete({
+      source:estado,
+    });
+});

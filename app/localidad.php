@@ -8,5 +8,6 @@ class localidad extends Model
 {
     protected $table='localidad';
     protected $primarykey='id_localidad';
-    protected $fillable=['id_localidad','id_municipio','nombre'];
+    protected $fillable=['id_municipio','nombre'];
+    public $timestamps=false;
 }

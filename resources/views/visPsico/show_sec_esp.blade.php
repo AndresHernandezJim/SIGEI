@@ -31,7 +31,7 @@
 <div class="row">
 	<div class="input-field col s1"></div>
 	<div class="input-field col s6">
-		<input readonly="" value="{{$PasNom->apellido." ".$PasNom->nombre}}" id="disabled" type="text" class="validate" name="nombre">
+		<input readonly="" value="{{$PasNom->nombre}}" id="disabled" type="text" class="validate" name="nombre">
         <label for="disabled">Nombre</label>
 	 </div>	 
 </div>

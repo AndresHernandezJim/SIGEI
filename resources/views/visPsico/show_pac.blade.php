@@ -15,13 +15,10 @@
 @section('content')
 <h2>Pacientes registrados</h2>
 <hr>
-<table class="striped" id="app"><thead><tr><th>Apellido</th><th>Nombre</th><th>Información</th><th>Eliminar</th></thead>
+<table class="striped" id="app"><thead><tr><th>Nombre</th><th>Información</th><th>Eliminar</th></thead>
 <tbody >
 @foreach ($pasientes as $pasiente)
 	<tr>
-		<td>
-			{{$pasiente->apellido}}
-		</td>
 		<td>
 			{{$pasiente->nombre}}
 		</td>

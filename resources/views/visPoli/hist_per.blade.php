@@ -8,7 +8,7 @@
 		<hr><br>
 		<div class="row">
 			<div class="input-field col s5">
-				<input readonly="" value="{{$personax->apellido." ".$personax->nombre}}" type="text"  name="nombre">
+				<input readonly="" value="{{$personax->nombre}}" type="text"  name="nombre">
 	        	<label >Nombre</label>
 			</div>
 			<div class="input-field col s5">

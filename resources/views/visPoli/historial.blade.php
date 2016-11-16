@@ -37,7 +37,7 @@ var tags = [
 
 var nombre = [
 	@foreach($personas as $val)
-	"{{$val->nombre.", ".$val->apellido}}",
+	"{{$val->nombre}}",
 	@endforeach
 ];
 

@@ -26,18 +26,20 @@
     	</div>
 	</div>
 	<div class="row">
-			<div class="input-field col s3 m3 l3 offset-s1 offset-m1 offset-l1">
+			<div class="input-field col s6 m4 l4 offset-s1 offset-m1 offset-l1">
 				<input type="text" name="nombre" id="nombre" class="validate" minlength="3" required>
 				<label>Nombre(s)</label>
 			</div>
-			<div class="input-field col s4 m4 l4">
-				<input id="apellidos" type="text" name="apellidos" class="validate" minlength="3" required>
-				<label>Apellidos</label>
-			</div>
-			<div class="input-field col s3 m3 l3">
+			<div class="input-field col s1">
+ 				<p><a id="show-option" title="Nombre(s) y Apellidos"><b>?</b></a></p>
+ 			</div>
+			<div class="input-field col s3 m4 l4">
 				<input type="text" id="tags" font style="text-transform: uppercase;" pattern="^[a-zA-Z]{4}\d{6}[a-zA-Z]{6}\d{2}$" title="Curp (formato: AAAA######AAAAAA##)" name="curp" minlength="18" maxlength="18" class="validate" placeholder="AAAA999999AAAAAA99">
 				<label>CURP</label>
 			</div>
+			<div class="input-field col s1">
+ 				<p><a id="show-option" title="ejemplo: SIHC400128HDFLLR01"><b>?</b></a></p>
+ 			</div>
 	</div>
 	<div class="row">
 		<div class="input-field col s2 m2 l2 offset-s1 offset-m1 offset-l1">
@@ -48,19 +50,19 @@
 			</select>
 		</div>
 		<div  class="input-field col s3 m3 l3">
-			<input id="tags" type="text" name="ocupacion" class="validate" required>
+			<input id="ocup" type="text" name="ocupacion" class="validate" required>
 			<label id="texto" for="tags"></i>Ocupación</label>
 		 </div>
 		 <div  class="input-field col s2 m2 l2">
-			<input id="tags" type="text" name="alias" class="validate">
+			<input id="apod" type="text" name="alias" class="validate">
 			<label id="texto" for="tags"></i>Apodo</label>
 		 </div> 
   		<div class="input-field col s1 m1 l1">
-		 	<input type="number" name="edad" min="5" max="120" class="validate" required>
+		 	<input type="text" id="old" name="edad" min="5" max="120" class="validate" required>
 		 	<label id="texto" for="usuario"></i>Edad</label>
    		</div>
  		<div class="input-field col s2 m2 l2">
- 			<input type='tel' pattern='[\(]\d{3}[\)]\d{3}[\-]\d{4}' title='Phone Number (Format: (999)999-9999)' name="telefono" class="validate" placeholder="(999)999-9999" required> 
+ 			<input id='tel' type='tel' pattern='[\(]\d{3}[\)]\d{3}[\-]\d{4}' title='Phone Number (Format: (999)999-9999)' name="telefono" class="validate" placeholder="(999)999-9999" required> 
 			<label id="texto" for="usuario"></i>Teléfono</label>
  		</div>
 	</div>
@@ -75,17 +77,9 @@
 			<label>Localidad</label>
 		</div>
 	
-		<div class="input-field col s3 m3 l3">
-			<input type="text" name="colonia" class="validate" required>
-			<label id="texto">Colonia</label>
-		</div>
-		<div class="input-field col s3 m3 l3">
-		 	<input type="text" name="calle" class="validate" required>
-			<label id="texto">Calle</label>
-		</div>
-		<div class="input-field col s1 m1 l1">
-		 	<input type="number" name="num_ext" min="1" max="9999" class="validate" required>
-			<label id="texto">Número</label>
+		<div class="input-field col s6 m6 l6">
+			<input id="dom" type="text" name="domicilio" class="validate" placeholder="Calle #numero Colonia Nombre de colonia" required>
+			<label id="texto">Domicilio</label>
 		</div>
 	</div>
 	<div class="row">
@@ -99,26 +93,25 @@
 	    </div>
 	</div>
 	<div class="row">
-		<div class = "input-field col s5 offset-s1 offset-m1 offset-l1">
-			<select  id="motivoarresto" class="browser-default" name="causa" required>
-				<option value="" disabled selected>Motivo del Arresto</option>
-				@foreach($emergencias as $emergencia)
-				<option value="{{$emergencia['id']}}">{{$emergencia['nombre']}}</option>
-				@endforeach
-			</select>
-	        
+	    <div class = "input-field col s5 offset-s1 offset-m1 offset-l1">
+	    	<select name="causa" class="browser-default" required>
+	    		<option value="" disabled selected>Motivo del Arresto</option>
+	    		@foreach($emergencias as $emergencias)
+	    		<option value="{{$emergencias['id']}}">{{$emergencias['nombre']}}</option>
+	    		@endforeach
+	    	</select>
 	    </div>
-	    <div class = "input-field col s5 m5 l5 ">
+	    <div class = "input-field col s5 m5 l5">
+	        <input id="aseguramiento" type="text" class="validate" name ="aseguramiento">
+	        <label for="aseguramiento">Aseguramiento</label>
+	    </div>
+	</div>
+	<div class="row">
+		<div class = "input-field col s7 offset-s1 offset-m1 offset-l1">
 	        <input id="pertenencias" type="text" class="validate" name ="pertenencias" required>
 	        <label for="pertenencias">Pertenencias al momento del arresto</label>
 	    </div>
 	    
-	</div>
-	<div class="row">
-	    <div class = "input-field col s5 m5 l5 offset-s1 offset-m1 offset-l1">
-	        <input id="aseguramiento" type="text" class="validate" name ="aseguramiento">
-	        <label for="aseguramiento">Aseguramiento</label>
-	    </div>
 	    <div class = "input-field col s3 m3 l3">
 	        <select id="destino" class="validate" name="destino" required>
 	        	<option value="" selected disabled>Destino</option>
@@ -129,7 +122,7 @@
 	</div>
 	<div class="row">
 		<div class = "input-field col s10 m10 l10 offset-s1 offset-m1 offset-l1">
-			OBSERVACIONES
+			<b>OBSERVACIONES:</b>
 	    </div>
 		<div class = "input-field col s10 m10 l10 offset-s1 offset-m1 offset-l1">
 			<textarea id="observaciones" type="materialize-textarea" cols="40" class="validate" name="observaciones" required></textarea>
@@ -171,22 +164,20 @@
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
 var tags = [
-	@foreach($personas as $val)
-	"{{$val->curp}}",
+	@foreach($ocupaciones as $val)
+	"{{$val->nombre}}",
 	@endforeach
 ];
 
 var nombre = [
 	@foreach($personas as $val)
-	"{{$val->nombre}}",
+	{
+		label:"{{$val->nombre}}",
+		id:"{{$val->id}}",
+	},
 	@endforeach
 ];
 
-var apellido = [
-	@foreach($personas as $val)
-	"{{$val->apellido}}",
-	@endforeach
-];
 
 </script>
 <script src="/js/historial.js"></script>

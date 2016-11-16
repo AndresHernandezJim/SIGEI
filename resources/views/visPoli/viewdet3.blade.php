@@ -11,7 +11,7 @@
 	<br>
 	<div class="row">
 		<div class="input-field col s5 offset-s1">
-			<input readonly="" value="{{$info->apellido." ".$info->nombre}}" id="disabled" type="text"  name="nombre">
+			<input readonly="" value="{{$info->nombre}}" id="disabled" type="text"  name="nombre">
 	        <label for="disabled">Nombre</label>
 		 </div>	 
 		 <div class="input-field col s2">

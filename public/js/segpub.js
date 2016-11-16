@@ -1,4 +1,13 @@
 $(document).ready(function(){
+    $( function() {
+        $( "#show-option" ).tooltip({
+        show: {
+          effect: "slideDown",
+          delay: 250
+        }
+      });
+      });
+
 
 	 $( "#tags" ).autocomplete({
       source: tags,

@@ -19,26 +19,26 @@
  {{ csrf_field() }}
  <h5>Datos Personales</h5>
  <div class="row">
- <div class="input-field col s1"></div>
-	 <div class="input-field col s3">
-		 <input type="text" name="nombre">
+	 <div class="input-field col s6 offset-s1">
+		 <input id="nombre"  type="text" name="nombre">
 		 <label id="texto" for="usuario"></i>Nombre(s)</label>
-	 </div>
-	 <div class="input-field col s3">
-		 <input type="text" name="apellidos">
-		 <label id="texto" for="usuario"></i>Apellidos</label>
-	 </div>	 
+	 </div> 
+	<div class="input-field col s1">
+ 		<p><a id="show-option" title="escribir el nombre de la persona con la siguiente estructura: Nombre(s) y Apellido"><b>?</b></a></p>
+ 	</div>
 	 <div class="input-field col s3">
  		<input id="tags2" type="text" name="curp">
-		<label id="texto" for="tags2"></i>CURP</label>
+		<label id="texto" for="tags2"></i>Curp</label>
  	</div> 
+ 	<div class="input-field col s1">
+ 		<p><a id="show-option" title="ejemplo: SIHC400128HDFLLR01"><b>?</b></a></p>
+ 	</div>
  </div>
 
 <div class="row">
- 	<div class="input-field col s1"></div>
- 	<div class="input-field col s2">
+ <div class="input-field col s2 offset-s1">
  	<select name="sexo">
-      <option value="none" disabled selected>Seleccione</option>
+      <option value="none" disabled selected>Seleccione..</option>
       <option value="1">Masculino</option>
       <option value="2">Femenino</option>
     </select>
@@ -46,7 +46,7 @@
  </div>
  <div id="suggestions" class="input-field col s3">
 	<input id="ocupacion" type="text" name="ocupacion" class="validate">
-	<label id="texto" for="tags"></i>Ocupación</label>
+	<label id="texto" for="tags"></i>Ocupacion</label>
  </div> 
   <div class="input-field col s1 m1 l1">
 		 <input type="number" name="edad">
@@ -54,18 +54,21 @@
    </div>
 
  	<div class="input-field col s3">
- 		<input type='tel' pattern='[\(]\d{3}[\)]\d{3}[\-]\d{4}' title='Phone Number (Format: (999)999-9999)' maxlength="13" name="telefono" class="validate" placeholder="(999)999-9999"> 
+ 		<input type='tel' pattern='[\(]\d{3}[\)]\d{3}[\-]\d{4}' title='Phone Number (Format: (999)999-9999)' maxlength="13" name="telefono" class="validate"> 
 		<label id="texto" for="usuario"></i>Teléfono</label>
- 	</div>   
+ 	</div> 
+ 	<div class="input-field col s1">
+ 		<p><a id="show-option2" title="ejemplo: (312)315-4545"><b>?</b></a></p>
+ 	</div>
  </div>
+
  <div class="row">
- 	<div class="input-field col s1"></div>
- 	<div class="input-field col s4">
- 		<input type="text" name="npadre">
+ 	<div class="input-field col s4 offset-s1">
+ 		<input type="text" name="npadre" placeholder="">
 		<label id="texto" for="usuario"></i>Nombre del Padre</label>
  	</div>
  	<div class="input-field col s4 offset-s1">
- 		<input type="text" name="nmadre">
+ 		<input type="text" name="nmadre" placeholder="">
 		<label id="texto" for="usuario"></i>Nombre de la Madre</label>
  	</div>
  </div>
@@ -83,18 +86,15 @@
 		</select>
 		<label>Localidad</label>
 	</div>
-	 <div class="input-field col s3">
-	 	<input type="text" name="colonia">
-		<label id="texto">Colonia</label>
-	 </div>
-	 <div class="input-field col s4">
-	 	<input type="text" name="calle">
-		<label id="texto">Calle</label>
+	 <div class="input-field col s7">
+	 	<input type="text" name="domicilio" placeholder="">
+		<label id="texto">Dirección</label>
 	 </div>
 	 <div class="input-field col s1">
-	 	<input type="text" name="num_ext">
-		<label id="texto">Número</label>
-	 </div>
+ 		<p><a id="show-option" title="Calle #numero Colonia 'Nombre de colonia'"><b>?</b></a></p>
+ 	 </div>
+	 <input type="hidden" name="existente" value="0">
+	 <input type="hidden" name="id">
 </div>
 
 <hr>
@@ -108,9 +108,7 @@
 </form>
 
 @stop
-
 @section('script')
-
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
 <script type="text/javascript">
 var tagso = [
@@ -118,6 +116,16 @@ var tagso = [
 	"{{$val->nombre}}",
 	@endforeach
 ];
+var nombre = [
+	@foreach($personas as $val)
+	   {
+		label:"{{$val->nombre}}",
+		id:"{{$val->id}}",
+	},
+	@endforeach
+];
+
 </script>
 <script src="/js/general_prevdel.js"></script>
 @stop
+

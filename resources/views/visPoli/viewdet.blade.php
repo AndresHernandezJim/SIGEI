@@ -13,7 +13,7 @@
 			<img src="{{$detenido->foto}}" width="80px">
 			</td>
 			<td>
-			{{$detenido->apellido." ".$detenido->nombre." (".$detenido->alias.")"}}
+			{{$detenido->nombre." (".$detenido->alias.")"}}
 			</td>
 			<td>
 			{{$detenido->created_at}}

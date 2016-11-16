@@ -21,7 +21,6 @@ Route::get('hola',function(){return view('upload-image');});
 
 Route::group(['middleware' => 'policia'], function(){
 	Route::get('/poli', 'segpubcontroller@index');
-
 	Route::get('/registroincidenciasp', 'segpubcontroller@nueva_incidencia_sp');
 	Route::get('/registroincidenciavial','segpubcontroller@newrepvial');
 	Route::get('/registrobarandilla','segpubcontroller@nueva_barandilla');
@@ -36,11 +35,9 @@ Route::group(['middleware' => 'policia'], function(){
 	Route::post('/segpub/barandilla/detper','segpubcontroller@detalleper_bara');
 	Route::get('/segpub/barandilla/detperx/{id}', 'segpubcontroller@detalleper_bara2');
 	Route::post('/sp','segpubcontroller@storepersona');
-
-
-	
+	Route::post('/segpub/incidenciavial','segpubcontroller@newvial');
+	Route::patch('get/user/info','segpubcontroller@get_user_info');
 });
-
 Route::group(['middleware' => 'psicologo'], function(){
 	Route::get('/predel', 'prevdelcontroller@index');
 	Route::get('/logoutpd', 'prevdelcontroller@logout');
@@ -63,7 +60,5 @@ Route::group(['middleware' => 'psicologo'], function(){
 	Route::get('/predel/intitucion/info/{id}', 'prevdelcontroller@mostrarInst');
 	Route::get('/predel/ajax/visitas/{id}', 'prevdelcontroller@showVis');
 	Route::get('/predel/intitucion/visita/{id}', 'prevdelcontroller@vis_esp');
-
-
+	Route::patch('get/user/infop','prevdelcontroller@get_user_info');
 });
-
