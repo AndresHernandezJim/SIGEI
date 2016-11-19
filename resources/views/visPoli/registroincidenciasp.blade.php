@@ -111,7 +111,7 @@
 						</thead>
 						<tbody v-for="agraviado in agraviados">
 							<tr>
-								<td>@{{$index+1}}.- @{{agraviado.nombre}} </td> <td> <a href="#!" v-on:click="rm_agra(agraviado)">X</a></td>
+								<td style="text-align:left; ">@{{$index+1}}.- @{{agraviado.nombre}} </td> <td> <a href="#!" v-on:click="rm_agra(agraviado)">X</a></td>
 							</tr>
 						</tbody>
 					</table>
@@ -133,7 +133,7 @@
 						</thead>
 						<tbody v-for="asegurado in asegurados">
 							<tr>
-								<td> @{{$index+1}} @{{asegurado.nombre}}</td> <td> <a href="#!" v-on:click="rm_aseg(asegurado)">X</a></td>
+								<td style="text-align: left;"> @{{$index+1}}.- @{{asegurado.nombre}}</td> <td> <a href="#!" v-on:click="rm_aseg(asegurado)">X</a></td>
 							</tr>
 						</tbody>
 					</table>

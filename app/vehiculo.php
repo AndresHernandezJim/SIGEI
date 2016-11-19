@@ -8,6 +8,6 @@ class vehiculo extends Model
 {
     protected $table = 'vehiculo';
     protected $primaryKey="id_vehiculo";
-    protected $fillable = ['id_modelo', 'id_tipo', 'id_estado', 'serie', 'detalles','liberado','ubicacion','adeudo'];
+    protected $fillable = ['id_modelo', 'id_tipo', 'id_estado', 'serie', 'detalles','liberado','ubicacion','adeudo','placas'];
     public $timestamps = false;
 }

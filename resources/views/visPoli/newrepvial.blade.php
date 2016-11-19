@@ -1,5 +1,14 @@
 @extends('templates.tsegpub')
-@section('style')
+@section('navegacion')
+  <div class="row">
+    <div id="navegacion" class="col s12">
+      <a href="/"></a>
+      <a href="/poli">Menú principal</a>
+      <span class="space">|</span>
+      <a class="nav-active">Registro de Incidencias de Vialidad</a>
+    </div>
+  </div>
+  
 @stop
 @section('content')
 <div class="row">
@@ -22,7 +31,10 @@
 		<input v-for="vehiculo in vehiculo" type="hidden" name="vehiculo[@{{$index}}][tipo]" value="@{{vehiculo.tipo}}">
 		<input v-for="vehiculo in vehiculo" type="hidden" name="vehiculo[@{{$index}}][asegurado]" value="@{{vehiculo.asegurado}}">
 		<input v-for="vehiculo in vehiculo" type="hidden" name="vehiculo[@{{$index}}][adeudo]" value="@{{vehiculo.adeudo}}">
+		<input v-for="vehiculo in vehiculo" type="hidden" name="vehiculo[@{{$index}}][responsable]" value="@{{vehiculo.responsable}}">
 		<input v-for="vehiculo in vehiculo" type="hidden" name="vehiculo[@{{$index}}][caracteristicas]" value="@{{vehiculo.caracteristicas}}">
+		<input v-for="vehiculo in vehiculo" type="hidden" name="vehiculo[@{{$index}}][estado]" value="@{{vehiculo.estado}}">
+		<input v-for="vehiculo in vehiculo" type="hidden" name="vehiculo[@{{$index}}][ubicacion]" value="@{{vehiculo.ubicacion}}">
 		<input v-for="vehiculo in vehiculo" type="hidden" name="vehiculo[@{{$index}}][nombre]" value="@{{vehiculo.nombre}}">
 		<input v-for="vehiculo in vehiculo" type="hidden" name="vehiculo[@{{$index}}][curp]" value="@{{vehiculo.curp}}">
 		<input v-for="vehiculo in vehiculo" type="hidden" name="vehiculo[@{{$index}}][sexo]" value="@{{vehiculo.sexo}}">
@@ -30,9 +42,10 @@
 		<input v-for="vehiculo in vehiculo" type="hidden" name="vehiculo[@{{$index}}][ocupacion]" value="@{{vehiculo.ocupacion}}">
 		<input v-for="vehiculo in vehiculo" type="hidden" name="vehiculo[@{{$index}}][domicilio]" value="@{{vehiculo.domicilio}}">
 		<input v-for="vehiculo in vehiculo" type="hidden" name="vehiculo[@{{$index}}][telefono]" value="@{{vehiculo.telefono}}">
+		<input v-for="vehiculo in vehiculo" type="hidden" name="vehiculo[@{{$index}}][localidad]" value="@{{vehiculo.localidad}}">
 	</div>
 	<div class="row">
-		<div class="input-field col s6 offset-s3">
+		<div class="input-field col s6 offset-s1">
 				<select id="nombre_emergencia"  name="emergencia" required>
 		        		<option value="" disabled selected>Suceso</option>
 		        		@foreach ($emergencias as $emergencias)
@@ -40,10 +53,18 @@
 	                    @endforeach
 		        </select>
 		</div>
+		<div class="col s1">
+			<br>
+			Hora
+		</div>
+		<div class = "input-field col s2">
+					<input type="time" name="time" placeholder="hrs:mins" pattern="^([0-1]?[0-9]|2[0-4]):([0-5][0-9])(:[0-5][0-9)?$" class="inputs time" required name="hora">
+
+				</div>
 	</div>
 	<div class="row">
 		<div class="input-field col s2 m2 l2 offset-s1 offset-m1 offset-l1">
-				<select class="validate" name="sexo" required>
+				<select class="validate" name="local" required>
 						<option value="" selected disabled>Localidad</option>	
 						@foreach($localidades as $localidad)
 						<option value="{{$localidad['id_localidad']}}">{{$localidad['nombre']}}</option>
@@ -51,24 +72,20 @@
 				</select>
 			</div>
 			<div class="input-field col s3 m3 l3">
-				<input id="tags" type="text" name="ocupacion" class="validate" required>
-				<label id="texto" for="tags"></i>Colonia</label>
+				<input  type="text" name="colonia1" class="validate" required>
+				<label id="texto" for="colonia1"></i>Colonia</label>
 			</div>
 			<div class="input-field col s2 m2 l2">
 				<input type="text" name="calle1"  class="validate" required>
-				<label id="texto" for="usuario"></i>Calle</label>
+				<label id="texto" for="calle1"></i>Calle</label>
 			</div>
 			<div class="input-field col s2 m2 l2">
-				<input type="number" name="numero1" min="1" max="9999" class="validate" required>
-				<label id="texto" for="usuario"></i>Número</label>
+				<input type="number" name="numero1" min="0" max="9999" class="validate" required>
+				<label id="texto" for="numero1"></i>Número</label>
 			</div>
 	</div>
 	<div class="row">
-		<div class="input-field col s2 offset-s1">
-			<input type="text" name="hora">
-			<label>Hora del suceso</label>
-		</div>
-		<div class="input-field col s3 ">
+		<div class="input-field col s3 offset-s1">
 			<select name="tipoaviso">
 				<option value="" selected disabled>Tipo de Aviso</option>
 				<option value="1"> Vía 066</option>
@@ -130,40 +147,65 @@
 						<label>Modelo</label>
 					</div>
 					<div class="input-field col s2">
-						<input type="text" name="anio" v-model="anio">
+						<input type="number" min="1950" name="anio" v-model="anio">
 						<label>Año</label>
 					</div>
 					<div class="input-field col s3 ">
-						<input type="text" name="serie" v-model="serie">
+						<input type="text" name="serie" maxlength="17" v-model="serie">
 						<label>Serie</label>
 					</div>
 				</div>
 				<div class="row">			
 					<div class="input-field col s2 offset-s1">
-						<input type="text" name="Placas" v-model="placas">
+						<input type="text" name="Placas" maxlength="10" v-model="placas" font style="text-transform: uppercase;">
 						<label>Placas</label>
 					</div>
 					<div class="input-field col s3 ">
-						<select v-model="tipo">
+						<input type="text" id="tipo" name="tipo" v-model="tipo">
+						<label>Tipo Vehiculo</label>
+						<!--select v-model="tipo" >
 							<option value="" disabled selected>Tipo de vehículo</option>
-							<option :value="1">Auto</option>
-							<option :value="2">Camioneta</option>
-							<option :value="3">Camión</option>
-							<option :value="4">Transporte</option>
-							<option :value="5">Otro</option>
-						</select>
+							<option v-for="tipo in tipos" :value.sync="@{{tipo.val}}">@{{tipo.nombre}}</option>
+						</select-->
 					</div>
 					<div class="input-field col s3">
 						<input type="text" id="estado" name="estado" v-model="estado">
 						<label>Procedencia</label>
 					</div>
 					<div class="input-field col s2">
-						<input name="group1" type="radio" id="1" v-model="asegurado" :value="1"/>
+						<input name="group1" type="radio" id="1" v-model="asegurado" :value="1" v-on:click="consignado"/>
 				      	<label for="1">Consignado</label>
 				      	<br>
-						<input name="group1" type="radio" id="2" v-model="asegurado" :value="2"/>
+						<input name="group1" type="radio" id="2" v-model="asegurado" :value="2" checked v-on:click="noconsignado"/>
 				      	<label for="2">No Consignado</label>
 					</div>
+				</div>
+				<div class="row" v-show="elconsignado">
+					<div class="row">
+						<div class="col s offset-s1">
+							Ubicacado en:
+						</div>	
+						<div class="col s2">
+							<input type="radio" name="group3" v-model="ubicacion" id="5" :value="1" >
+							<label for="5">El Mezquite</label>
+						</div>
+						<div class="col s2">
+							<input type="radio" name="group3" v-model="ubicacion" id="6" :value="2" >
+							<label for="6">Gruas Ralf</label>
+						</div>
+						<div class="col s4">
+							<input type="radio" name="group3" v-model="ubicacion" id="7" :value="3" >
+							<label for="7">Estacionamiento del Complejo</label>
+						</div>
+					</div>
+					<div class="row">
+						<div class="input-field col s3 offset-s1" v-show="elconsignado">
+							<input type="number" step="any" name="adeudo" v-model="adeudo">
+							<label>Monto Adeudado</label>
+						</div>
+					</div>
+
+					
 				</div>
 				<div class="row">
 					<div class="input-field col s10 offset-s1">
@@ -172,13 +214,25 @@
 					</div>
 				</div>
 				<div class="row">
-					<div class="input-field col s3 offset-s1">
-						<input type="text" name="adeudo" v-model="adeudo">
-						<label>Adeudo</label>
+					
+					<div class="col s2 offset-s1">
+					<br>
+						<center>
+							Parte en el  incidente
+						</center>
 					</div>
-					<div class="col s3 offset-s2">
+					<div class="col s3">
+					<br>
+						<input type="radio" name="gropu4"  id="10" value="2" v-model="culpable">
+						<label for="10">Responsable del incidente</label>
+						<input type="radio" name="group4" id="9" value="1" v-model="culpable">
+						<label for="9">Afectado</label>
+					</div>
+				</div>
+				<div class="row">
+					<center>
 						<a href="#!" v-on:click="personaevt" class="btn orange darken-3"><i class="fa fa-angle-double-down" aria-hidden="true"></i></a>
-					</div>
+					</center>
 				</div>
 		</div>
 		<div class="row" v-show="personas">
@@ -201,18 +255,19 @@
 				</div>
 				<div class="row">
 					<div class="input-field col s2 m2 l2 offset-s1 offset-m1 offset-l1">
-						<select class="validate" name="sexo"  v-model="sexo">
-								<option value="" selected disabled>Sexo</option>
-								<option value="1"> Masculino</option>
-								<option value="2"> Femenino</option>
-						</select>
+
+								<input name="group" type="radio" id="3" v-model="sexo" :value="1" checked />
+				      			<label for="3">Masculino</label>
+				      			<br>
+								<input name="group" type="radio" id="4" v-model="sexo" :value="2"/>
+				      			<label for="4">Femenino</label>
 					</div>
 					<div class="input-field col s3 m3 l3">
-						<input id="tags" type="text" name="ocupacion" class="validate" v-model="ocupacion">
+						<input id="ocupacion" type="text" name="ocupacion" class="validate" v-model="ocupacion">
 						<label id="texto" for="tags"></i>Ocupación</label>
 					</div>
 					<div class="input-field col s2 m2 l2">
-						<input type="number" name="edad" min="5" max="120" class="validate" v-model="edad" >
+						<input type="number" name="edad" min="0" max="120" class="validate" v-model="edad" >
 						<label id="texto" for="usuario"></i>Edad</label>
 					</div>
 					<div class="input-field col s3 m3 l3">
@@ -224,6 +279,10 @@
 					<div class="input-field col s6 offset-s1">
 						<input type="text" name="domicilio" placeholder="calle numero colonia" v-model="domicilio">
 						<label>Domicilio</label>
+					</div>
+					<div class="input-field col s2">
+						<input type="text" id="localidad" name="localidad" v-model="localidad">
+						<label>Localidad</label>
 					</div>
 				</div>
 				<div class="row">
@@ -257,50 +316,42 @@
 	      anio:"",
 	      serie:"",
 	      placas:"",
-	      tipo:0,
+	      tipo:"",
 	      estado:"",
 	      asegurado:0,
 	      adeudo:"",
 	      caracteristicas:"",
 	      nombre:"",
 	      curp:"",
+	      localidad:"",
 	      sexo:"",
 	      edad:0,
 	      ocupacion:"",
 	      domicilio:"",
+	      culpable:"",
 	      telefono:"",
+	      ubicacion:"",
 	      btnagregar:true,
 	      vehiculo:[],
 	      vehiculos:false,
 	      personas:false,
+	      elconsignado:false,
+	      tipos:[
+	      	{nombre:"Auto",val:1},{nombre:"Camioneta",val:2},{nombre:"Camion",val:3},{nombre:"Motocicleta",val:4},{nombre:"Otros",val:5}
+	      ],
 
 	  },
 	  ready:function(){
-	   	console.log(this.nombre);
+	   	
 	  },
 	  methods:{
 	  	agregar:function(){
 	  		this.vehiculo.push({'marca':this.marca,'modelo':this.modelo,'anio':this.anio,'serie':this.serie,'placas':this.placas,
-	  		'tipo':this.tipo,'asegurado':this.asegurado,'adeudo':this.adeudo,'caracteristicas':this.caracteristicas,'nombre':this.nombre,
-	  		'curp':this.curp,'sexo':this.sexo,'edad':this.edad,'ocupacion':this.ocupacion,'domicilio':this.domicilio,'telefono':this.telefono});
-	  		this.marca="";
-			this.modelo="";
-			this.anio="";
-			this.serie="";
-			this.placas="";
-			this.tipo="";
-			this.asegurado="";
-			this.adeudo="";
-			this.caracteristicas="";
-			this.nombre="";
-			this.curp="";
-			this.sexo="";
-			this.edad="";
-			this.ocupacion="";
-			this.domicilio="";
-			this.telefono="";
-			this.personas=!this.personas;
-			this.btnagregar=!this.btnagregar;
+	  		'tipo':this.tipo,'asegurado':this.asegurado,'ubicacion':this.ubicacion,'estado':this.estado,'adeudo':this.adeudo,'caracteristicas':this.caracteristicas,'responsable':this.culpable,'nombre':this.nombre,'curp':this.curp,'sexo':this.sexo,'edad':this.edad,'ocupacion':this.ocupacion,'domicilio':this.domicilio,'telefono':this.telefono,'localidad':this.localidad});
+	  		this.marca="";this.modelo="";this.anio=1950;this.serie="";this.placas="";this.tipo="";this.estado="";
+			this.asegurado="";this.adeudo="";this.caracteristicas="";this.nombre="";this.curp="";this.sexo="";this.ubicacion="";
+			this.edad="";this.ocupacion="";this.domicilio="";this.telefono="";this.localidad="";this.personas=!this.personas;
+			this.btnagregar=!this.btnagregar;this.culpable="";this.elconsignado=false;
 	  	},
 	  	nuevo:function(){
 	  		
@@ -325,7 +376,13 @@
 	  		console.log(vehi);
 	  		this.vehiculo.$remove(vehi);
 	  	},
-	  	
+	  	consignado:function(){
+	  		this.elconsignado=!this.elconsignado;
+	  	},
+	  	noconsignado:function(){
+	  		this.ubicacion="";
+	  		this.elconsignado=!this.elconsignado;
+	  	}
 	  },
 });
 </script>
@@ -362,6 +419,17 @@ var marca=[
 ];
 var estado=[
 	@foreach($estado as $val)
+	"{{$val->nombre}}",
+	@endforeach
+];
+
+var tipo=[
+	@foreach($tipo as $val)
+	"{{$val->nombre}}",
+	@endforeach	
+];
+var modelo=[
+	@foreach($modelo as $val)
 	"{{$val->nombre}}",
 	@endforeach
 ];

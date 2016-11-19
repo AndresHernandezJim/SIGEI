@@ -45,10 +45,10 @@
 </ul>
 <nav class="grey darken-4">
   <div class="nav-wrapper ">
-    <img class="logo" src="/images/logo.png"><a href="#!" class="brand-logo form">&nbspSICOI</a>
+    <img class="logo" src="/images/logo.png"><a href="/poli" class="brand-logo form">&nbsp;SIGEI</a>
     <ul class="right hide-on-med-and-down">
-	  <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Seg.Pública&nbsp<i class="fa fa-chevron-down"></i></a></li>    
-      <li><a class="dropdown-button" href="#!" data-activates="dropdown2">Vialidad &nbsp &nbsp<i class="fa fa-chevron-down"></i></a></li> 
+	  <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Seg.Pública&nbsp;<i class="fa fa-chevron-down"></i></a></li>    
+      <li><a class="dropdown-button" href="#!" data-activates="dropdown2">Vialidad &nbsp; &nbsp;<i class="fa fa-chevron-down"></i></a></li> 
       <li><a class="dropdown-button" href="#!" data-activates="dropdown3">Detenidos &nbsp &nbsp &nbsp<i class="fa fa-chevron-down"></i></a></li> 
       <li><a href="/logoutp">{{session()->get('Policia')->nombre}} &nbsp&nbsp<i class="fa fa-sign-out"></i>Cerrar Sesión</a></li> 
     </ul>

@@ -29,4 +29,7 @@ $(document).ready(function(){
     $("#estado").autocomplete({
       source:estado,
     });
+    $("#tipo").autocomplete({
+      source:tipo
+    });
 });

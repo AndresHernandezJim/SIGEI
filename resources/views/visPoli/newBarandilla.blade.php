@@ -8,6 +8,17 @@
           }
         </style>
 @stop
+@section('navegacion')
+  <div class="row">
+    <div id="navegacion" class="col s12">
+      <a href="/"></a>
+      <a href="/poli">Menú principal</a>
+      <span class="space">|</span>
+      <a class="nav-active">Registro de Barandillas</a>
+    </div>
+  </div>
+  
+@stop
 @section('content')
 <center><h4>REGISTRO DE INGRESO A BARANDILLA</h4></center>
 <hr>
@@ -28,7 +39,7 @@
 	<div class="row">
 			<div class="input-field col s6 m4 l4 offset-s1 offset-m1 offset-l1">
 				<input type="text" name="nombre" id="nombre" class="validate" minlength="3" required>
-				<label>Nombre(s)</label>
+				<label>Nombre completo</label>
 			</div>
 			<div class="input-field col s1">
  				<p><a id="show-option" title="Nombre(s) y Apellidos"><b>?</b></a></p>
