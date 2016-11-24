@@ -68,6 +68,8 @@ $(document).ready(function(){
               $('[name="edad"]').val(data.edad);
               $('[name="domicilio"]').val(data.domicilio);
               $('[name="nombre"]').attr('disabled', 'disabled');
+              $('[name="existente"]').val(1);
+              $('[name="id"]').val(data.id);
             }
           }
         });

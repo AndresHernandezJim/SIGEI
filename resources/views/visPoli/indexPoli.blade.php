@@ -4,9 +4,9 @@
 @yield('styles')
 
 <title>DSPVC</title>
-	<link rel="stylesheet" type="text/css" href="/css/materialize.min.css">
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-	<link rel="stylesheet" type="text/css" href="/css/app1.css">
+  <link rel="stylesheet" type="text/css" href="/css/materialize.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+  <link rel="stylesheet" type="text/css" href="/css/app1.css">
 </head>
 <body>
 <header>
@@ -25,11 +25,7 @@
 <li class="divider"></li>
 <li><a href="/consultaplacasfecha">Consultar Vehículo</a></li>
 <li class="divider"></li>
-<li><a href="/consultagruas">Vehículos Asegurados</a></li>
-<li class="divider"></li>
 <li><a href="/consultagruasfecha">Asegurados en Fecha</a></li>
-<li class="divider"></li>
-<li><a href="/liberarvehiculo">Liberar Vehículo</a></li>
 <li class="divider"></li>
 </ul>
 <ul id="dropdown3" class="dropdown-content">
@@ -44,13 +40,13 @@
   <div class="nav-wrapper ">
     <img class="logo" src="/images/logo.png"><a href="#!" class="brand-logo form">&nbspSICOI</a>
     <ul class="right hide-on-med-and-down">
-	  <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Seg.Publica&nbsp<i class="fa fa-chevron-down"></i></a></li>    
+    <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Seg.Publica&nbsp<i class="fa fa-chevron-down"></i></a></li>    
       <li><a class="dropdown-button" href="#!" data-activates="dropdown2">Vialidad &nbsp &nbsp<i class="fa fa-chevron-down"></i></a></li> 
       <li><a class="dropdown-button" href="#!" data-activates="dropdown3">Detenidos &nbsp &nbsp &nbsp<i class="fa fa-chevron-down"></i></a></li> 
       <li><a href="/logoutp">{{session()->get('Policia')->nombre}} &nbsp&nbsp<i class="fa fa-sign-out"></i>Cerrar Sesión</a></li> 
     </ul>
   </div>
-</nav>	
+</nav>  
 </header>
 
 <script src="/js/jquery-2.2.1.min.js"></script>

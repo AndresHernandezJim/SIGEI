@@ -31,7 +31,7 @@
       <ul class="right hide-on-med-and-down">
         <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Personas&nbsp<i class="fa fa-chevron-down"></i></a></li>    
         <li><a class="dropdown-button" href="#!" data-activates="dropdown2">Instituciones&nbsp<i class="fa fa-chevron-down"></i></a></li> 
-        <li><a href="/logoutpd">{{session()->get('Psicologo')->nombre}} &nbsp&nbsp<i class="fa fa-sign-out"></i>Cerrar Sesión</a></li> 
+        <li><a href="/logoutpd">{{session()->get('Psicologo')->nombre}} &nbsp;&nbsp;<i class="fa fa-sign-out"></i>Cerrar Sesión</a></li> 
       </ul>
     </div>
   </nav>  

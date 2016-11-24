@@ -36,7 +36,23 @@ Route::group(['middleware' => 'policia'], function(){
 	Route::get('/segpub/barandilla/detperx/{id}', 'segpubcontroller@detalleper_bara2');
 	Route::post('/sp','segpubcontroller@storepersona');
 	Route::post('/segpub/incidenciavial','segpubcontroller@newvial');
+	Route::get('/consultaplacasfecha','segpubcontroller@vialplacas');
+	Route::get('/consultagruasfecha','segpubcontroller@vialfecha');
+	Route::get('/consultagruasfecha', 'segpubcontroller@searchdate');
+	Route::get('/consultallamadas', 'segpubcontroller@llamadas');
+	Route::get('/consultaincidenciasp','segpubcontroller@insp');
+	Route::get('/consultaincidenciasp/{id}','segpubcontroller@detalleincidencia');
+   //ajax
 	Route::patch('get/user/info','segpubcontroller@get_user_info');
+	Route::patch('get/auto/placa','segpubcontroller@get_auto_info');
+	Route::patch('get/auto/liberar','segpubcontroller@get_auto_libre');
+	Route::patch('get/auto/fecha1','segpubcontroller@vialfecha1');
+	Route::patch('get/auto/fecha2','segpubcontroller@vialfecha2');
+	Route::patch('get/llamada/fecha1','segpubcontroller@llamadafecha1');
+	Route::patch('get/llamada/fecha2','segpubcontroller@llamadafecha2');  
+	Route::patch('get/incidencia/fecha','segpubcontroller@get_incidencias');
+
+
 });
 Route::group(['middleware' => 'psicologo'], function(){
 	Route::get('/predel', 'prevdelcontroller@index');
@@ -54,11 +70,14 @@ Route::group(['middleware' => 'psicologo'], function(){
 	Route::post('/predel/sesion/{id}', 'prevdelcontroller@insertSes');
 	Route::post('/predel/visita/{id}', 'prevdelcontroller@regVis');
 	Route::get('/predel/ajax/sesiones/{id}', 'prevdelcontroller@showSec');
-	Route::get('/predel/personas/sesion/{id}', 'prevdelcontroller@ses_esp');
+	//Route::get('/predel/personas/sesion/{id}', 'prevdelcontroller@ses_esp');
 	Route::post('/predel/ajax/delpac', 'prevdelcontroller@deletePac');
 	Route::get('/predel/ajax/showinst', 'prevdelcontroller@showInst');
 	Route::get('/predel/intitucion/info/{id}', 'prevdelcontroller@mostrarInst');
 	Route::get('/predel/ajax/visitas/{id}', 'prevdelcontroller@showVis');
-	Route::get('/predel/intitucion/visita/{id}', 'prevdelcontroller@vis_esp');
+	//Route::get('/predel/intitucion/visita/{id}', 'prevdelcontroller@vis_esp');
 	Route::patch('get/user/infop','prevdelcontroller@get_user_info');
+	//ajax
+	Route::patch('/predel/personas/sesion/', 'prevdelcontroller@ses_esp');
+	Route::patch('/predel/intitucion/visita/', 'prevdelcontroller@vis_esp');
 });

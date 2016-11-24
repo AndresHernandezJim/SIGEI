@@ -1,4 +1,3 @@
-
 $(document).ready(function(){
     $( function() {
         $( "#show-option" ).tooltip({
@@ -19,6 +18,18 @@ $(document).ready(function(){
     });
     $( "#ocupacion" ).autocomplete({
       source:ocupacion
+    });
+    $( "#tags2" ).autocomplete({
+      source: tags2,
+    });
+    $( "#nombre2" ).autocomplete({
+      source: nombre2,
+    });
+    $( "#localidad2" ).autocomplete({
+      source:localidad2,
+    });
+    $( "#ocupacion2" ).autocomplete({
+      source:ocupacion2
     });
     $("#marca").autocomplete({
       source:marca,

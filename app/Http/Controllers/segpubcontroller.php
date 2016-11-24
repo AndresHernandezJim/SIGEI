@@ -22,18 +22,17 @@ use App\modelo_vehiculo;
 use App\tipo_vehiculo;
 use App\vehiculo;
 use App\reporte_vehiculo;
+use App\heridos;
 class segpubcontroller extends Controller
 {   
     public function index(){
         //dd("policon");
         return view('visPoli.indexPoli');
     }
-    
     public function logout(){
         session()->forget('Policia');
         return redirect('/');
     }
-
     public function nueva_incidencia_sp(){
       
         $data1 = \DB::table('persona')
@@ -47,13 +46,11 @@ class segpubcontroller extends Controller
                         );
         return view('visPoli.registroincidenciasp',$persona);
     }
-
     public function nueva_barandilla(){
-          $data1 = \DB::table('persona')
-        ->select('nombre', 'id_persona as id', 'curp')
-        ->get();
-        //dd($data1);
-
+        $data1 = \DB::table('persona')
+            ->select('nombre', 'id_persona as id', 'curp')
+            ->get();
+            //dd($data1);
         $data = array('personas' => $data1,
                       'localidades'=> \App\localidad::get(),
                       'ocupaciones'=> \DB::table('ocupacion')->select('id_ocupacion as id', 'nombre')->get(),
@@ -63,7 +60,6 @@ class segpubcontroller extends Controller
     }
     public function showdet(){
        $data=\DB::table('persona')
-
             ->join('reporte_barandilla', 'persona.id_persona', '=', 'reporte_barandilla.id_persona')
             ->select('persona.nombre',
              'reporte_barandilla.foto',
@@ -78,8 +74,7 @@ class segpubcontroller extends Controller
 
         
         return view('visPoli.viewdet',$detenido);
-    }
-    
+    } 
     public function guardabarandilla(Request $request){ 
             //dd($request->all());
             if($request->existente == 0){
@@ -244,11 +239,8 @@ class segpubcontroller extends Controller
                             return redirect('/consultadetenido');         
                 }   
             }
-
     }
-
-        public function showdet2($id){
-
+    public function showdet2($id){
         $data=\DB::table('persona as p')->join('reporte_barandilla as rb','p.id_persona','=','rb.id_persona')
             ->join('ocupacion as o','o.id_ocupacion','=','p.id_ocupacion')
             ->join('lugar as l','p.id_lugar','=','l.id_lugar')->join('localidad as l2','l2.id_localidad','=','l.id_localidad')
@@ -273,7 +265,6 @@ class segpubcontroller extends Controller
         return view('visPoli.viewdet2',$datos);
     }
     public function showdet3($id){
-
         $data=\DB::table('persona as p')->join('reporte_barandilla as rb','p.id_persona','=','rb.id_persona')
             ->join('ocupacion as o','o.id_ocupacion','=','p.id_ocupacion')
             ->join('lugar as l','p.id_lugar','=','l.id_lugar')->join('localidad as l2','l2.id_localidad','=','l.id_localidad')
@@ -297,7 +288,6 @@ class segpubcontroller extends Controller
         //dd($data);
         return view('visPoli.viewdet3',$datos);
     }
-
     public function liberar(Request $request){
         $reporte = \DB::table('reporte_barandilla')
          ->where('id_reporte', '=', $request->id_rep)
@@ -305,7 +295,6 @@ class segpubcontroller extends Controller
                    'updated_at' => DATE('Y-m-d H:i:s') 
                   ]);
     }
-
     public function bus_per(){
 
         $data1 = \DB::table('persona')
@@ -356,7 +345,6 @@ class segpubcontroller extends Controller
        // dd($dataecho);
         return view('visPoli.newrepvial',$dataecho);
     }
-
     public function detalleper_bara2($id){
         $persona=\DB::table('persona')
             ->join('ocupacion','ocupacion.id_ocupacion','=','persona.id_ocupacion')
@@ -390,11 +378,10 @@ class segpubcontroller extends Controller
 
              return view('visPoli.hist_per', $data);
     }
-
     public function storepersona(Request $request){
-        $domicilio=$request->calle." #".$request->num_ext." colonia ".$request->colonia;
+        $domicilio=$request->dom;
         $id_lugar= \DB::table('lugar')->select('id_lugar')->where('direccion','=', $domicilio)->first();
-                //dd($id_lugar);
+       //dd($id_lugar);
                 if($id_lugar==null){//no existe el lugar, hay que agregarlo
                     $dom=new lugar;
                     $dom->id_localidad=$request->local;
@@ -402,6 +389,7 @@ class segpubcontroller extends Controller
                     $dom->save();
                     $id_lugar= \DB::table('lugar')->select('id_lugar')->where('direccion','=', $domicilio)->first(); //obtenemos el id de lugar ojo-*****
                 }
+              //dd($id_lugar);  
         $sesion=\DB::table('sys_sesion')->select('id_sesion')->orderby('id_sesion','desc')->first();
         $nuevo= \DB::table('reporte')->insert([
             'id_emergencia'=>$request->emergencia,
@@ -436,7 +424,8 @@ class segpubcontroller extends Controller
                 $agraviado=$request->agrav[$i]; 
                 //dd($agraviado['localidad']);
                 //obtenemos el registro de la persona si es que existe
-                $persona=\DB::table('persona')->select('id_persona')->where('curp','=',$agraviado['curp'])->first();    
+                $persona=\DB::table('persona')->select('id_persona')->where('curp','=',$agraviado['curp'])->first(); 
+                //dd($persona);   
                 if($persona==null){ //no existe la persona, hay que agregarla
                     //verificamos si equiste la localidad si existe obtenemos el id si no la agregamos
                     $localidad=\DB::table('localidad')->select('id_localidad')->where('nombre','=',$agraviado['localidad'])->first();
@@ -452,15 +441,17 @@ class segpubcontroller extends Controller
                     }
                     //verificamos datos del lugar
                     $domicilio2=$agraviado['domicilio'];
-                    $id_lugar= \DB::table('lugar')->select('id_lugar')->where('direccion','=', $domicilio2)->first();
-                    //dd($id_lugar);
-                    if($id_lugar==null){//no existe el lugar, hay que agregarlo
+                    //dd($domicilio2);
+                    $id_lugar2= \DB::table('lugar')->select('id_lugar')->where('direccion','=', $domicilio2)->first();
+                    //dd($id_lugar2);
+                    if($id_lugar2==null){//no existe el lugar, hay que agregarlo
                         $dom=new lugar;
                         $dom->id_localidad=$localidad->id_localidad;
-                        $dom->direccion=$domicilio;
+                        $dom->direccion=$domicilio2;
                         $dom->save();
-                        $id_lugar= \DB::table('lugar')->select('id_lugar')->where('direccion','=', $domicilio2)->first(); //obtenemos el id de lugar ojo-*****
+                        $id_lugar2= \DB::table('lugar')->select('id_lugar')->where('direccion','=', $domicilio2)->first(); //obtenemos el id de lugar ojo-*****
                     }
+                    //dd($id_lugar2);
                     //verificamos si existe  la ocupacion
                     $id_ocupacion = \DB::table('ocupacion')->select('id_ocupacion')->where('nombre','=', $agraviado['ocupacion'])->first();
                     if($id_ocupacion==null){//la ocupación no existe tenemos que crearla
@@ -469,11 +460,10 @@ class segpubcontroller extends Controller
                         $ocupacion->save();
                         //se hace nuevamente la consulta para obtener el id de la nueva profesión
                         $id_ocupacion = \DB::table('ocupacion')->select('id_ocupacion')->where('nombre','=', $agraviado['ocupacion'])->first();
-
                     }
                        //procedemos a registrar la persona con los campos obtenidos
                     $detenido = new persona;
-                    $detenido->id_lugar = $id_lugar->id_lugar;
+                    $detenido->id_lugar = $id_lugar2->id_lugar;
                     $detenido->id_ocupacion = $id_ocupacion->id_ocupacion;
                     $detenido->nombre = $agraviado['nombre'];
                     $detenido->domicilio = $domicilio2;
@@ -538,7 +528,6 @@ class segpubcontroller extends Controller
                         $ocupacion->save();
                         //se hace nuevamente la consulta para obtener el id de la nueva profesión
                         $id_ocupacion = \DB::table('ocupacion')->select('id_ocupacion')->where('nombre','=', $asegurado['ocupacion'])->first();
-
                     }
                        //procedemos a registrar la persona con los campos obtenidos
                     $detenido = new persona;
@@ -572,8 +561,7 @@ class segpubcontroller extends Controller
                 } 
                 
             }
-        dd('funcionó');
-    return redirect('/poli');
+        return redirect('/poli');
     }
     public function get_user_info(Request $request){
         //dd($request->all());
@@ -598,16 +586,15 @@ class segpubcontroller extends Controller
         if( count($get) == 1 )
             return json_encode($get[0]);
     }
-
     public function newvial(Request $request){
-        $sesion=\DB::table('sys_sesion')->select('id_sesion')->orderby('id_sesion','desc')->first();
+        //dd($request->all());
+       $sesion=\DB::table('sys_sesion')->select('id_sesion')->orderby('id_sesion','desc')->first();
         if($request->numero1==0){
             $domicilio=$request->calle1." S/N colonia ".$request->colonia1;
         }
         else{
             $domicilio=$request->calle1." #".$request->numero1." colonia ".$request->colonia1;
-        }
-        
+        }       
         $lugarinsidencia=\DB::table('lugar')->select('id_lugar')->where('direccion','=',$domicilio)->first();
         if($lugarinsidencia==null){
             $dom=new lugar;
@@ -615,10 +602,8 @@ class segpubcontroller extends Controller
             $dom->direccion=$domicilio;
             $dom->save();
             $lugarinsidencia= \DB::table('lugar')->select('id_lugar')->where('direccion','=', $domicilio)->first(); 
-            //obtenemos el id de lugar ojo-*****
-
+            //obtenemos el id de lugar ojo-****
         }
-
         $nuevo= \DB::table('reporte')->insert([
             'id_emergencia'=>$request->emergencia,
             'tipo_aviso'=>$request->tipoaviso   ,
@@ -630,6 +615,68 @@ class segpubcontroller extends Controller
             'id_sesion'=>$sesion->id_sesion]);
             //obtenemos el id del reporte 
         $id=\DB::table('reporte')->select('id_reporte')->orderby('id_reporte','desc')->first();
+        //registramos los heridos
+        //dd($request->herido);
+        $tamaño=sizeof($request->herido);
+        if($tamaño !=0){
+            for($i=0;$i<$tamaño;$i++){
+                $herido=$request->herido[$i];
+                $persona=\DB::table('persona')->select('id_persona')->where('nombre','=',$herido['nombre'])->first();
+                if($persona==null){
+                   $localidad=\DB::table('localidad')->select('id_localidad')->where('nombre','=',$herido['localidad'])->first();
+                    if($localidad==null){
+                        $loc=new localidad;
+                        $loc->nombre=$agraviado['localidad'];
+                        $loc->id_municipio=3;
+                        $loc->save();
+                        $localidad=\DB::table('localidad')->select('id_localidad')->orderby('id_localidad','desc')->first();
+                    } //dd($localidad);
+                    //verificamos datos del lugar
+                    $domicilio2=$herido['domicilio'];
+                    //dd($domicilio2);
+                    $id_lugar= \DB::table('lugar')->select('id_lugar')->where('direccion','=', $domicilio2)->first();
+                    //dd($id_lugar);
+                    if($id_lugar==null){//no existe el lugar, hay que agregarlo
+                        $dom=new lugar;
+                        $dom->id_localidad=$localidad->id_localidad;
+                        $dom->direccion=$domicilio2;
+                        $dom->save();
+                        $id_lugar= \DB::table('lugar')->select('id_lugar')->where('direccion','=', $domicilio2)->first(); //obtenemos el id de lugar ojo-*****
+                        //dd($id_lugar);
+                    }
+                    //dd($id_lugar);
+                    //verificamos si existe  la ocupacion
+                    $id_ocupacion = \DB::table('ocupacion')->select('id_ocupacion')->where('nombre','=', $herido['ocupacion'])->first();
+                    if($id_ocupacion==null){//la ocupación no existe tenemos que crearla
+                        $ocupacion = new ocupacion;
+                        $ocupacion->nombre = $herido['ocupacion'];
+                        $ocupacion->save();
+                        //se hace nuevamente la consulta para obtener el id de la nueva profesión
+                        $id_ocupacion = \DB::table('ocupacion')->select('id_ocupacion')->where('nombre','=', $herido['ocupacion'])->first();
+
+                    }
+                       //procedemos a registrar la persona con los campos obtenidos
+                    $detenido = new persona;
+                    $detenido->id_lugar = $id_lugar->id_lugar;
+                    $detenido->id_ocupacion = $id_ocupacion->id_ocupacion;
+                    $detenido->nombre = $herido['nombre'];
+                    $detenido->domicilio = $domicilio2;
+                    $detenido->curp = $herido['curp'];
+                    $detenido->sexo = $herido['sexo'];
+                    $detenido->edad = $herido['edad'];
+                    $detenido->telefono = $herido['telefono'];
+                    $detenido->tipo=3;
+                    $detenido->activo_pd=0;
+                    $detenido->activo_sp=1;
+                    $detenido->save();  
+                 $persona=\DB::table('persona')->select('id_persona')->where('nombre','=',$herido['nombre'])->first();
+                }
+                $tab=new heridos;
+                $tab->reporte=$id->id_reporte;
+                $tab->id_persona=$persona->id_persona;
+                $tab-save();
+            }
+        }
         //comenzamos con los conductores para poder registrar el vehiculo 
         $tam=sizeof($request->vehiculo);
         for ($i=0; $i < $tam; $i++) { 
@@ -838,5 +885,178 @@ class segpubcontroller extends Controller
         }
         return redirect('/poli');
     }
+    public function vialplacas(){
+        $placas = \DB::table('vehiculo')
+        ->select('placas')
+        ->get();
+         $data= array('placas' => $placas,);
+        return view('vispoli.consultaplacas', $data);
+    }
+    public function get_auto_info(Request $request){
+        $auto = \DB::table('vehiculo as v')
+        ->join('modelo_vehiculo as mv', 'mv.id_modelo', '=','v.id_modelo')
+        ->join('tipo_vehiculo as tv', 'tv.id_tipo', '=', 'v.id_tipo')
+        ->join('reporte_vehiculo as rv', 'rv.id_vehiculo', '=', 'v.id_vehiculo')
+        ->join('estado as e', 'e.id_estado', '=', 'v.id_estado')
+        ->select('mv.nombre as modelo',
+            'mv.anio as anii',
+            'rv.created_at as registrado',
+            'rv.updated_at as liberado1',
+            'tv.nombre as tipo',
+            'e.nombre as estado',
+            'v.id_vehiculo',
+            'v.detalles',
+            'v.ubicacion',
+            'v.liberado',
+            'v.adeudo',
+            'v.placas'
+        )
+        ->where('v.placas', $request->placa)
+        ->get();
+        if( count($auto) == 1 ){
+            $auto = $auto[0];
+            //asignacion para el valor de liberado
+            $auto->liberado = $auto->liberado == 0 ? "Liberado" : "No liberado";
+            //asignacion para el valor de ubicación
+            switch($auto->ubicacion){
+                case 1:
+                    $auto->ubicacion = "El mesquite";
+                    break;
+                case 2:
+                    $auto->ubicacion = "Gruas Ralf";
+                    break;
+                case 3:
+                    $auto->ubicacion = "Corralon del complejo";
+                    break;
+                default:
+                    $auto->ubicacion = "libre";
+            }
 
+            return json_encode($auto);
+        }
+    }
+    public function get_auto_libre(Request $request){
+        //dd($request->all());
+        $update = \DB::table('vehiculo')
+                            ->where('placas', $request->placa)
+                            ->update([
+                                'liberado' => 0,
+                                'adeudo' => 0,
+                            ]);
+
+        $update1 = \DB::table('reporte_vehiculo')
+                            ->where('id_vehiculo', $request->id)
+                            ->update(['updated_at' => DATE('Y-m-d H:i:s')]);
+
+        $modificado = \DB::table('vehiculo as v')
+                                ->join('reporte_vehiculo as rv', 'rv.id_vehiculo', '=', 'v.id_vehiculo')
+                                ->select('rv.updated_at as liberadoo','v.liberado', 'v.adeudo')
+                                ->where('placas', $request->placa)
+                                ->get();
+        //dd($modificado);
+            $modificado = $modificado[0];
+            return json_encode($modificado);
+    }
+    public function searchdate(Request $request){
+        return view('vispoli.con_fec');
+    }
+    public function vialfecha1(Request $request){
+        $data=\DB::table('vehiculo as v')
+                 ->join('modelo_vehiculo as mov','mov.id_modelo','=','v.id_modelo')
+                 ->join('marca_vehiculo as mav','mav.id_marca','=','mov.id_marca')
+                 ->join('reporte_vehiculo as rv','v.id_vehiculo','=','rv.id_vehiculo')
+                 ->select('mav.nombre as marca','mov.nombre as modelo','mov.anio as anio','v.placas as placas')
+                 ->where((\DB::raw('DATE(rv.created_at)')),'like',$request->fecha)
+                 ->get();
+        return json_encode($data);
+    }
+    public function vialfecha2(Request $request){
+        $data=\DB::table('vehiculo as v')
+                 ->join('modelo_vehiculo as mov','mov.id_modelo','=','v.id_modelo')
+                 ->join('marca_vehiculo as mav','mav.id_marca','=','mov.id_marca')
+                 ->join('reporte_vehiculo as rv','v.id_vehiculo','=','rv.id_vehiculo')
+                 ->select('mav.nombre as marca','mov.nombre as modelo','mov.anio as anio','v.placas as placas')
+                 ->wherebetween ((\DB::raw('DATE(rv.created_at)')),[$request->fecha,$request->fecha2])
+                 ->get();
+        return json_encode($data);
+    }
+    public function llamadas(){
+        return view('vispoli.llamadas');
+    }
+    public function llamadafecha1(Request $request){
+        //dd($request->all());
+        $llamada=\DB::table('reporte as r')
+                    ->join('tipo_aviso as ta','ta.id_tipo','=','r.tipo_aviso')
+                    ->select((\DB::raw('COUNT(r.id_reporte) as cantidad')),'ta.nombre')
+                    ->groupBY('ta.nombre')
+                    ->where((\DB::raw('DATE(r.fecha)')),'=',$request->fecha)
+                    ->get();
+        return json_encode($llamada);
+    }
+    public function llamadafecha2(Request $request){
+        //dd($request->all());
+        $llamada2=\DB::table('reporte as r') 
+        ->join('tipo_aviso as ta','ta.id_tipo','=','r.tipo_aviso') 
+        ->select((\DB::raw('COUNT(r.id_reporte) as cantidad')),'ta.nombre') 
+        ->groupBY('ta.nombre') 
+        ->wherebetween('r.fecha',[$request->fecha,$request->fecha2]) 
+        ->get();
+        return json_encode($llamada2);
+    }
+    public function insp(){
+        return view('vispoli.incidenciasp');
+    }
+    //funcon ajax de incidencias
+    public function get_incidencias(Request $request){
+        $fecha=DATE('Y-').$request->mes."-01";
+        $dias= cal_days_in_month(CAL_GREGORIAN, $request->mes, DATE('Y'));
+        $fecha2 =Date('Y-').$request->mes.'-'.$dias;
+        //dd($fecha2);
+        
+        $data=\DB::table('reporte_sp as sp')
+            ->join('reporte as r','r.id_reporte','=','sp.id_reporte')
+            ->join('emergencia as e','e.id','=','sp.id_emergencia')
+            ->join('lugar as l','l.id_lugar','=','r.id_lugar')
+            ->join('tipo_aviso as ta','ta.id_tipo','=','sp.tipoaviso')
+            ->select('l.direccion',(\DB::raw('DATE_FORMAT(sp.created_at,"%b %d %Y") as fecha')),
+                'sp.hora','ta.nombre as aviso','e.nombre as emergencia','sp.id_reporte as id')
+            ->wherebetween('sp.created_at',[$fecha,$fecha2])
+            ->orderBy('fecha', 'DESC')
+            ->get();           
+        return json_encode($data);
+    }
+    public function detalleincidencia($id){
+        //dd($id);
+        $data=array(
+                'reporte'=>\DB::table('reporte_sp as rep')
+                    ->join('emergencia as e','e.id','=','rep.id_emergencia')
+                    ->join('reporte as r','r.id_reporte','=','rep.id_reporte')
+                    ->join('lugar as lug','lug.id_lugar','=','r.id_lugar')
+                    ->join('localidad as loc','loc.id_localidad','=','lug.id_localidad')
+                    ->join('tipo_aviso as ta','ta.id_tipo','=','rep.tipoaviso')
+                    ->select((\DB::raw('Date_format(rep.created_at,"%d del %c de %Y" )as fecha')),'e.nombre as emergencia','rep.hora','loc.nombre as localidad','lug.direccion','rep.unidad','rep.oficiales','rep.observaciones','ta.nombre as aviso')
+                    ->where('rep.id_reporte','=',$id)
+                    ->first(),
+                'agraviados'=>\DB::table('persona as p')
+                    ->join('lugar as l','l.id_lugar','=','p.id_lugar')
+                    ->join('localidad as loc','l.id_localidad','=','loc.id_localidad')
+                    ->join('detalle_per_rep as det','det.id_persona','p.id_persona')
+                    ->join('ocupacion as o','p.id_ocupacion','=','o.id_ocupacion')
+                    ->select('p.nombre as persona','p.curp','p.sexo','o.nombre as ocupacion','p.edad','p.telefono','l.direccion','loc.nombre as localidad')
+                    ->where('det.id_reporte','=',$id)
+                    ->where('det.estatus','=',1)
+                    ->get(),
+                'asegurados'=>\DB::table('persona as p')
+                    ->join('lugar as l','l.id_lugar','=','p.id_lugar')
+                    ->join('localidad as loc','l.id_localidad','=','loc.id_localidad')
+                    ->join('detalle_per_rep as det','det.id_persona','p.id_persona')
+                    ->join('ocupacion as o','p.id_ocupacion','=','o.id_ocupacion')
+                    ->select('p.nombre as persona','p.curp','p.sexo','o.nombre as ocupacion','p.edad','p.telefono','l.direccion','loc.nombre as localidad')
+                    ->where('det.id_reporte','=',$id)
+                    ->where('det.estatus','=',2)
+
+                    ->get(),
+        );
+        return view('visPoli.incidenciasp2',$data);
+    }
  }

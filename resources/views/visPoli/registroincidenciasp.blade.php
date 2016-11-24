@@ -60,25 +60,27 @@
 			            @endforeach
 					</select>
 				</div>
-				<div class="input-field col s3 m3 l3">
-					<input type="text" name="colonia" class="validate" required>
-					<label id="texto">Colonia</label>
+				<div class="input-field col s6 m6 l6">
+					<input type="text" name="dom" class="validate" required placeholder="                      Calle # colonia">
+					<label id="texto">Domicilio</label>
 				</div>
-				<div class="input-field col s3 3m l3">
-				 	<input type="text" name="calle" class="validate" required>
-					<label id="texto">Calle</label>
-				</div>
-				<div class="input-field col s1 m1 l1">
-				 	<input type="text" name="num_ext" class="validate" required>
-					<label id="texto">#</label>
-				</div>
+				<br>
+				<p><a id="show-option" title="
+EJEMPLO: Madero #1 colonia Centro
+En caso de ser una ubicación fuera de la cuidad especificar de la siguiente forma
+EJEMPLO: Carretera Colima-Comala Km.3 S/N"><b>?</b></a></p>
 			</div>
 			</dir>
 			<div class="row">
-	        	<div class="input-field col s2  offset-s1">
+				<div class="col s1">
+				<br>
+					<p style="text-align: right;"><a id="show-option" title="Especificar la unidad (Vehículo) que atendío el incidente"><b>?</b></a></p>
+				</div>
+	        	<div class="input-field col s2  ">
 					<input id="unidad" type="text" class="validate" name="unidad" required>
 					<label id="texto">Unidad</label>
 	        	</div>
+
 	        	<div class="input-field col s6 m6 l6">
 					<input id="policias" type="text" class="validate" name="policias" required>
 					<label id="texto">Policías</label>
@@ -111,7 +113,7 @@
 						</thead>
 						<tbody v-for="agraviado in agraviados">
 							<tr>
-								<td style="text-align:left; ">@{{$index+1}}.- @{{agraviado.nombre}} </td> <td> <a href="#!" v-on:click="rm_agra(agraviado)">X</a></td>
+								<td style="text-align:left; ">@{{$index+1}}.- @{{agraviado.nombre}} </td> <td> <a href="#!" id="show-option" title="Eliminar" v-on:click="rm_agra(agraviado)"><i class="fa fa-trash" aria-hidden="true"></i></a>&nbsp;&nbsp;<a id="show-option" title="Editar" href="#!" v-on:click="editaragra(agraviado)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
 							</tr>
 						</tbody>
 					</table>
@@ -133,7 +135,7 @@
 						</thead>
 						<tbody v-for="asegurado in asegurados">
 							<tr>
-								<td style="text-align: left;"> @{{$index+1}}.- @{{asegurado.nombre}}</td> <td> <a href="#!" v-on:click="rm_aseg(asegurado)">X</a></td>
+								<td style="text-align: left;"> @{{$index+1}}.- @{{asegurado.nombre}}</td> <td> <a id="show-option" title="Eliminar" href="#!" v-on:click="rm_aseg(asegurado)"><i class="fa fa-trash" aria-hidden="true"></i></a>&nbsp;&nbsp;<a id="show-option" title="Editar" href="#!" v-on:click="editaraseg(asegurado)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a></td>
 							</tr>
 						</tbody>
 					</table>
@@ -305,8 +307,6 @@
 			telefono:"",
 			domicilio:"",
 			localidad:"",
-			id:0,
-			id2:0,
 			agraviados:[],
 			asegurados:[],
 			agrav:false,
@@ -314,16 +314,27 @@
 			btn_aseg:true,
 			btn_agrav:true,
 			btncanagrav:false,
-			localidades2:[],
 		},
 		ready:function(){
 			
 		},
 		methods:{
-			getlocalidad: function(){
-				this.$http.get('/sp/localidades').then(function(response){
-				this.$set('localidades2', response.data);
-				});
+			editaraseg:function(asegurado){
+				this.asegu=!this.asegu;
+				this.btn_aseg=!this.btn_aseg;
+				this.nombre=asegurado.nombre;this.domicilio=asegurado.domicilio;
+				this.curp=asegurado.curp;this.ocupacion=asegurado.ocupacion;
+				this.edad=asegurado.edad;this.telefono=asegurado.telefono;this.localidad=asegurado.localidad;
+				this.asegurados.$remove(asegurado);
+			},
+			editaragra:function(agraviado){
+				//console.log(agraviado);
+				this.agrav=!this.agrav;
+				this.btn_agrav=!this.btn_agrav;	
+				this.nombre=agraviado.nombre;this.domicilio=agraviado.domicilio;
+				this.curp=agraviado.curp;this.ocupacion=agraviado.ocupacion;
+				this.edad=agraviado.edad;this.telefono=agraviado.telefono;this.localidad=agraviado.localidad;
+				this.agraviados.$remove(agraviado);
 			},
 			agra:function(){
 				this.agrav=!this.agrav;
@@ -332,10 +343,16 @@
 			noagrav:function(){
 				this.agrav=!this.agrav;
 				this.btn_agrav=!this.btn_agrav;
+				this.nombre="";this.domicilio="";
+					this.curp="";this.domicilio="";this.ocupacion="";
+					this.edad="";this.telefono="";this.localidad="";
 			},
 			noaseg:function(){
 				this.asegu=!this.asegu;
 				this.btn_aseg=!this.btn_aseg;
+				this.nombre="";this.domicilio="";
+					this.curp="";this.domicilio="";this.ocupacion="";
+					this.edad="";this.telefono="";this.localidad="";
 			},
 			aseg:function(){
 				this.asegu=!this.asegu;
@@ -343,35 +360,31 @@
 			},
 			rm_agra:function(agraviado){
 				this.agraviados.$remove(agraviado);
-				this.id--;
 			},
 			rm_aseg:function(asegurado){
 				this.asegurados.$remove(asegurado);
-				this.id2--;
 			},
 			guardapersona:function(){
 				this.agrav=!this.agrav;
 				this.btn_agrav=!this.btn_agrav;
-				this.agraviados.push({'id':this.id,'nombre': this.nombre, 
+				this.agraviados.push({'nombre': this.nombre, 
 					'curp':this.curp,'ocupacion':this.ocupacion,'edad':this.edad,'telefono':this.telefono,
 					'domicilio':this.domicilio,'sexo':this.sexo,'localidad':this.localidad});
 					console.log(this.agraviados);
 					this.nombre="";this.domicilio="";
 					this.curp="";this.domicilio="";this.ocupacion="";
 					this.edad="";this.telefono="";this.localidad="";
-					this.id++;
 			},
 			guardapersona2:function(){
 					this.asegu=!this.asegu;
 					this.btn_aseg=!this.btn_aseg;
-					this.asegurados.push({'id2':this.id2,'nombre': this.nombre, 
+					this.asegurados.push({'nombre': this.nombre, 
 					'curp':this.curp,'ocupacion':this.ocupacion,'edad':this.edad,'telefono':this.telefono,
 					'domicilio':this.domicilio,'sexo':this.sexo,'localidad':this.localidad});
 					console.log(this.asegurados);
 					this.nombre="";this.domicilio="";
 					this.curp="";this.domicilio="";this.ocupacion="";
 					this.edad="";this.telefono="";this.localidad="";
-					this.id2++;
 			}
 		}
 
@@ -403,7 +416,28 @@ var ocupacion=[
 	"{{$val->nombre}}",
 	@endforeach
 ];
+var tags2 = [
+	@foreach($personas as $val)
+	"{{$val->curp}}",
+	@endforeach
+];
 
+var nombre2 = [
+	@foreach($personas as $val)
+	"{{$val->nombre}}",
+	@endforeach
+];
+
+var localidad2 =[
+	@foreach($localidades as $val)
+	"{{$val->nombre}}",
+	@endforeach
+];	
+var ocupacion2=[
+	@foreach($ocupaciones as $val) 
+	"{{$val->nombre}}",
+	@endforeach
+];
 
 </script>
 <script src="/js/segpub.js"></script>

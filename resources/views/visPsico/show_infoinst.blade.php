@@ -62,34 +62,49 @@
 <!--=======================================================-->
     <div class="col s4 amber lighten-3">
     	<h5>Visitas</h5>
-		<div class="row">
-		<div class="input-field col s12">
-		<table class="striped" id="app"><thead><tr><th>Fecha</th><th>Observaciones</th></thead>
-		<tbody>
-		@foreach ($visitas as $visita)
-			<tr>
-				<td>
-					{{$visita->fecha}}
-				</td>
-				<td>
-					<a href="/predel/intitucion/visita/{{$visita->id}}" class="waves-effect waves-light btn">Ver</a>
-				</td>
-			</tr>
-		@endforeach
-		</tbody>
-		</table>
-		{{$visitas->links()}}
-		</div>
-		</div>  	
+    	<form>
+    	{{ csrf_field() }}
+    		<div class="row">
+				<div class="input-field col s12">
+					<table class="striped" id="app"><thead><tr><th>Fecha</th><th>Observaciones</th></thead>
+						<tbody>
+							@foreach ($visitas as $visita)
+								<tr>
+									<td>
+										{{$visita->fecha}}
+									</td>
+									<td>
+										<a data-id="{{$visita->id}}" class="waves-effect waves-light btn ver">Ver</a>
+									</td>
+								</tr>
+							@endforeach
+						</tbody>
+					</table>
+					{{$visitas->links()}}
+				</div>
+			</div>  	
+    	</form>
     </div>
 <!--=======================================================-->
     </div>
+    <hr>
+    <div id="efect" class="row card-panel cyan accent-1">
+     <center><h4>Dato de la Consulta</h4></center>
+     <hr>
+    	<div class="input-field col s8">
+			<textarea id="detalles" readonly="" class="materialize-textarea"></textarea>
+    	</div>
+    	<div class="col s2 offset-s2">
+    		<br><br><br><br>
+    		<a id="close" class="waves-effect waves-light btn">ocultar</a>
+    	</div>	
+    </div>
 <!--=======================================================-->
- 
-
-<hr>
-
 <hr>
 
 
+@stop
+@section('script')
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script src="/js/instituto.js"></script>
 @stop
