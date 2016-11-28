@@ -12,7 +12,7 @@
 		<section>
     		<center>
        			 <div class="col s10">
-            		<img src="/images/banner.png" class="responsive-img imgheader">
+            		<img src="/images/IMGAES/banner.png" class="responsive-img imgheader">
         		 </div>
          		
     		</center>

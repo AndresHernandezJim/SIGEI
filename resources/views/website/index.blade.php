@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
 	<title>SICOI</title>
 	<link rel="stylesheet" type="text/css" href="/css/materialize.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -11,7 +12,7 @@
 <section>
     <center>
         <div class="col s12">
-            <img src="/images/banner.png" class="responsive-img imgheader">
+            <img src="/images/IMGAES/banner.png" class="responsive-img imgheader">
          </div>
          <div><a href="/registro">registrar</a></div>
     </center>

@@ -167,7 +167,7 @@
 	</center>
 </div>
 <div id="efect" class="row">
-	<CENTER><h5>Numer de llamadas</h5></CENTER>
+	<CENTER><h5>Número de llamadas recibidas por vía</h5></CENTER>
 	<div class="col s10 offset-s1">
 		<table class="bordered highlight centered" id="app"><thead><tr><th>Tipo</th><th>Cantidad</th></thead>
 			<tbody id="tllamadas">

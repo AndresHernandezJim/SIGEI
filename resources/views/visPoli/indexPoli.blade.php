@@ -2,7 +2,7 @@
 <html>
 <head>
 @yield('styles')
-
+<link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
 <title>DSPVC</title>
   <link rel="stylesheet" type="text/css" href="/css/materialize.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -27,6 +27,8 @@
 <li class="divider"></li>
 <li><a href="/consultagruasfecha">Asegurados en Fecha</a></li>
 <li class="divider"></li>
+<li><a href="/consultaincidenciasv">Consultar Incidencias</a></li>
+<li class="divider"></li>
 </ul>
 <ul id="dropdown3" class="dropdown-content">
 <li><a href="/registrobarandilla">Registrar Ingreso</a></li>
@@ -38,7 +40,7 @@
 </ul>
 <nav class="grey darken-4">
   <div class="nav-wrapper ">
-    <img class="logo" src="/images/logo.png"><a href="#!" class="brand-logo form">&nbspSICOI</a>
+    <img class="logo" src="/images/logo.png"><a href="#!" class="brand-logo form">&nbsp;SIGEI</a>
     <ul class="right hide-on-med-and-down">
     <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Seg.Publica&nbsp<i class="fa fa-chevron-down"></i></a></li>    
       <li><a class="dropdown-button" href="#!" data-activates="dropdown2">Vialidad &nbsp &nbsp<i class="fa fa-chevron-down"></i></a></li> 

@@ -31,6 +31,8 @@
 <li class="divider"></li>
 <li><a href="/consultagruasfecha">Asegurados en Fecha</a></li>
 <li class="divider"></li>
+<li><a href="/consultaincidenciasv">Consultar Incidencias</a></li>
+<li class="divider"></li>
 </ul>
 <ul id="dropdown3" class="dropdown-content">
 <li><a href="/registrobarandilla">Registrar Ingreso</a></li>

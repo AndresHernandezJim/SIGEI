@@ -405,6 +405,15 @@
     </div>
   </div>
   <div class="row">
+    <br><br>
+  </div>
+  <div class="row">
+    <div class="col s5 offset-s1">
+      <input  id="remite" type="text" name="remite" required>
+      <label for="remite">Oficial que reporta</label>
+    </div>
+  </div>
+  <div class="row">
     <div class="input-field col s4  offset-s6">
       <button type="submit" class="waves-effect waves-light btn-large cyan darken-3 right">Registrar &nbsp<i class="fa fa-floppy-o" aria-hidden="true"></i></button>
     </div>

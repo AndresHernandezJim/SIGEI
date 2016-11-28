@@ -672,9 +672,9 @@ class segpubcontroller extends Controller
                  $persona=\DB::table('persona')->select('id_persona')->where('nombre','=',$herido['nombre'])->first();
                 }
                 $tab=new heridos;
-                $tab->reporte=$id->id_reporte;
+                $tab->id_reporte=$id->id_reporte;
                 $tab->id_persona=$persona->id_persona;
-                $tab-save();
+                $tab->save();
             }
         }
         //comenzamos con los conductores para poder registrar el vehiculo 
@@ -868,6 +868,9 @@ class segpubcontroller extends Controller
                 $newve->id_conductor=$persona->id_persona;
                 $newve->probable_resp=0;
                 $newve->detalles=$caracteristicas;
+                $newve->created_at=DATE('Y-m-d H:i:s');
+                $newve->updated_at=DATE('Y-m-d H:i:s');
+                $newve->remite=$request->remite;
                 $newve->save();
                 $reporteve=\DB::table('reporte_vehiculo')->where('id_reporte','=',$id->id_reporte)->where('id_vehiculo','=',$dbvehiculo->id_vehiculo)->first();
 
@@ -879,6 +882,7 @@ class segpubcontroller extends Controller
                 $newve->id_conductor=$persona->id_persona;
                 $newve->probable_resp=1;
                 $newve->detalles=$caracteristicas;
+                $newve->remite=$request->remite;
                 $newve->save();
                 $reporteve=\DB::table('reporte_vehiculo')->where('id_reporte','=',$id->id_reporte)->where('id_vehiculo','=',$dbvehiculo->id_vehiculo)->first();
             }
@@ -1057,6 +1061,63 @@ class segpubcontroller extends Controller
 
                     ->get(),
         );
+        //dd($data);
         return view('visPoli.incidenciasp2',$data);
+    }
+    public function incv(){
+        return view('vispoli.incidenciasv');
+    }
+
+    public function get_incidenciasV(Request $request){
+        $fecha=DATE('Y-').$request->mes."-01";
+        $dias= cal_days_in_month(CAL_GREGORIAN, $request->mes, DATE('Y'));
+        $fecha2 =Date('Y-').$request->mes.'-'.$dias;
+        //dd($request->all());
+        $data = \DB::table('reporte as r')
+    ->join('reporte_vehiculo as rv','rv.id_reporte','=','r.id_reporte')
+    ->join('emergencia as e','e.id','=','r.id_emergencia')
+    ->join('tipo_aviso as ta','ta.id_tipo','=','r.tipo_aviso')
+    ->select('r.id_reporte as id','e.nombre as emergencia',(\DB::raw('DATE_FORMAT(r.fecha,"%b %d %Y") as fecha')),'r.hora as hora','ta.nombre as comunicado')
+    ->wherebetween('r.fecha',[$fecha,$fecha2])
+    ->orderBy('fecha', 'DESC')
+    ->get();
+    return json_encode($data);
+    }
+    public function detincv($id){
+       $data=array( 
+            'reporte'=>\DB::table('reporte as r')
+              ->join('reporte_vehiculo as rv','rv.id_reporte','=','r.id_reporte')
+              ->join('emergencia as e','e.id','=','r.id_emergencia')
+              ->join('lugar as l','l.id_lugar','=','r.id_lugar')
+              ->join('localidad as lo','lo.id_localidad','=','l.id_localidad')
+              ->join('tipo_aviso as ta','ta.id_tipo','=','r.tipo_aviso')
+              ->select('e.nombre as emergencia',(\DB::raw('DATE_FORMAT(r.fecha,"%b %d %Y") as fecha')),'r.hora as hora','ta.nombre as comunicado','l.direccion','lo.nombre as localidad','rv.remite as oficial')
+              ->where('r.id_reporte','=',$id)
+              ->first(),
+            'heridos'=>\DB::table('persona as p')
+                ->join('lugar as l','l.id_lugar','=','p.id_lugar')
+                ->join('localidad as lo','lo.id_localidad','=','l.id_localidad')
+                ->join('herido as h','h.id_persona','=','p.id_persona')
+                ->join('reporte_vehiculo as rv','rv.id_reporte','=','h.id_reporte')
+                ->select('p.nombre as nombre','p.edad','p.domicilio','p.curp','p.telefono','lo.nombre as procedencia')
+                ->where('rv.id_reporte','=',$id)
+                ->get(),
+            'vehiculo'=>\DB::table('vehiculo AS v')
+                 ->JOIN ('reporte_vehiculo AS rv','rv.id_vehiculo','=','v.id_vehiculo')
+                 ->JOIN ('modelo_vehiculo AS mv ','mv.id_modelo','=','v.id_modelo')
+                 ->JOIN ('marca_vehiculo AS mav','mav.id_marca','=','mv.id_marca')
+                 ->JOIN ('estado as e','e.id_estado','=','v.id_estado')
+                 ->JOIN ('tipo_vehiculo AS tv','tv.id_tipo','=','v.id_tipo')
+                 ->JOIN ('persona AS p','p.id_persona','=','rv.id_conductor')
+                 ->join ('lugar as lu','lu.id_lugar','=','p.id_lugar')
+                 ->join ('localidad as l','l.id_localidad','=','lu.id_localidad')
+                 ->select('tv.nombre AS tipo','mav.nombre AS marca','mv.nombre AS modelo','mv.anio','v.serie','v.detalles',
+                  'v.liberado','v.adeudo','v.placas','v.ubicacion','v.adeudo','e.nombre AS procedencia','p.nombre AS conductor','p.edad','p.telefono',
+                    'p.domicilio','l.nombre AS localidad','rv.probable_resp as responsable') 
+                 ->WHERE('rv.id_reporte','=',$id)
+                 ->get(),
+               );
+       //dd($data);
+       return view('visPoli.detallevial',$data);
     }
  }
