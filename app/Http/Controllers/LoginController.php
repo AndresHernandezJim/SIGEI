@@ -25,12 +25,13 @@ class LoginController extends Controller
             
                 //dd($usuario->all());
                 if($usuario->idprivilegio == 1){
+                    //dd("op");
                     $request->session()->put('Admin', $usuario);
                     $sesion= new sesion;
                     $sesion->id_usuario=$usuario->id_usuario;
                     $sesion->ip=$request->ip();
                     $sesion->save();
-                    return redirect('/admin');
+                    return redirect('/director');
 
                 }
                 if($usuario->idprivilegio == 2){
@@ -54,6 +55,16 @@ class LoginController extends Controller
                     $sesion->ip=$request->ip();
                     $sesion->save();
                     return redirect('/predel');
+                }
+                 if($usuario->idprivilegio == 4){
+                    //dd("si entro a 3");
+                    $request->session()->put('SuperAdm', $usuario);
+                    //dd(session()->get('Psicologo')->nombre);
+                    $sesion= new sesion;
+                    $sesion->id_usuario=$usuario->id_usuario;
+                    $sesion->ip=$request->ip();
+                    $sesion->save();
+                    return redirect('/');
                 }
         return back()->with('error', true); 
         }

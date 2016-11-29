@@ -19,6 +19,14 @@ Route::Post('/newusr', 'website@Newusr');
 Route::Post('/login', 'LoginController@login');
 Route::get('hola',function(){return view('upload-image');});
 
+Route::group(['middleware' => 'admin'], function(){
+	Route::get('/director', 'DirectorController@index');
+	Route::get('/logoutD', 'DirectorController@logout');
+
+	Route::get('/consultaincidenciasp','DirectorController@insp');
+	Route::get('/consultaincidenciasp/{id}','DirectorController@detalleincidencia');
+});
+
 Route::group(['middleware' => 'policia'], function(){
 	Route::get('/poli', 'segpubcontroller@index');
 	Route::get('/registroincidenciasp', 'segpubcontroller@nueva_incidencia_sp');

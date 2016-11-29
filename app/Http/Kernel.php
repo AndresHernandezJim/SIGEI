@@ -55,5 +55,6 @@ class Kernel extends HttpKernel
         'admin' => \App\Http\Middleware\AdminMdl::class,
         'policia' => \App\Http\Middleware\PoliMdl::class,
         'psicologo' => \App\Http\Middleware\PsicoMdl::class,
+        'SuperAdm' => \App\Http\Middleware\SuperAdm::class,
     ];
 }
