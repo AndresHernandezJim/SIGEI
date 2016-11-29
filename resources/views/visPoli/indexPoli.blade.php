@@ -3,6 +3,33 @@
 <head>
 @yield('styles')
 <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+<style>
+/* para quitar las lineas eliminar la propiedad border de cada clase*/
+  .wrap{
+    width: 100%;
+    margin: 0 auto;
+  }
+  .leftrigth{
+    height: 100vh;
+     border-right: 1px solid;
+  }
+  .rigthleft{
+    height: 100vh;
+    border-left: 1px solid; 
+  }
+  .top{
+    height: 50vh;
+    border-bottom: 1px solid;
+  }
+  .bott{
+    height: 50vh;
+    border-top: 1px solid;
+  }
+  .center{
+    height: 100vh;
+  }
+</style>
+
 <title>DSPVC</title>
   <link rel="stylesheet" type="text/css" href="/css/materialize.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -50,7 +77,36 @@
   </div>
 </nav>  
 </header>
-
+  <div class="wrap">
+  <div class="row">
+    <div class="leftrigth col s4">
+        <div class="top">
+          
+        </div>
+        <div class="bott">
+          
+        </div>
+    </div>
+    <div class="center col s4">
+        <div class="top">
+          
+        </div>
+        <div class="bott">
+          
+        </div>
+    </div>
+    <div class="rigthleft col s4">
+     <div class="top">
+          
+        </div>
+        <div class="bott">
+          
+        </div>
+       
+    </div>
+  </div>
+    
+  </div>
 <script src="/js/jquery-2.2.1.min.js"></script>
 <script src="/js/materialize.min.js"></script>
 <script src="/js/app.js"></script>

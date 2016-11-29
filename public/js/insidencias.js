@@ -32,7 +32,7 @@ $(document).ready(function(){
 				 		console.log(data);
 				 		$.each(data, function(index,val){
 				 			$('#tincidencia').append('<tr><td>' + val.fecha + '</td><td>' + val.hora + 
-				 				'</td><td>' + val.aviso + '</td><td>' + val.emergencia+ '</td><td><a href="/consultaincidenciasp/'+val.id+'"><i class="fa fa-search-plus" aria-hidden="true"></i></a></td>');
+				 				'</td><td>' + val.emergencia + '</td><td>' + val.aviso+ '</td><td><a href="/consultaincidenciasp/'+val.id+'"><i class="fa fa-search-plus" aria-hidden="true"></i></a></td>');
 				 		});
 		
 					}else{ 

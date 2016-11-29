@@ -26,7 +26,7 @@
 			<?php
 				$tam=sizeof($heridos);
 				if($tam!=0){
-					echo "Mediante un comunicado a {$reporte->comunicado} se acudío al domicilio {$reporte->direccion} en la localidad de {$reporte->localidad}, en donde se registro un incidente de vialidad que correspondientemente al catálodo de emergencias se denomina como {$reporte->emergencia}, donde se vieron afectadas las siguientes personas.
+					echo "Mediante un comunicado {$reporte->comunicado} se acudío al domicilio {$reporte->direccion} en la localidad de {$reporte->localidad}, en donde se registro un incidente de vialidad que correspondientemente al catálodo de emergencias se denomina como {$reporte->emergencia}, donde se vieron afectadas las siguientes personas.
 
 					<br><br><div class='col s10 offset-s1'>
 					<ul>";
@@ -40,7 +40,13 @@
 					foreach($vehiculo as $vehiculo){
 						echo "<li  type='square'> <b>{$vehiculo->tipo}</b>  marca <b>{$vehiculo->marca}</b> modelo <b>{$vehiculo->modelo} {$vehiculo->anio}</b> {$vehiculo->detalles} con placas <b>{$vehiculo->placas}</b> del estado de <b>{$vehiculo->procedencia}</b>, el cual éra conducido por <b>{$vehiculo->conductor}</b> de {$vehiculo->edad} años de edad, con domicilio en {$vehiculo->domicilio} de la localidad de {$vehiculo->localidad}. ";
 							if($vehiculo->liberado!=0){
-							echo "<br> <b>Nota:</b> El vehiculo se encuentra actualmente en calidad de consignado, siendo {$vehiculo->ubicacion} la ubicación donde este se resguarda, además se tiene un adeudo de <b>$ {$vehiculo->adeudo} pesos</b> por acciones realizadas para el traslado o consignación del vehiculo. " ;	
+								if($vehiculo->ubicacion==1){
+										echo "<br><b>Nota:</b> El vehiculo se encuentra actualmente en calidad de consignado, siendo El Mezquite la ubicación donde este se resguarda, además se tiene un adeudo de {$vehiculo->adeudo} pesos por acciones realizadas para el vehiculo (grua, corralón, etc)" ;	
+									}elseif ($vehiculo->ubicacion==2) {
+										echo "<br><b>Nota:</b> El vehiculo se encuentra actualmente en calidad de consignado, siendo Gruas Ralf la ubicación donde este se resguarda, además se tiene un adeudo de {$vehiculo->adeudo} pesos por acciones realizadas para el vehiculo (grua, corralón, etc)" ;
+									}elseif ($vehiculo->ubicacion==3) {
+										echo "<br><b>Nota:</b> El vehiculo se encuentra actualmente en calidad de consignado, siendo El estacionamiento del Complejo la ubicación donde este se resguarda, además se tiene un adeudo de {$vehiculo->adeudo} pesos por acciones realizadas para el vehiculo (grua, corralón, etc)" ;
+									}
 							}else
 							{
 								echo "El vehiculo no se ha consignado y es libre de circular. ";
@@ -60,7 +66,14 @@
 					foreach($vehiculo as $vehiculo){
 						echo "<li  type='square'> <b>{$vehiculo->tipo}</b>  marca <b>{$vehiculo->marca}</b> modelo <b>{$vehiculo->modelo} {$vehiculo->anio}</b> {$vehiculo->detalles} con placas <b>{$vehiculo->placas}</b> del estado de <b>{$vehiculo->procedencia}</b>, el cual éra conducido por <b>{$vehiculo->conductor}</b> de {$vehiculo->edad} años de edad, con domicilio en {$vehiculo->domicilio} de la localidad de {$vehiculo->localidad}. ";
 							if($vehiculo->liberado!=0){
-							echo "<br> El vehiculo se encuentra actualmente en calidad de consignado, siendo {$vehiculo->ubicacion} la ubicación donde este se resguarda, además se tiene un adeudo de {$vehiculo->adeudo} pesos por acciones realizadas para el vehiculo (grua, corralón, etc)" ;	
+									if($vehiculo->ubicacion==1){
+										echo "<br><b>Nota:</b> El vehiculo se encuentra actualmente en calidad de consignado, siendo El Mezquite la ubicación donde este se resguarda, además se tiene un adeudo de {$vehiculo->adeudo} pesos por acciones realizadas para el vehiculo (grua, corralón, etc)" ;	
+									}elseif ($vehiculo->ubicacion==2) {
+										echo "<br><b>Nota:</b> El vehiculo se encuentra actualmente en calidad de consignado, siendo Gruas Ralf la ubicación donde este se resguarda, además se tiene un adeudo de {$vehiculo->adeudo} pesos por acciones realizadas para el vehiculo (grua, corralón, etc)" ;
+									}elseif ($vehiculo->ubicacion==3) {
+										echo "<br><b>Nota:</b> El vehiculo se encuentra actualmente en calidad de consignado, siendo El estacionamiento del Complejo la ubicación donde este se resguarda, además se tiene un adeudo de {$vehiculo->adeudo} pesos por acciones realizadas para el vehiculo (grua, corralón, etc)" ;
+									}
+								
 							}else
 							{
 								echo "El vehiculo no se ha consignado y es libre de circular";
