@@ -16,10 +16,10 @@
     height: 100vh;
   }
   .top{
-    height: 40vh;
+    height: 50vh;
   }
   .bott{
-    height: 40vh;
+    height: 50vh;
   }
   .center{
     height: 100vh;
@@ -150,7 +150,6 @@
         var chart = new google.visualization.PieChart(document.getElementById('dos'));
         chart.draw(data, options);
       }
-      // Callback that draws the pie chart for Anthony's pizza.
       function tres() {
 
         // Create the data table for Anthony's pizza.
@@ -172,7 +171,6 @@
         var chart = new google.visualization.PieChart(document.getElementById('tres'));
         chart.draw(data, options);
       }
-      // Callback that draws the pie chart for Anthony's pizza.
       function cuatro() {
 
         // Create the data table for Anthony's pizza.
@@ -194,7 +192,6 @@
         var chart = new google.visualization.PieChart(document.getElementById('cuatro'));
         chart.draw(data, options);
       }
-      // Callback that draws the pie chart for Anthony's pizza.
       function cinco() {
 
         // Create the data table for Anthony's pizza.
@@ -217,8 +214,35 @@
         // Instantiate and draw the chart for Anthony's pizza.
         var chart = new google.visualization.PieChart(document.getElementById('cinco'));
         chart.draw(data, options);
+
+          /* crear histograma
+                    var data = google.visualization.arrayToDataTable([
+                ["Element", "Density", { role: "style" } ],
+                ["Copper", 8.94, "#b87333"],
+                ["Silver", 10.49, "silver"],
+                ["Gold", 19.30, "gold"],
+                ["Platinum", 21.45, "color: #e5e4e2"]
+              ]);
+
+              var view = new google.visualization.DataView(data);
+              view.setColumns([0, 1,
+                               { calc: "stringify",
+                                 sourceColumn: 1,
+                                 type: "string",
+                                 role: "annotation" },
+                               2]);
+
+              var options = {
+                title: "Density of Precious Metals, in g/cm^3",
+                width: 600,
+                height: 400,
+                bar: {groupWidth: "95%"},
+                legend: { position: "none" },
+              };
+              var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
+              chart.draw(view, options);
+        */
       }
-      // Callback that draws the pie chart for Anthony's pizza.
       function seis() {
 
         // Create the data table for Anthony's pizza.

@@ -19,7 +19,7 @@
  {{ csrf_field() }}
  <div class="row">
 	 <div class="input-field col s9 offset-s1">
-		 <input type="text" name="nombre" id="nombre">
+		 <input type="text" name="nombre" id="nombre" required>
 		 <label id="nombre" for="usuario">Nombre</label>
 	 </div>
 	 
@@ -27,7 +27,7 @@
 <div class="row">
 	<div class="input-field col s1"></div>
 	<div class="input-field col s3 m3 l3">
-		<select name="local" id="localidad">
+		<select name="local" id="localidad" required="">
 			<option value="" disabled selected>Seleccione</option>
 			@foreach ($localidades as $localidad)
                 <option value="{{$localidad['id_localidad']}}">{{$localidad['nombre']}}</option>
@@ -36,17 +36,17 @@
 		<label for="localidad">Localidad</label>
 	</div>
 	 <div class="input-field col s6">
-	 	<input type="text" name="domicilio">
+	 	<input type="text" name="domicilio" required>
 		<label id="texto">Domicilio</label>
 	 </div>
 </div>
 <div class="row">
  	<div class="input-field col s3 offset-s1">
- 		<input type='tel' pattern='[\(]\d{3}[\)]\d{3}[\-]\d{4}' title='Número Telefónico (Formato: (999)999-9999)' name="telefono" class="validate" placeholder="(999)999-9999"> 
+ 		<input type='tel' pattern='[\(]\d{3}[\)]\d{3}[\-]\d{4}' title='Número Telefónico (Formato: (999)999-9999)' name="telefono" class="validate" placeholder="(999)999-9999" required> 
 		<label id="texto" for="usuario">Teléfono</label>
  	</div> 
  	<div class="input-field col s8 m8 l5">
-		<input type="text" id="contacto" name="contacto">
+		<input type="text" id="contacto" name="contacto" required>
 		<label for="contacto">Contacto</label>
 	</div>  
  </div>

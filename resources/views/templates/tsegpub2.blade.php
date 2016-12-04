@@ -22,8 +22,6 @@
 <li class="divider"></li>
 <li><a href="/consultallamadas">Consultar Llamadas</a></li>
 <li class="divider"></li>
-<li><a href="/consultahechos">Consultar Hechos</a></li>
-<li class="divider"></li>
 </ul>
 <ul id="dropdown2" class="dropdown-content">
 <li><a href="/registroincidenciavial">Registrar Incidencia</a></li>

@@ -1029,6 +1029,55 @@ class segpubcontroller extends Controller
             ->get();           
         return json_encode($data);
     }
+    public function get_incidencias2(Request $request){
+        //dd($request->all());
+        $fecha1=$request->año1."-".$request->mes1.'-'.$request->dia1;
+        $fecha2=$request->año2."-".$request->mes2.'-'.$request->dia2;
+        $data=\DB::table('reporte_sp as sp')
+            ->join('reporte as r','r.id_reporte','=','sp.id_reporte')
+            ->join('emergencia as e','e.id','=','sp.id_emergencia')
+            ->join('lugar as l','l.id_lugar','=','r.id_lugar')
+            ->join('tipo_aviso as ta','ta.id_tipo','=','sp.tipoaviso')
+            ->select('l.direccion',(\DB::raw('DATE_FORMAT(sp.created_at,"%b %d %Y") as fecha')),
+                'sp.hora','ta.nombre as aviso','e.nombre as emergencia','sp.id_reporte as id')
+            ->wherebetween('sp.created_at',[$fecha1,$fecha2])
+            ->orderBy('fecha', 'DESC')
+            ->get();     
+            //dd($data);      
+        return json_encode($data);
+    }
+    public function get_incidencias3(){
+        $fecha=date('Y-m-d');
+        $data=\DB::table('reporte_sp as sp')
+            ->join('reporte as r','r.id_reporte','=','sp.id_reporte')
+            ->join('emergencia as e','e.id','=','sp.id_emergencia')
+            ->join('lugar as l','l.id_lugar','=','r.id_lugar')
+            ->join('tipo_aviso as ta','ta.id_tipo','=','sp.tipoaviso')
+            ->select('l.direccion',(\DB::raw('DATE_FORMAT(sp.created_at,"%b %d %Y") as fecha')),
+                'sp.hora','ta.nombre as aviso','e.nombre as emergencia','sp.id_reporte as id')
+            ->where(\DB::raw('DATE(sp.created_at)'),'=',$fecha)
+            ->orderBy('fecha', 'DESC')
+            ->get();     
+            //dd($data);      
+        return json_encode($data);
+    }
+    public function get_incidencias4(){
+        $date = date( "Y-m-d" );
+        $ayer = date( "Y-m-d", strtotime( "-1 day", strtotime( $date ) ) );  
+        // dd($ayer);
+        $data=\DB::table('reporte_sp as sp')
+            ->join('reporte as r','r.id_reporte','=','sp.id_reporte')
+            ->join('emergencia as e','e.id','=','sp.id_emergencia')
+            ->join('lugar as l','l.id_lugar','=','r.id_lugar')
+            ->join('tipo_aviso as ta','ta.id_tipo','=','sp.tipoaviso')
+            ->select('l.direccion',(\DB::raw('DATE_FORMAT(sp.created_at,"%b %d %Y") as fecha')),
+                'sp.hora','ta.nombre as aviso','e.nombre as emergencia','sp.id_reporte as id')
+            ->where(\DB::raw('DATE(sp.created_at)'),'=',$ayer)
+            ->orderBy('fecha', 'DESC')
+            ->get();     
+            //dd($data);      
+        return json_encode($data);
+    }
     public function detalleincidencia($id){
         //dd($id);
         $data=array(
@@ -1083,6 +1132,44 @@ class segpubcontroller extends Controller
     ->get();
     return json_encode($data);
     }
+    public function get_incidenciasV2(Request $request){
+        $fecha1=$request->año1."-".$request->mes1.'-'.$request->dia1;
+        $fecha2=$request->año2."-".$request->mes2.'-'.$request->dia2;
+        $data = \DB::table('reporte as r')
+        ->join('reporte_vehiculo as rv','rv.id_reporte','=','r.id_reporte')
+        ->join('emergencia as e','e.id','=','r.id_emergencia')
+        ->join('tipo_aviso as ta','ta.id_tipo','=','r.tipo_aviso')
+        ->select('r.id_reporte as id','e.nombre as emergencia',(\DB::raw('DATE_FORMAT(r.fecha,"%b %d %Y") as fecha')),'r.hora as hora','ta.nombre as comunicado')
+        ->wherebetween('r.fecha',[$fecha1,$fecha2])
+        ->orderBy('fecha', 'DESC')
+        ->get();
+    return json_encode($data);
+    }
+    public function get_incidenciasV3(){
+        $fecha=date('Y-m-d');
+        $data = \DB::table('reporte as r')
+        ->join('reporte_vehiculo as rv','rv.id_reporte','=','r.id_reporte')
+        ->join('emergencia as e','e.id','=','r.id_emergencia')
+        ->join('tipo_aviso as ta','ta.id_tipo','=','r.tipo_aviso')
+        ->select('r.id_reporte as id','e.nombre as emergencia',(\DB::raw('DATE_FORMAT(r.fecha,"%b %d %Y") as fecha')),'r.hora as hora','ta.nombre as comunicado')
+        ->where(\DB::raw('DATE(r.fecha)'),'=',$fecha)
+        ->orderBy('fecha', 'DESC')
+        ->get();
+    return json_encode($data);
+    }
+    public function get_incidenciasV4(){
+        $date = date( "Y-m-d" );
+        $ayer = date( "Y-m-d", strtotime( "-1 day", strtotime( $date ) ) );  
+        $data = \DB::table('reporte as r')
+        ->join('reporte_vehiculo as rv','rv.id_reporte','=','r.id_reporte')
+        ->join('emergencia as e','e.id','=','r.id_emergencia')
+        ->join('tipo_aviso as ta','ta.id_tipo','=','r.tipo_aviso')
+        ->select('r.id_reporte as id','e.nombre as emergencia',(\DB::raw('DATE_FORMAT(r.fecha,"%b %d %Y") as fecha')),'r.hora as hora','ta.nombre as comunicado')
+        ->where(\DB::raw('DATE(r.fecha)'),'=',$ayer)
+        ->orderBy('fecha', 'DESC')
+        ->get();
+    return json_encode($data);
+    }
     public function detincv($id){
        $data=array( 
             'reporte'=>\DB::table('reporte as r')
@@ -1120,4 +1207,5 @@ class segpubcontroller extends Controller
        //dd($data);
        return view('visPoli.detallevial',$data);
     }
+
  }

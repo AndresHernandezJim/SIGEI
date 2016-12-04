@@ -59,9 +59,16 @@ Route::group(['middleware' => 'policia'], function(){
 	Route::patch('get/llamada/fecha1','segpubcontroller@llamadafecha1');
 	Route::patch('get/llamada/fecha2','segpubcontroller@llamadafecha2');  
 	Route::patch('get/incidencia/fecha','segpubcontroller@get_incidencias');
+	Route::patch('get/incidencia/fecha2','segpubcontroller@get_incidencias2');
+	Route::patch('get/incidencia/fecha3','segpubcontroller@get_incidencias3');
+	Route::patch('get/incidencia/fecha4','segpubcontroller@get_incidencias4');
 	Route::get('/consultaincidenciasv','segpubcontroller@incv');
 	Route::get('/consultaincidenciasvd/{id}','segpubcontroller@detincv');
 	Route::patch('get/incidenciaV/fecha','segpubcontroller@get_incidenciasV');
+	Route::patch('get/incidenciaV/fecha2','segpubcontroller@get_incidenciasV2');
+	Route::patch('get/incidenciaV/fecha3','segpubcontroller@get_incidenciasV3');
+	Route::patch('get/incidenciaV/fecha4','segpubcontroller@get_incidenciasV4');
+	
 
 });
 Route::group(['middleware' => 'psicologo'], function(){

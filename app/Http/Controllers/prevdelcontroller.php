@@ -17,7 +17,7 @@ use App\sesionIns;
 class prevdelcontroller extends Controller
 {
    
-	 public function index(){
+     public function index(){
        
         //cargamos los datos de las instituciones registradas, y las consultas dadas para el dashboard
         //$instituciones=array('instituciones'=>\DB::table('institucion')->select('nombre')->get() );
@@ -34,8 +34,8 @@ class prevdelcontroller extends Controller
           $datalocal=array(
             'localidades'=>\App\localidad::get(),
         );
-		return view('visPsico.new_inst',$datalocal);
-	}
+        return view('visPsico.new_inst',$datalocal);
+    }
     public function registroInst(Request $request){
        // dd($request->all());
         //verificamos si ya existe el domicilio registrado
@@ -87,7 +87,7 @@ class prevdelcontroller extends Controller
         }   
         
     }
-	 public function visIns(){
+     public function visIns(){
 
          $data = \DB::table('institucion')
             ->select('id_institucion as id', 'nombre', 'telefono')
@@ -124,7 +124,7 @@ class prevdelcontroller extends Controller
         );
 
        // dd($municipios);
-    	return view('visPsico.new_persona', $data);
+        return view('visPsico.new_persona', $data);
     }
     
 
@@ -291,7 +291,7 @@ class prevdelcontroller extends Controller
         return $sesiones;
     }*/
 
-    public function ses_esp($id){
+    /*public function ses_esp($id){
         //dd($id);
         $sesiones = \DB::table('sesion')->select('id_persona', 'detalle', 'fecha')->where('id_sesion', '=', $id)->first();
         //dd($sesiones->id_usuario);
@@ -301,7 +301,13 @@ class prevdelcontroller extends Controller
         //dd($data);
         $pasiente = array('PasNom' => $persona,);
         //dd($pasiente);
-        return view('visPsico.show_sec_esp', $data, $pasiente);
+        //return view('visPsico.show_sec_esp', $data, $pasiente);
+    }*/
+    public function ses_esp(Request $request){
+        //dd($id);
+        $sesiones = \DB::table('sesion')->select('id_persona', 'detalle', 'fecha')->where('id_sesion', '=', $request->id)->first();
+        return json_encode($sesiones);
+       
     }
 
      
@@ -376,14 +382,10 @@ class prevdelcontroller extends Controller
     }*/
 
 //funcion de la vista de una vista en especifico que se quiera consultar de una institucion en especifico
-    public function vis_esp($id){
+    public function vis_esp(Request $request){
         //dd($id);
-        $visita = \DB::table('sesioninstit')->select('id_institucion as id', 'fecha', 'observaciones')->where('id_sesion', '=', $id)->first();
-        $nombre=  \DB::table('institucion')->select('nombre')->where('id_institucion', '=', $visita->id)->first();
-        $visita->id_institucion=$nombre->nombre;
-        //dd($visita);
-        $data = array('visita' => $visita,);
-        return view('visPsico.show_visita', $data); 
+        $visita = \DB::table('sesioninstit')->select('id_institucion as id', 'fecha', 'observaciones')->where('id_sesion', '=', $request->id)->first();
+        return json_encode($visita);
     }
 
      public function get_user_info(Request $request){
