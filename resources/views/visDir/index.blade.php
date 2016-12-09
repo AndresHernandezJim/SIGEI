@@ -34,11 +34,9 @@
 <body>
 <header>
 <ul id="dropdown1" class="dropdown-content">
-<li><a href="/consultaincidenciasD">Consultar Incidencias</a></li>
+<li><a href="/consultaincidenciaspD">Consultar Incidencias</a></li>
 <li class="divider"></li>
 <li><a href="/consultallamadasD">Consultar Llamadas</a></li>
-<li class="divider"></li>
-<li><a href="/consultahechosD">Consultar Hechos</a></li>
 <li class="divider"></li>
 </ul>
 <ul id="dropdown2" class="dropdown-content">
@@ -50,9 +48,9 @@
 <li class="divider"></li>
 </ul>
 <ul id="dropdown3" class="dropdown-content">
-<li><a href="/consultadetenidoD">Consultar Interno</a></li>
+<li><a href="/consultadetenidoD">Consultar Internos</a></li>
 <li class="divider"></li>
-<li><a href="/segpub/barandilla/historialD">Aseguramientos</a></li>
+<li><a href="/segpub/barandilla/historialD">Historial de internos</a></li>
 <li class="divider"></li>
 </ul>
 <nav class="grey darken-4">

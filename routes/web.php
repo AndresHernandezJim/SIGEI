@@ -23,8 +23,41 @@ Route::group(['middleware' => 'admin'], function(){
 	Route::get('/director', 'DirectorController@index');
 	Route::get('/logoutD', 'DirectorController@logout');
 
-	Route::get('/consultaincidenciasp','DirectorController@insp');
-	Route::get('/consultaincidenciasp/{id}','DirectorController@detalleincidencia');
+	
+	Route::get('/consultadetenidoD','DirectorController@showdet');
+	Route::get('/segpub/barandilla/infoD/{id}','DirectorController@showdet2');
+	Route::get('/regreso','DirectorController@return');
+	Route::get('/segpub/personas/detencionD/{id}','DirectorController@showdet3');
+	Route::get('/segpub/barandilla/historialD', 'DirectorController@bus_per');
+	Route::post('/segpub/barandilla/detperD','DirectorController@detalleper_bara');
+	Route::get('/segpub/barandilla/detperxD/{id}', 'DirectorController@detalleper_bara2');
+	Route::post('/sp','DirectorController@storepersona');
+	Route::post('/segpub/incidenciavial','DirectorController@newvial');
+	Route::get('/consultaplacasfechaD','DirectorController@vialplacas');
+	Route::get('/consultagruasfecha','DirectorController@vialfecha');
+	Route::get('/consultagruasfechaD', 'DirectorController@searchdate');
+	Route::get('/consultallamadasD', 'DirectorController@llamadas');
+	Route::get('/consultaincidenciaspD','DirectorController@inspp');
+	Route::get('/consultaincidenciaspDD/{id}','DirectorController@detalleincidencia');
+   //ajax
+	Route::patch('get/user/infoD','DirectorController@get_user_info');
+	Route::patch('get/auto/placaD','DirectorController@get_auto_info');
+	Route::patch('get/auto/liberarD','DirectorController@get_auto_libre');
+	Route::patch('get/auto/fecha1D','DirectorController@vialfecha1');
+	Route::patch('get/auto/fecha2D','DirectorController@vialfecha2');
+	Route::patch('get/llamada/fecha1D','DirectorController@llamadafecha1');
+	Route::patch('get/llamada/fecha2D','DirectorController@llamadafecha2');  
+	Route::patch('get/incidencia/fechaD','DirectorController@get_incidencias');
+	Route::patch('get/incidencia/fecha2D','DirectorController@get_incidencias2');
+	Route::patch('get/incidencia/fecha3D','DirectorController@get_incidencias3');
+	Route::patch('get/incidencia/fecha4D','DirectorController@get_incidencias4');
+	Route::get('/consultaincidenciasvD','DirectorController@incv');
+	Route::get('/consultaincidenciasvdd/{id}','DirectorController@detincv');
+	Route::patch('get/incidenciaV/fechaD','DirectorController@get_incidenciasV');
+	Route::patch('get/incidenciaV/fecha2D','DirectorController@get_incidenciasV2');
+	Route::patch('get/incidenciaV/fecha3D','DirectorController@get_incidenciasV3');
+	Route::patch('get/incidenciaV/fecha4D','DirectorController@get_incidenciasV4');
+	Route::post('/segpub/ajax/liberarD', 'DirectorController@liberar');
 });
 
 Route::group(['middleware' => 'policia'], function(){

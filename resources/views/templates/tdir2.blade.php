@@ -16,38 +16,31 @@
 <body>
 <header>
 <ul id="dropdown1" class="dropdown-content">
-<li><a href="/registroincidenciasp">Registrar Incidencia</a></li>
+<li><a href="/consultaincidenciaspD">Consultar Incidencias</a></li>
 <li class="divider"></li>
-<li><a href="/consultaincidenciasp">Consultar Incidencias</a></li>
-<li class="divider"></li>
-<li><a href="/consultallamadas">Consultar Llamadas</a></li>
-<li class="divider"></li>
-<li><a href="/consultahechos">Consultar Hechos</a></li>
+<li><a href="/consultallamadasD">Consultar Llamadas</a></li>
 <li class="divider"></li>
 </ul>
 <ul id="dropdown2" class="dropdown-content">
-<li><a href="/registroincidenciavial">Registrar Incidencia</a></li>
+<li><a href="/consultaplacasfechaD">Consultar Vehículo</a></li>
 <li class="divider"></li>
-<li><a href="/consultaplacasfecha">Consultar Vehículo</a></li>
+<li><a href="/consultagruasfechaD">Asegurados en Fecha</a></li>
 <li class="divider"></li>
-<li><a href="/consultagruasfecha">Asegurados en Fecha</a></li>
-<li class="divider"></li>
-<li><a href="/consultaincidenciasv">Consultar Incidencias</a></li>
+<li><a href="/consultaincidenciasvD">Consultar Incidencias</a></li>
 <li class="divider"></li>
 </ul>
 <ul id="dropdown3" class="dropdown-content">
-<li><a href="/registrobarandilla">Registrar Ingreso</a></li>
+<li><a href="/consultadetenidoD">Consultar Internos</a></li>
 <li class="divider"></li>
-<li><a href="/consultadetenido">Consultar Internos</a></li>
-<li class="divider"></li>
-<li><a href="/segpub/barandilla/historial">Historial de Internos</a></li>
+<li><a href="/segpub/barandilla/historialD">Historial de internos</a></li>
 <li class="divider"></li>
 </ul>
 <nav class="grey darken-4">
   <div class="nav-wrapper ">
-    <img class="logo" src="/images/logo.png"><a href="/poli" class="brand-logo form">&nbsp;SIGEI</a>
+    <img class="logo" src="/images/logo.png"><a href="/director" class="brand-logo form">&nbsp;SIGEI</a>
     <ul class="right hide-on-med-and-down">
-    <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Seg.Pública&nbsp<i class="fa fa-chevron-down"></i></a></li>    
+     <li><a class="" href="/director" >Estadisticas&nbsp<i class="fa fa-pie-chart" aria-hidden="true"></i></a></li>
+      <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Seg.Pública&nbsp<i class="fa fa-chevron-down"></i></a></li>    
       <li><a class="dropdown-button" href="#!" data-activates="dropdown2">Vialidad &nbsp &nbsp<i class="fa fa-chevron-down"></i></a></li> 
       <li><a class="dropdown-button" href="#!" data-activates="dropdown3">Detenidos &nbsp &nbsp &nbsp<i class="fa fa-chevron-down"></i></a></li> 
       <li><a href="/logoutD">Director: {{session()->get('Admin')->nombre}} &nbsp&nbsp<i class="fa fa-sign-out"></i>Cerrar Sesión</a></li>  

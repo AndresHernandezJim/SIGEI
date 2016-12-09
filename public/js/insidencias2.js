@@ -1,5 +1,4 @@
 $(document).ready(function(){
-	alert();
 	$( '#efect' ).hide();
 	$( '#error' ).hide();
 	function runEffect(){
@@ -15,7 +14,7 @@ $(document).ready(function(){
 
 		console.log( $('#mes').val().trim() );
 		$.ajax({
-			 url:'get/incidencia/fecha',
+			 url:'get/incidencia/fechaD',
 		     method:'post',
 	         data:{
 			 	'_method':'PATCH',
@@ -33,7 +32,7 @@ $(document).ready(function(){
 				 		console.log(data);
 				 		$.each(data, function(index,val){
 				 			$('#tincidencia').append('<tr><td>' + val.fecha + '</td><td>' + val.hora + 
-				 				'</td><td>' + val.emergencia + '</td><td>' + val.aviso+ '</td><td><a href="/consultaincidenciasp/'+val.id+'"><i class="fa fa-search-plus" aria-hidden="true"></i></a></td>');
+				 				'</td><td>' + val.emergencia + '</td><td>' + val.aviso+ '</td><td><a href="/consultaincidenciaspDD/'+val.id+'"><i class="fa fa-search-plus" aria-hidden="true"></i></a></td>');
 				 		});
 		
 					}else{ 
@@ -46,7 +45,7 @@ $(document).ready(function(){
 	});
 	$('#enviar2').on('click', function(){
 		$.ajax({
-			 url:'get/incidencia/fecha2',
+			 url:'get/incidencia/fecha2D',
 		     method:'post',
 	         data:{
 			 	'_method':'PATCH',
@@ -69,7 +68,7 @@ $(document).ready(function(){
 				 		console.log(data);
 				 		$.each(data, function(index,val){
 				 			$('#tincidencia').append('<tr><td>' + val.fecha + '</td><td>' + val.hora + 
-				 				'</td><td>' + val.emergencia + '</td><td>' + val.aviso+ '</td><td><a href="/consultaincidenciasp/'+val.id+'"><i class="fa fa-search-plus" aria-hidden="true"></i></a></td>');
+				 				'</td><td>' + val.emergencia + '</td><td>' + val.aviso+ '</td><td><a href="/consultaincidenciaspDD/'+val.id+'"><i class="fa fa-search-plus" aria-hidden="true"></i></a></td>');
 				 		});
 		
 					}else{ 
@@ -82,7 +81,7 @@ $(document).ready(function(){
 	});
 	$('#a1').on('click',function(){
 		$.ajax({
-					 url:'get/incidencia/fecha3',
+					 url:'get/incidencia/fecha3D',
 				     method:'post',
 			         data:{
 					 	'_method':'PATCH',
@@ -99,7 +98,7 @@ $(document).ready(function(){
 						 		console.log(data);
 						 		$.each(data, function(index,val){
 						 			$('#tincidencia').append('<tr><td>' + val.fecha + '</td><td>' + val.hora + 
-						 				'</td><td>' + val.emergencia + '</td><td>' + val.aviso+ '</td><td><a href="/consultaincidenciasp/'+val.id+'"><i class="fa fa-search-plus" aria-hidden="true"></i></a></td>');
+						 				'</td><td>' + val.emergencia + '</td><td>' + val.aviso+ '</td><td><a href="/consultaincidenciaspDD/'+val.id+'"><i class="fa fa-search-plus" aria-hidden="true"></i></a></td>');
 						 		});
 				
 							}else{ 
@@ -111,7 +110,7 @@ $(document).ready(function(){
 	});
 	$('#a2').on('click',function(){
 		$.ajax({
-					 url:'get/incidencia/fecha4',
+					 url:'get/incidencia/fecha4D',
 				     method:'post',
 			         data:{
 					 	'_method':'PATCH',
@@ -128,7 +127,7 @@ $(document).ready(function(){
 						 		console.log(data);
 						 		$.each(data, function(index,val){
 						 			$('#tincidencia').append('<tr><td>' + val.fecha + '</td><td>' + val.hora + 
-						 				'</td><td>' + val.emergencia + '</td><td>' + val.aviso+ '</td><td><a href="/consultaincidenciasp/'+val.id+'"><i class="fa fa-search-plus" aria-hidden="true"></i></a></td>');
+						 				'</td><td>' + val.emergencia + '</td><td>' + val.aviso+ '</td><td><a href="/consultaincidenciaspDD/'+val.id+'"><i class="fa fa-search-plus" aria-hidden="true"></i></a></td>');
 						 		});
 				
 							}else{ 

@@ -317,11 +317,9 @@ class segpubcontroller extends Controller
           
         }else{
 
-            $fragmento = explode(", ", $request->nombre);
-            //dd($fragmento[0]."----".$fragmento[1]);
-             $persona=\DB::table('persona')
+            $persona=\DB::table('persona')
             ->select('id_persona as id')
-            ->where('persona.nombre', $fragmento[0])
+            ->where('persona.nombre', $request->nombre)
             ->first();
             return redirect('/segpub/barandilla/detperx/'.$persona->id);
         } 
