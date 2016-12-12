@@ -40,7 +40,7 @@ $(document).ready(function(){
 					$( '#efect' ).hide();
 					   runEffect2();
 					}
-				}/
+				}
 		    });
 
 	});
