@@ -11,19 +11,23 @@
   }
   .leftrigth{
     height: 100vh;
-     border-right: 1px solid;
+     
   }
   .rigthleft{
     height: 100vh;
-    border-left: 1px solid; 
+    
   }
   .top{
-    height: 50vh;
-    border-bottom: 1px solid;
+    height: 25vh;
+    
   }
   .bott{
-    height: 50vh;
-    border-top: 1px solid;
+    height: 33vh;
+    
+  }
+  .mid{
+    height: 41vh;
+
   }
   .center{
     height: 100vh;
@@ -78,29 +82,16 @@
   <div class="wrap">
   <div class="row">
     <div class="leftrigth col s4">
-        <div class="top">
-          
-        </div>
-        <div class="bott">
-          
-        </div>
+        <div class="top"></div>
+        <div class="mid" id="uno"></div>
     </div>
     <div class="center col s4">
-        <div class="top">
-          
-        </div>
-        <div class="bott">
-          
-        </div>
+        <div class="top"></div>
+        <div class="mid"></div>
     </div>
     <div class="rigthleft col s4">
-     <div class="top">
-          
-        </div>
-        <div class="bott">
-          
-        </div>
-       
+        <div class="top"></div>
+        <div class="mid" id="dos"></div>
     </div>
   </div>
     
@@ -110,6 +101,60 @@
 <script src="/js/app.js"></script>
 <script src="https://cdn.jsdelivr.net/vue/1.0.21/vue.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/0.7.0/vue-resource.min.js"></script>
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+
+      // Load Charts and the corechart package.
+      google.charts.load('current', {'packages':['corechart']});
+
+      // Draw the pie chart for Sarah's pizza when Charts is loaded.
+      google.charts.setOnLoadCallback(uno);
+
+      // Draw the pie chart for the Anthony's pizza when Charts is loaded.
+      google.charts.setOnLoadCallback(dos);
+      function uno() {
+
+        // Create the data table for Anthony's pizza.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        data.addRows([
+          @foreach($uno as $item)
+            ['{{$item->nombre}}', {{$item->cantidad}}],
+          @endforeach
+        ]);
+
+        // Set options for Anthony's pie chart.
+        var options = {title:'Tipos de atencion de llamadas en el mes',
+                       width:400,
+                       height:300};
+
+        // Instantiate and draw the chart for Anthony's pizza.
+        var chart = new google.visualization.PieChart(document.getElementById('uno'));
+        chart.draw(data, options);
+      }
+      function dos() {
+
+        // Create the data table for Anthony's pizza.
+        var data = new google.visualization.DataTable();
+        data.addColumn('string', 'Topping');
+        data.addColumn('number', 'Slices');
+        data.addRows([
+          @foreach($dos as $item)
+            ['{{$item->emergencia}}',{{$item->cantidad}}],
+          @endforeach
+        ]);
+
+        // Set options for Anthony's pie chart.
+        var options = {title:'Top 10 Tipo de emergencias Atendidaa en el mes',
+                       width:400,
+                       height:300};
+
+        // Instantiate and draw the chart for Anthony's pizza.
+        var chart = new google.visualization.PieChart(document.getElementById('dos'));
+        chart.draw(data, options);
+      }
+    </script>
 @yield('script')
 </body>
 </html>

@@ -14,16 +14,18 @@
 Route::get('/', function () {
     return view('website/index');
 });
-Route::get('/registro','website@nusu');
-Route::Post('/newusr', 'website@Newusr');
+
+Route::get('/LFGMAHJ','website@nusu');
+Route::post('/newuser','website@Newusr');
+
 Route::Post('/login', 'LoginController@login');
 Route::get('hola',function(){return view('upload-image');});
 
 Route::group(['middleware' => 'admin'], function(){
 	Route::get('/director', 'DirectorController@index');
 	Route::get('/logoutD', 'DirectorController@logout');
-
-	
+	Route::get('/director/usuarios/registro','DirectorController@nusu');
+	Route::Post('/newusr', 'DirectorController@Newusr');
 	Route::get('/consultadetenidoD','DirectorController@showdet');
 	Route::get('/segpub/barandilla/infoD/{id}','DirectorController@showdet2');
 	Route::get('/regreso','DirectorController@return');

@@ -32,12 +32,42 @@ class DirectorController extends Controller
     public function insp(){
         return view('visDir.incidenciaspD');
     }
+    public function nusu(){
+        $data=array(
+            'privilegios'=> \App\privilegios::get(),
+        );
+        return view('/visDir/nusu',$data);
+        //return view('welcome',$data);
+    }
 
+    public function Newusr(Request $request){
+        //dd($request->all());
+        $contrasena = \Hash::make($request->contrasena);
+        $usuario = new User;
+        $usuario->nombre = $request->nombre;
+        $usuario->password = $contrasena;
+        $usuario->idprivilegio = $request->privilegio;
+        $usuario->telefono = $request->telefono;
+        $usuario->nick = $request->nick;
+        $usuario->updated_at = DATE('Y-m-d H:i:s');
+        $usuario->created_at = DATE('Y-m-d H:i:s');
+        $usuario->save();
+
+        return redirect('/director');
+    }
+    public function changepass(Request $request){
+        
+    }
     public function index(){
         //dd("direcon");
+        $año=date('Y');
+        $mes=date('m');
         $fecha=DATE('Y-m')."-01";
         $dias= cal_days_in_month(CAL_GREGORIAN, date('m'), DATE('Y'));
         $fecha2 =Date('Y-m').'-'.$dias;
+        if($mes==1 && $dias<1){
+            $año--;
+        }
     	$get = \DB::table('reporte as r')
         		->select(
         			\DB::raw('COUNT(m.id) AS cantidad'),
@@ -70,6 +100,7 @@ class DirectorController extends Controller
     			->groupBy('m.id')
     			->orderBy('cantidad','DESC')
     			->where('tr.id_tiporep',1)
+                ->where(\DB::raw('YEAR(r.fecha)'),'=',$año)
     			->limit(5)	
     			->get(),
     		'tres' => \DB::table('reporte as r')
@@ -89,9 +120,35 @@ class DirectorController extends Controller
                     ->select((\DB::raw('COUNT(r.id_reporte) as cantidad')),'ta.nombre')
                     ->groupBY('ta.nombre')
                     ->wherebetween('r.fecha',[$fecha,$fecha2]) 
-                    ->get()
+                    ->get(),
+            'cinco'=> \DB::table('reporte as r')
+                ->select(
+                    \DB::raw('COUNT(m.id) AS cantidad'),
+                    'm.nombre as emergencia'
+                )
+                ->join('emergencia AS m','m.id','=','r.id_emergencia')
+                ->join('tipo_reporte AS tr','tr.id_tiporep','=','m.tipo')
+                ->groupBy('m.id')
+                ->orderBy('cantidad','DESC')
+                ->where('tr.id_tiporep',2)
+                ->wherebetween('r.fecha',[$fecha,$fecha2]) 
+                ->limit(5)
+                ->get(),
+            'seis'=> \DB::table('reporte as r')
+                ->select(
+                    \DB::raw('COUNT(m.id) AS cantidad'),
+                    'm.nombre as emergencia'
+                )
+                ->join('emergencia AS m','m.id','=','r.id_emergencia')
+                ->join('tipo_reporte AS tr','tr.id_tiporep','=','m.tipo')
+                ->groupBy('m.id')
+                ->orderBy('cantidad','DESC')
+                ->where('tr.id_tiporep',1)
+                ->wherebetween('r.fecha',[$fecha,$fecha2])
+                ->limit(5)  
+                ->get(),
         ];
-        // dd($data);
+        //dd($data);
         return view('visDir.index',$data);
     }
 

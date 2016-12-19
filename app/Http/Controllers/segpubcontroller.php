@@ -27,7 +27,31 @@ class segpubcontroller extends Controller
 {   
     public function index(){
         //dd("policon");
-        return view('visPoli.indexPoli');
+        $fecha=DATE('Y-m')."-01";
+        $dias= cal_days_in_month(CAL_GREGORIAN, date('m'), DATE('Y'));
+        $fecha2 =Date('Y-m').'-'.$dias;
+        $data=[
+            'uno'=>\DB::table('reporte as r')
+                    ->join('tipo_aviso as ta','ta.id_tipo','=','r.tipo_aviso')
+                    ->select((\DB::raw('COUNT(r.id_reporte) as cantidad')),'ta.nombre')
+                    ->groupBY('ta.nombre')
+                    ->wherebetween('r.fecha',[$fecha,$fecha2]) 
+                    ->get(),
+            'dos'=> \DB::table('reporte as r')
+                ->select(
+                    \DB::raw('COUNT(m.id) AS cantidad'),
+                    'm.nombre as emergencia'
+                )
+                ->join('emergencia AS m','m.id','=','r.id_emergencia')
+                ->join('tipo_reporte AS tr','tr.id_tiporep','=','m.tipo')
+                ->wherebetween('r.fecha',[$fecha,$fecha2])
+                ->groupBy('m.id')
+                ->orderBy('cantidad','DESC')
+                ->limit(10)
+                ->get(),
+            ];
+            //dd($data); 
+        return view('visPoli.indexPoli',$data);
     }
     public function logout(){
         session()->forget('Policia');
