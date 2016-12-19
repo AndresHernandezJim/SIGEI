@@ -53,6 +53,10 @@
 <li><a href="/segpub/barandilla/historialD">Historial de internos</a></li>
 <li class="divider"></li>
 </ul>
+<ul id="dropdown4" class="dropdown-content">
+<li><a href="/director/usuarios/registro">Agregar usuario</a> </li>
+<li><a href="/registro">Modificar contraseñas</a> </li>
+</ul>
 <nav class="grey darken-4">
   <div class="nav-wrapper ">
     <img class="logo" src="/images/logo.png"><a href="#!" class="brand-logo form">&nbsp;SIGEI</a>
@@ -60,6 +64,7 @@
     <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Seg.Publica&nbsp<i class="fa fa-chevron-down"></i></a></li>    
       <li><a class="dropdown-button" href="#!" data-activates="dropdown2">Vialidad &nbsp &nbsp<i class="fa fa-chevron-down"></i></a></li> 
       <li><a class="dropdown-button" href="#!" data-activates="dropdown3">Detenidos &nbsp &nbsp &nbsp<i class="fa fa-chevron-down"></i></a></li> 
+        <li><a href="#!" class="dropdown-button" data-activates="dropdown4">Usuarios&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-down"></i></a></li>
       <li><a href="/logoutD">Director: {{session()->get('Admin')->nombre}} &nbsp&nbsp<i class="fa fa-sign-out"></i>Cerrar Sesión</a></li> 
     </ul>
   </div>
@@ -140,12 +145,12 @@
         ]);
 
         // Set options for Anthony's pie chart.
-        var options = {title:'Emergencias de seguridad publica',
+        var options = {title:'Emergencias de seguridad pública en el año',
                        width:400,
                        height:300};
 
         // Instantiate and draw the chart for Anthony's pizza.
-        var chart = new google.visualization.PieChart(document.getElementById('dos'));
+        var chart = new google.visualization.PieChart(document.getElementById('cuatro'));
         chart.draw(data, options);
       }
       function tres() {
@@ -161,7 +166,7 @@
         ]);
 
         // Set options for Anthony's pie chart.
-        var options = {title:'Emergencias de vialidad',
+        var options = {title:'Emergencias de vialidad del año',
                        width:400,
                        height:300};
 
@@ -187,7 +192,7 @@
                        height:300};
 
         // Instantiate and draw the chart for Anthony's pizza.
-        var chart = new google.visualization.PieChart(document.getElementById('cuatro'));
+        var chart = new google.visualization.PieChart(document.getElementById('dos'));
         chart.draw(data, options);
       }
       function cinco() {
@@ -197,49 +202,19 @@
         data.addColumn('string', 'Topping');
         data.addColumn('number', 'Slices');
         data.addRows([
-          ['Mushrooms', 2],
-          ['Onions', 2],
-          ['Olives', 2],
-          ['Zucchini', 0],
-          ['Pepperoni', 3]
+          @foreach($cinco as $item)
+            ['{{$item->emergencia}}', {{$item->cantidad}}],
+          @endforeach
         ]);
 
         // Set options for Anthony's pie chart.
-        var options = {title:'How Much Pizza Anthony Ate Last Night',
+        var options = {title:'Emergencias de Vialidad en el mes',
                        width:400,
                        height:300};
 
         // Instantiate and draw the chart for Anthony's pizza.
         var chart = new google.visualization.PieChart(document.getElementById('cinco'));
         chart.draw(data, options);
-
-          /* crear histograma
-                    var data = google.visualization.arrayToDataTable([
-                ["Element", "Density", { role: "style" } ],
-                ["Copper", 8.94, "#b87333"],
-                ["Silver", 10.49, "silver"],
-                ["Gold", 19.30, "gold"],
-                ["Platinum", 21.45, "color: #e5e4e2"]
-              ]);
-
-              var view = new google.visualization.DataView(data);
-              view.setColumns([0, 1,
-                               { calc: "stringify",
-                                 sourceColumn: 1,
-                                 type: "string",
-                                 role: "annotation" },
-                               2]);
-
-              var options = {
-                title: "Density of Precious Metals, in g/cm^3",
-                width: 600,
-                height: 400,
-                bar: {groupWidth: "95%"},
-                legend: { position: "none" },
-              };
-              var chart = new google.visualization.ColumnChart(document.getElementById("columnchart_values"));
-              chart.draw(view, options);
-        */
       }
       function seis() {
 
@@ -248,15 +223,13 @@
         data.addColumn('string', 'Topping');
         data.addColumn('number', 'Slices');
         data.addRows([
-          ['Mushrooms', 2],
-          ['Onions', 2],
-          ['Olives', 2],
-          ['Zucchini', 0],
-          ['Pepperoni', 3]
+         @foreach( $seis as $item )
+          ['{{$item->emergencia}}', {{$item->cantidad}}],
+          @endforeach
         ]);
 
         // Set options for Anthony's pie chart.
-        var options = {title:'How Much Pizza Anthony Ate Last Night',
+        var options = {title:'Emergencias de seguridad Pública atendidas en el mes',
                        width:400,
                        height:300};
 

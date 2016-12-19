@@ -34,6 +34,10 @@
 <li><a href="/segpub/barandilla/historialD">Historial de internos</a></li>
 <li class="divider"></li>
 </ul>
+<ul id="dropdown4" class="dropdown-content">
+<li><a href="/director/usuarios/registro">Agregar usuario</a> </li>
+<li><a href="/registro">Modificar contraseñas</a> </li>
+</ul>
 <nav class="grey darken-4">
   <div class="nav-wrapper ">
     <img class="logo" src="/images/logo.png"><a href="/director" class="brand-logo form">&nbsp;SIGEI</a>
@@ -42,7 +46,9 @@
     <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Seg.Pública&nbsp;<i class="fa fa-chevron-down"></i></a></li>    
       <li><a class="dropdown-button" href="#!" data-activates="dropdown2">Vialidad &nbsp; &nbsp;<i class="fa fa-chevron-down"></i></a></li> 
       <li><a class="dropdown-button" href="#!" data-activates="dropdown3">Detenidos &nbsp &nbsp &nbsp<i class="fa fa-chevron-down"></i></a></li> 
-      <li><a href="/logoutD">Director: {{session()->get('Admin')->nombre}} &nbsp&nbsp<i class="fa fa-sign-out"></i>Cerrar Sesión</a></li> 
+       <li><a href="#!" class="dropdown-button" data-activates="dropdown4">Usuarios&nbsp;&nbsp;&nbsp;<i class="fa fa-chevron-down"></i></a></li>
+      <li><a href="/logoutD">Director: {{session()->get('Admin')->nombre}} &nbsp&nbsp<i class="fa fa-sign-out"></i>Cerrar Sesión</a></li>
+
     </ul>
   </div>
 </nav>  

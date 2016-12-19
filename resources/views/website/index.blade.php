@@ -14,7 +14,6 @@
         <div class="col s12">
             <img src="/images/IMGAES/banner.png" class="responsive-img imgheader">
          </div>
-         <div><a href="/registro">registrar</a></div>
     </center>
 </section>
 </header>
