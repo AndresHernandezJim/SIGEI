@@ -34,7 +34,6 @@ Route::group(['middleware' => 'admin'], function(){
 	Route::post('/segpub/barandilla/detperD','DirectorController@detalleper_bara');
 	Route::get('/segpub/barandilla/detperxD/{id}', 'DirectorController@detalleper_bara2');
 	Route::post('/sp','DirectorController@storepersona');
-	Route::post('/segpub/incidenciavial','DirectorController@newvial');
 	Route::get('/consultaplacasfechaD','DirectorController@vialplacas');
 	Route::get('/consultagruasfecha','DirectorController@vialfecha');
 	Route::get('/consultagruasfechaD', 'DirectorController@searchdate');

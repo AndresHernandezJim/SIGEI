@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	alert();
+	
 	$( '#efect' ).hide();
 	$( '#error' ).hide();
 	function runEffect(){
@@ -40,7 +40,7 @@ $(document).ready(function(){
 					$( '#efect' ).hide();
 					   runEffect2();
 					}
-				}///
+				}
 		    });
 
 	});
