@@ -17,7 +17,7 @@ new Vue({
 			var confirmar = confirm("¿Seguro quiere eliminar la Institución?");
 			if (confirmar) {
 				this.$http.post('/predel/ajax/delins', {'id_ins':id}).then(function(response){
-					this.instituciones.$remove(institucion);
+					//this.instituciones.$remove(institucion);
 					Materialize.toast('La institucion a sido borrada', 3500);
 					location.reload();
 			});

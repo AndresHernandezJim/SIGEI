@@ -121,6 +121,7 @@ Route::group(['middleware' => 'psicologo'], function(){
 	Route::get('/predel/ajax/sesiones/{id}', 'prevdelcontroller@showSec');
 	//Route::get('/predel/personas/sesion/{id}', 'prevdelcontroller@ses_esp');
 	Route::post('/predel/ajax/delpac', 'prevdelcontroller@deletePac');
+	Route::post('/predel/ajax/delins', 'prevdelcontroller@deleteIns');
 	Route::get('/predel/ajax/showinst', 'prevdelcontroller@showInst');
 	Route::get('/predel/intitucion/info/{id}', 'prevdelcontroller@mostrarInst');
 	Route::get('/predel/ajax/visitas/{id}', 'prevdelcontroller@showVis');
@@ -129,4 +130,5 @@ Route::group(['middleware' => 'psicologo'], function(){
 	//ajax
 	Route::patch('/predel/personas/sesion/', 'prevdelcontroller@ses_esp');
 	Route::patch('/predel/intitucion/visita/', 'prevdelcontroller@vis_esp');
+	
 });
