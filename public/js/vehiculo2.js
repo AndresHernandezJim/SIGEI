@@ -66,32 +66,6 @@ $(document).ready(function(){
 	    
 	});
 
-	$('#liberar').on('click', function(){
-		var confirmar = confirm("¿Liberar Vehiculo?");
-		if(confirmar){
-			$.ajax({
-			 url:'get/auto/liberar',
-		     method:'post',
-	         data:{
-			 	'_method':'PATCH',
-			 	'placa':$('#placas').val().trim(),
-			 	'id':$('#idv').val().trim(),
-			 	'_token':$('[name="_token"]').val()
-			 },
-				success:function(data){
-				 	console.log(data);
-				 	if(data != ""){
-				 		data = JSON.parse(data);
-				 		$('#liberado').val(data.liberado);
-						$('#adeudo').val(data.adeudo);
-						$('#feclibe').val(data.liberadoo);
-						$('#liberar').hide();
-				 	}
-				}
-		    });
-		}
-	});	    	
-
 });
 
 

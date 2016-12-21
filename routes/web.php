@@ -53,7 +53,7 @@ Route::group(['middleware' => 'admin'], function(){
 	Route::patch('get/incidencia/fecha3D','DirectorController@get_incidencias3');
 	Route::patch('get/incidencia/fecha4D','DirectorController@get_incidencias4');
 	Route::get('/consultaincidenciasvD','DirectorController@incv');
-	Route::get('/consultaincidenciasvdd/{id}','DirectorController@detincv');
+	Route::get('/consultaincidenciasvddW/{id}','DirectorController@detincv');
 	Route::patch('get/incidenciaV/fechaD','DirectorController@get_incidenciasV');
 	Route::patch('get/incidenciaV/fecha2D','DirectorController@get_incidenciasV2');
 	Route::patch('get/incidenciaV/fecha3D','DirectorController@get_incidenciasV3');
@@ -97,7 +97,7 @@ Route::group(['middleware' => 'policia'], function(){
 	Route::patch('get/incidencia/fecha3','segpubcontroller@get_incidencias3');
 	Route::patch('get/incidencia/fecha4','segpubcontroller@get_incidencias4');
 	Route::get('/consultaincidenciasv','segpubcontroller@incv');
-	Route::get('/consultaincidenciasvd/{id}','segpubcontroller@detincv');
+	Route::get('/consultaincidenciasvdd/{id}','segpubcontroller@detincv');
 	Route::patch('get/incidenciaV/fecha','segpubcontroller@get_incidenciasV');
 	Route::patch('get/incidenciaV/fecha2','segpubcontroller@get_incidenciasV2');
 	Route::patch('get/incidenciaV/fecha3','segpubcontroller@get_incidenciasV3');

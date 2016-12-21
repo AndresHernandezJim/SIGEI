@@ -80,11 +80,6 @@
 		<input type="text" name="libre" id="feclibe" class="validate" readonly="">
 		<label>Fecha de liberado</label>
 	</div>
-	<div class="col s2 offset-s10">
-	<br><br>
-	<a id="liberar" class="btn">Liberar</a>
-	<input type="hidden" id="idv" name="id">	
-	</div>
 </div>
 	
 </div>

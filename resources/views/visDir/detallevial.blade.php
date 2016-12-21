@@ -90,7 +90,7 @@
 			<p>Siendo el oficial <b>{{$reporte->oficial}}</b> quien da fé y veracidad del reporte remitido.</p><br><hr>
 		</div>
 		<div class="col s3 offset-s8">
-			<a href="/consultaincidenciasv" class="btn">Regresar</a>
+			<a href="/consultaincidenciasvD" class="btn">Regresar</a>
 		</div>
 		
 	</div>

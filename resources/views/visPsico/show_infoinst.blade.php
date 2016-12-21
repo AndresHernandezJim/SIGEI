@@ -88,7 +88,7 @@
 <!--=======================================================-->
     </div>
     <hr>
-    <div id="efect" class="row card-panel cyan accent-1">
+    <div id="efect" class="row card-panel amber lighten-3">
      <center><h4>Dato de la Consulta</h4></center>
      <hr>
     	<div class="input-field col s8">
