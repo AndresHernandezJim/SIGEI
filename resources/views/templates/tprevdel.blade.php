@@ -28,7 +28,7 @@
     </ul>
   <nav class="deep-orange darken-4">
     <div class="nav-wrapper ">
-      <img class="logo" src="/images/logo.png"><a href="#!" class="brand-logo form">&nbspSIGEI</a>
+      <img class="logo" src="/images/logo.png"><a href="/predel" class="brand-logo form">&nbspSIGEI</a>
       <ul class="right hide-on-med-and-down">
         <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Personas&nbsp<i class="fa fa-chevron-down"></i></a></li>    
         <li><a class="dropdown-button" href="#!" data-activates="dropdown2">Instituciones&nbsp<i class="fa fa-chevron-down"></i></a></li> 

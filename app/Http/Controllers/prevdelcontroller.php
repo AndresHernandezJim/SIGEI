@@ -326,8 +326,9 @@ class prevdelcontroller extends Controller
     public function showInst(){
             $data = \DB::table('institucion')
             ->select('id_institucion as id', 'nombre', 'telefono')
-            ->orderBy('Nombre', 'asc')->get();
-           //->paginate(3); 
+            ->orderBy('Nombre', 'asc')
+            ->where('activo_pd', 1)
+           ->paginate(3); 
             //dd($data);
             return $data;
     }

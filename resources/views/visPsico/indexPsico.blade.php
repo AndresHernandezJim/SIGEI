@@ -2,6 +2,7 @@
 <html>
 <head>
   <title>Prevención del Delito</title>
+  <link rel="shortcut icon" href="/images/prevdel.png" type="image/png">
   <meta id="token" value="{{csrf_token()}}"> 
   <link rel="stylesheet" type="text/css" href="/css/materialize.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
@@ -27,7 +28,7 @@
 </ul>
 <nav class="deep-orange darken-4">
   <div class="nav-wrapper ">
-    <img class="logo" src="/images/logo.png"><a href="#!" class="brand-logo form">&nbspSIGEI</a>
+    <img class="logo" src="/images/logo.png"><a href="/predel" class="brand-logo form">&nbspSIGEI</a>
     <ul class="right hide-on-med-and-down">
       <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Personas&nbsp<i class="fa fa-chevron-down"></i></a></li>    
       <li><a class="dropdown-button" href="#!" data-activates="dropdown2">Instituciones&nbsp<i class="fa fa-chevron-down"></i></a></li> 

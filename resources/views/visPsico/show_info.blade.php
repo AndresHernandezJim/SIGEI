@@ -90,7 +90,7 @@
 		<hr>
     </div>
 <!--=======================================================-->
-    <div class="col s4 card-panel cyan accent-1">
+    <div class="col s4 card-panel amber lighten-4">
 		<br>
 		<h5>Sesiones</h5>
 		<form>
@@ -121,7 +121,7 @@
 <!--=======================================================-->
     </div>
     <hr>
-    <div id="efect" class="row card-panel cyan accent-1">
+    <div id="efect" class="row card-panel amber lighten-4">
      <center><h4>Dato de la Consulta</h4></center>
      <hr>
     	<div class="input-field col s8">

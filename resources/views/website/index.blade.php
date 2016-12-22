@@ -2,7 +2,7 @@
 <html>
 <head>
 <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
-	<title>SICOI</title>
+	<title>SIGEI</title>
 	<link rel="stylesheet" type="text/css" href="/css/materialize.min.css">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
 	<link rel="stylesheet" type="text/css" href="/css/app.css">
