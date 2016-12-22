@@ -55,7 +55,7 @@
 </ul>
 <ul id="dropdown4" class="dropdown-content">
 <li><a href="/director/usuarios/registro">Agregar usuario</a> </li>
-<li><a href="/registro">Modificar contraseñas</a> </li>
+<li><a href="/director/usuarios/modificar">Modificar contraseñas</a> </li>
 </ul>
 <nav class="grey darken-4">
   <div class="nav-wrapper ">

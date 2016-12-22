@@ -39,7 +39,6 @@ class DirectorController extends Controller
         return view('/visDir/nusu',$data);
         //return view('welcome',$data);
     }
-
     public function Newusr(Request $request){
         //dd($request->all());
         $contrasena = \Hash::make($request->contrasena);
@@ -54,6 +53,12 @@ class DirectorController extends Controller
         $usuario->save();
 
         return redirect('/director');
+    }
+    public function chngpass(){
+        $data=[
+            'usuarios'=>\DB::table('usuario')->select('nombre','password')->get(),
+        ];
+        return view('visDir.chngpsw');
     }
     public function changepass(Request $request){
         

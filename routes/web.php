@@ -24,6 +24,7 @@ Route::get('hola',function(){return view('upload-image');});
 Route::group(['middleware' => 'admin'], function(){
 	Route::get('/director', 'DirectorController@index');
 	Route::get('/logoutD', 'DirectorController@logout');
+	Route::get('/director/usuarios/modificar','DirectorController@chngpass');
 	Route::get('/director/usuarios/registro','DirectorController@nusu');
 	Route::Post('/newusr', 'DirectorController@Newusr');
 	Route::get('/consultadetenidoD','DirectorController@showdet');
@@ -131,4 +132,5 @@ Route::group(['middleware' => 'psicologo'], function(){
 	//ajax
 	Route::patch('/predel/personas/sesion/', 'prevdelcontroller@ses_esp');
 	Route::patch('/predel/intitucion/visita/', 'prevdelcontroller@vis_esp');
+	Route::post('/predel/ajax/delins', 'prevdelcontroller@deleteIns');
 });
